@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../component/sso/list_content_horizontal_loading.dart';
+import '../../apptheme.dart';
 
 // ignore: must_be_immutable
 class ListContentHorizontalPrivilegeSuggested extends StatefulWidget {
@@ -51,7 +52,7 @@ class _ListContentHorizontalPrivilegeSuggested
               child: Text(
                 widget.title!,
                 style: TextStyle(
-                  // color: Color(0xFF000070),
+                  // color: Color(0xFFC9166D),
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
@@ -74,7 +75,7 @@ class _ListContentHorizontalPrivilegeSuggested
           ],
         ),
         Container(
-          height: 300,
+          height: 232,
           color: Colors.transparent,
           child: renderCard(
             widget.title!,
@@ -129,34 +130,40 @@ myCard(int index, int lastIndex, dynamic model, BuildContext context,
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
-                // color: Color(0xFF000000),
+                color: AppColors.surface,
+                border: Border.all(color: AppColors.border),
               ),
               margin: index == 0
-                  ? EdgeInsets.only(left: 10.0, right: 5.0)
+                  ? const EdgeInsets.only(left: 10.0, right: 6.0)
                   : index == lastIndex - 1
-                      ? EdgeInsets.only(left: 5.0, right: 15.0)
-                      : EdgeInsets.symmetric(horizontal: 5.0),
-              width: 300.0,
+                      ? const EdgeInsets.only(left: 6.0, right: 16.0)
+                      : const EdgeInsets.symmetric(horizontal: 6.0),
+              width: 208.0,
               child: Column(
                 children: [
                   Container(
-                    child: Image.network(
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.vertical(
+                        top: Radius.circular(15),
+                      ),
+                      child: Image.network(
                       '${model['imageUrl']}',
-                      height: 200,
+                      height: 158,
                       width: double.infinity,
                       fit: BoxFit.contain,
+                      ),
                     ),
                   ),
                   Container(
-                    height: 45,
-                    width: 350,
+                    height: 52,
+                    width: double.infinity,
                     alignment: Alignment.topLeft,
                     decoration: BoxDecoration(
                       borderRadius: new BorderRadius.only(
                         bottomLeft: const Radius.circular(5.0),
                         bottomRight: const Radius.circular(5.0),
                       ),
-                      color: Theme.of(context).primaryColor,
+                      color: AppColors.primary,
                     ),
                     padding: EdgeInsets.all(5.0),
                     child: Column(
@@ -168,7 +175,8 @@ myCard(int index, int lastIndex, dynamic model, BuildContext context,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
-                            fontFamily: 'Sarabun',
+                            fontFamily: 'Kanit',
+                            color: AppColors.surface,
                             fontSize: 13.0,
                           ),
                         ),
@@ -178,6 +186,7 @@ myCard(int index, int lastIndex, dynamic model, BuildContext context,
                           style: TextStyle(
                             fontWeight: FontWeight.w300,
                             fontFamily: 'Sarabun',
+                            color: AppColors.surface.withValues(alpha: 0.8),
                             fontSize: 10.0,
                           ),
                         ),

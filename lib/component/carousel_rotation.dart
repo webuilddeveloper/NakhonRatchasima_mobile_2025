@@ -1,13 +1,19 @@
-import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'blurred_network_image.dart';
+
 class CarouselRotation extends StatefulWidget {
-  CarouselRotation({super.key, this.model, this.nav});
+  CarouselRotation({
+    super.key,
+    this.model,
+    this.nav,
+    this.blurOverflow = true,
+  });
 
   final Future<dynamic>? model;
   final Function(String, String, dynamic, String)? nav;
+  final bool blurOverflow;
 
   @override
   _CarouselRotation createState() => _CarouselRotation();
@@ -37,8 +43,14 @@ class _CarouselRotation extends State<CarouselRotation> {
       future: widget.model,
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         if (snapshot.hasData) {
-          if (snapshot.data.length > 0) {
-            return _buildScreen(snapshot.data);
+          final activeItems = (snapshot.data as Iterable<dynamic>)
+              .where(
+                (item) => item is Map && item['isActive'] == true,
+              )
+              .toList();
+
+          if (activeItems.isNotEmpty) {
+            return _buildScreen(activeItems);
           } else {
             return Container();
           }
@@ -51,7 +63,7 @@ class _CarouselRotation extends State<CarouselRotation> {
     );
   }
 
-  _buildScreen(dynamic model) {
+  Widget _buildScreen(List<dynamic> model) {
     return Stack(
       children: [
         CarouselSlider(
@@ -70,22 +82,22 @@ class _CarouselRotation extends State<CarouselRotation> {
           ),
           items: model.map<Widget>(
             (document) {
-              return new InkWell(
+              return InkWell(
                 onTap: () {
-                  widget.nav!(
-                    model[_current]['linkUrl'],
-                    model[_current]['action'],
-                    model[_current],
-                    model[_current]['code'],
+                  widget.nav?.call(
+                    document['linkUrl'],
+                    document['action'],
+                    document,
+                    document['code'],
                   );
                 },
                 child: Container(
                   child: Center(
-                    child: Image.network(
-                      document['imageUrl'],
-                      fit: BoxFit.fitHeight,
+                    child: BlurredNetworkImage(
+                      imageUrl: '${document['imageUrl'] ?? ''}',
                       height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width,
+                      blurWhenNeeded: widget.blurOverflow,
                     ),
                   ),
                 ),
@@ -109,8 +121,8 @@ class _CarouselRotation extends State<CarouselRotation> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
                     color: _current == index
-                        ? const Color(0xFFfad84c)
-                        : const Color(0xFF9e6e19),
+                        ? const Color(0xFFC9166D)
+                        : const Color(0xFFFFE3F0),
                   ),
                 );
               }).toList(),
@@ -122,7 +134,7 @@ class _CarouselRotation extends State<CarouselRotation> {
           child: Transform.translate(
             offset: const Offset(0, -90), // ขึ้นจากล่าง 60px
             child: Text(
-              'นครพนมเมืองวัฒนธรรมก้าวหน้า',
+              'โคราชเมืองวัฒนธรรมก้าวหน้า',
               textAlign: TextAlign.center,
               style: TextStyle(
                   color: Colors.white,

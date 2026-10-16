@@ -54,7 +54,7 @@ class _DisputeListPageState extends State<DisputeList> {
         },
         title: widget.title,
       ),
-      backgroundColor: Color(0xFFF5F8FB),
+      backgroundColor: Color(0xFFFFFBF7),
       body: InkWell(
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
@@ -175,7 +175,7 @@ class _DisputeListPageState extends State<DisputeList> {
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
-                color: Color(0xFF6F267B),
+                color: Color(0xFFC9166D),
               ),
               child: Column(
                 children: [
@@ -258,7 +258,7 @@ class _DisputeListPageState extends State<DisputeList> {
     return Container(
       height: 2,
       margin: EdgeInsets.symmetric(vertical: 10),
-      color: Color(0xFFEDF0F3),
+      color: Color(0xFFFFF3F8),
     );
   }
 

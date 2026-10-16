@@ -82,7 +82,7 @@
 //           );
 //           // Navigator.pop(context, false);
 //         }, title: 'ตรวจสอบข้อมูลใบอนุญาตขับรถ'),
-//         backgroundColor: const Color(0xFFF5F8FB),
+//         backgroundColor: const Color(0xFFFFFBF7),
 //         body: InkWell(
 //           splashColor: Colors.transparent,
 //           highlightColor: Colors.transparent,
@@ -190,7 +190,7 @@
 //               alignment: Alignment.center,
 //               decoration: BoxDecoration(
 //                 borderRadius: BorderRadius.circular(10),
-//                 color: const Color(0xFF9C0000),
+//                 color: const Color(0xFFC9166D),
 //               ),
 //               child: const Text(
 //                 'ตกลง',
@@ -299,7 +299,7 @@
 //                             style: TextStyle(
 //                               fontFamily: 'Sarabun',
 //                               fontSize: 15,
-//                               color: Color(0xFF9C0000),
+//                               color: Color(0xFFC9166D),
 //                             ),
 //                           ),
 //                         ),
@@ -420,7 +420,7 @@
 //                             },
 //                             child: Container(
 //                               decoration: const BoxDecoration(
-//                                 color: Color(0xFF9C0000),
+//                                 color: Color(0xFFC9166D),
 //                                 borderRadius: BorderRadius.only(
 //                                   bottomLeft: Radius.circular(10),
 //                                   bottomRight: Radius.circular(10),
@@ -536,7 +536,7 @@
 //                                 style: TextStyle(
 //                                   fontFamily: 'Sarabun',
 //                                   fontSize: 15,
-//                                   color: Color(0xFF9C0000),
+//                                   color: Color(0xFFC9166D),
 //                                 ),
 //                               ),
 //                             ),
@@ -609,7 +609,7 @@
 //                         fontSize: 15.00,
 //                         fontFamily: 'Kanit',
 //                         color: Color(
-//                           0xFF000070,
+//                           0xFFC9166D,
 //                         ),
 //                       ),
 //                     ),
@@ -664,19 +664,19 @@
 //           containerHeight: 210.0,
 //           itemStyle: TextStyle(
 //             fontSize: 16.0,
-//             color: Color(0xFF9A1120),
+//             color: Color(0xFFC9166D),
 //             fontWeight: FontWeight.normal,
 //             fontFamily: 'Sarabun',
 //           ),
 //           doneStyle: TextStyle(
 //             fontSize: 16.0,
-//             color: Color(0xFF9A1120),
+//             color: Color(0xFFC9166D),
 //             fontWeight: FontWeight.normal,
 //             fontFamily: 'Sarabun',
 //           ),
 //           cancelStyle: TextStyle(
 //             fontSize: 16.0,
-//             color: Color(0xFF9A1120),
+//             color: Color(0xFFC9166D),
 //             fontWeight: FontWeight.normal,
 //             fontFamily: 'Sarabun',
 //           ),

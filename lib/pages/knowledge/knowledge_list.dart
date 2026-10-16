@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ratchasima/component/header.dart';
+import 'package:ratchasima/apptheme.dart';
+import 'package:ratchasima/component/key_search.dart';
 import 'package:ratchasima/shared/api_provider.dart' as service;
 
 import 'knowledge_list_vertical.dart' as grid;
@@ -21,6 +23,7 @@ class _KnowledgeList extends State<KnowledgeList> {
   bool hideSearch = true;
   String? keySearch;
   String? category;
+  late Future<dynamic> _futureCategory;
   int _limit = 10;
 
   final RefreshController _refreshController =
@@ -34,6 +37,10 @@ class _KnowledgeList extends State<KnowledgeList> {
       site: 'DDPM',
       model: service
           .post('${service.knowledgeApi}read', {'skip': 0, 'limit': _limit}),
+    );
+    _futureCategory = service.postCategory(
+      '${service.knowledgeCategoryApi}read',
+      {'skip': 0, 'limit': 100},
     );
   }
 
@@ -69,7 +76,7 @@ class _KnowledgeList extends State<KnowledgeList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.background,
       appBar: header(
         context,
         goBack,
@@ -97,12 +104,105 @@ class _KnowledgeList extends State<KnowledgeList> {
             physics: const ScrollPhysics(),
             shrinkWrap: true,
             children: [
-              const SizedBox(height: 10.0),
+              const SizedBox(height: 16.0),
+              KeySearch(
+                show: hideSearch,
+                hintext: 'ค้นหาคลังความรู้',
+                onKeySearchChange: (value) {
+                  setState(() {
+                    keySearch = value;
+                    _loadResults();
+                  });
+                },
+              ),
+              const SizedBox(height: 12.0),
+              _buildCategory(),
+              const SizedBox(height: 12.0),
               gridView!,
             ],
           ),
         ),
       ),
+    );
+  }
+
+  void _loadResults() {
+    gridView = grid.KnowledgeListVertical(
+      site: 'DDPM',
+      model: service.post('${service.knowledgeApi}read', {
+        'skip': 0,
+        'limit': _limit,
+        'category': category ?? '',
+        'keySearch': keySearch ?? '',
+      }),
+    );
+  }
+
+  Widget _buildCategory() {
+    return FutureBuilder<dynamic>(
+      future: _futureCategory,
+      builder: (context, snapshot) {
+        if (!snapshot.hasData || snapshot.data.isEmpty) {
+          return const SizedBox(height: 48);
+        }
+
+        final tabWidth = (MediaQuery.of(context).size.width - 48) /
+            snapshot.data.length;
+        return Container(
+          height: 48,
+          margin: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          decoration: BoxDecoration(
+            color: AppColors.surface,
+            border: Border.all(color: AppColors.border),
+            borderRadius: BorderRadius.circular(14),
+          ),
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: snapshot.data.length,
+            itemBuilder: (context, index) {
+              final item = snapshot.data[index];
+              final selected = (category ?? '') == (item['code'] ?? '');
+              return GestureDetector(
+                onTap: () {
+                  setState(() {
+                    category = item['code'];
+                    _loadResults();
+                  });
+                },
+                child: SizedBox(
+                  width: tabWidth,
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 2),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: selected
+                          ? AppColors.primarySoft
+                          : Colors.transparent,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text(
+                      item['title'],
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: selected
+                            ? AppColors.primary
+                            : AppColors.textSecondary,
+                        fontFamily: 'Kanit',
+                        fontSize: 14,
+                        fontWeight:
+                            selected ? FontWeight.w600 : FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import '../../component/button_close_back.dart';
 import '../../component/comment.dart';
 import '../../component/content.dart';
+import '../../component/header.dart';
+import '../../apptheme.dart';
 import '../../shared/api_provider.dart';
 
 // ignore: must_be_immutable
@@ -71,9 +72,10 @@ class _EventCalendarForm extends State<EventCalendarForm> {
 
   @override
   Widget build(BuildContext context) {
-    double statusBarHeight = MediaQuery.of(context).padding.top;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.background,
+      appBar: header(context, () => Navigator.pop(context),
+          title: 'รายละเอียดกิจกรรม'),
       body: NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (OverscrollIndicatorNotification overScroll) {
           overScroll.disallowIndicator();
@@ -107,13 +109,6 @@ class _EventCalendarForm extends State<EventCalendarForm> {
                     url: widget.url!,
                     model: widget.model,
                     urlGallery: widget.urlGallery,
-                  ),
-                  Positioned(
-                    right: 0,
-                    top: statusBarHeight + 5,
-                    child: Container(
-                      child: buttonCloseBack(context),
-                    ),
                   ),
                 ],
                 // overflow: Overflow.clip,

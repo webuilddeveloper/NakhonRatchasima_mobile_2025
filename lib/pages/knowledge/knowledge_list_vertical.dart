@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../apptheme.dart';
+import '../../component/blurred_network_image.dart';
 import 'knowledge_form.dart';
 
 class KnowledgeListVertical extends StatefulWidget {
@@ -28,7 +30,7 @@ class _KnowledgeListVerticalState extends State<KnowledgeListVertical> {
             child: GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                childAspectRatio: 0.85,
+                childAspectRatio: 0.72,
                 crossAxisSpacing: 12,
                 mainAxisSpacing: 16,
               ),
@@ -37,7 +39,9 @@ class _KnowledgeListVerticalState extends State<KnowledgeListVertical> {
               itemCount: 6,
               itemBuilder: (context, index) {
                 return Card(
-                  elevation: 3,
+                  elevation: 0,
+                  color: AppColors.surface,
+                  shadowColor: Colors.transparent,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -129,7 +133,7 @@ class _KnowledgeListVerticalState extends State<KnowledgeListVertical> {
           child: GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              childAspectRatio: 0.85,
+              childAspectRatio: 0.72,
               crossAxisSpacing: 12,
               mainAxisSpacing: 16,
             ),
@@ -139,10 +143,12 @@ class _KnowledgeListVerticalState extends State<KnowledgeListVertical> {
             itemBuilder: (context, index) {
               final item = snapshot.data[index];
               return Card(
-                elevation: 3,
-                shadowColor: Colors.black.withOpacity(0.1),
+                elevation: 0,
+                color: AppColors.surface,
+                shadowColor: Colors.transparent,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
+                  side: const BorderSide(color: AppColors.border),
                 ),
                 child: InkWell(
                   onTap: () {
@@ -166,40 +172,17 @@ class _KnowledgeListVerticalState extends State<KnowledgeListVertical> {
                           flex: 3,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(8),
-                            child: Image.network(
-                              item['imageUrl'] ?? '',
-                              fit: BoxFit.cover,
+                            child: BlurredNetworkImage(
+                              imageUrl: '${item['imageUrl'] ?? ''}',
                               width: double.infinity,
-                              errorBuilder: (context, error, stackTrace) {
-                                return Container(
-                                  color: Colors.grey[200],
-                                  child: Icon(
-                                    Icons.image_not_supported,
-                                    color: Colors.grey[400],
-                                    size: 32,
-                                  ),
-                                );
-                              },
-                              loadingBuilder:
-                                  (context, child, loadingProgress) {
-                                if (loadingProgress == null) return child;
-                                return Container(
-                                  color: Colors.grey[200],
-                                  child: Center(
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                      value:
-                                          loadingProgress.expectedTotalBytes !=
-                                                  null
-                                              ? loadingProgress
-                                                      .cumulativeBytesLoaded /
-                                                  loadingProgress
-                                                      .expectedTotalBytes!
-                                              : null,
-                                    ),
-                                  ),
-                                );
-                              },
+                              placeholder: Container(
+                                color: Colors.grey[200],
+                                child: Icon(
+                                  Icons.image_not_supported,
+                                  color: Colors.grey[400],
+                                  size: 32,
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -212,7 +195,7 @@ class _KnowledgeListVerticalState extends State<KnowledgeListVertical> {
                               fontSize: 14,
                               fontFamily: 'Sarabun',
                               fontWeight: FontWeight.w600,
-                              color: Color.fromRGBO(0, 0, 0, 0.8),
+                              color: AppColors.textPrimary,
                             ),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,

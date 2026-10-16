@@ -40,7 +40,7 @@ class _SSOOnlineServiceHorizontal extends State<SSOOnlineServiceHorizontal> {
                 child: Text(
                   widget.title!,
                   style: TextStyle(
-                    color: Color(0xFF000070),
+                    color: Color(0xFFC9166D),
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
                     fontFamily: 'Sarabun',
@@ -187,7 +187,7 @@ class _SSOOnlineServiceHorizontal extends State<SSOOnlineServiceHorizontal> {
                 child: Text(
                   widget.title!,
                   style: TextStyle(
-                    color: Color(0xFF000070),
+                    color: Color(0xFFC9166D),
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
                     fontFamily: 'Sarabun',
@@ -273,7 +273,7 @@ myCircle(String title, String subTitle, String image, Function nav) {
         child: Column(
           children: [
             CircleAvatar(
-              backgroundColor: Color(0xFFFFC324),
+              backgroundColor: Color(0xFFF670C3),
               radius: 30,
               child: Image.asset(
                 image,
@@ -289,7 +289,7 @@ myCircle(String title, String subTitle, String image, Function nav) {
                 style: TextStyle(
                   fontSize: 10,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF000070),
+                  color: Color(0xFFC9166D),
                   fontFamily: 'Sarabun',
                 ),
                 maxLines: 2,
@@ -303,7 +303,7 @@ myCircle(String title, String subTitle, String image, Function nav) {
                 style: TextStyle(
                   fontSize: 8,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF000070),
+                  color: Color(0xFFC9166D),
                   fontFamily: 'Sarabun',
                 ),
                 overflow: TextOverflow.ellipsis,

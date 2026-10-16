@@ -104,7 +104,7 @@
 //                             '${model['imageUrl']}' != '' ? 0.0 : 5.0),
 //                         decoration: BoxDecoration(
 //                           borderRadius: BorderRadius.circular(30),
-//                           color: const Color(0xFFFF7900),
+//                           color: const Color(0xFFF670C3),
 //                         ),
 //                         height: 60,
 //                         width: 60,
@@ -137,7 +137,7 @@
 //                                         'รอยืนยันตัวตน',
 //                                         style: TextStyle(
 //                                           fontSize: 15,
-//                                           color: Color(0xFFFF7B06),
+//                                           color: Color(0xFFF670C3),
 //                                         ),
 //                                         textAlign: TextAlign.center,
 //                                       ),
@@ -239,7 +239,7 @@
 //                         //                 'ท่านไม่มีใบขับขี่',
 //                         //                 style: TextStyle(
 //                         //                   fontSize: 15,
-//                         //                   color: Color(0xFFFF7B06),
+//                         //                   color: Color(0xFFF670C3),
 //                         //                 ),
 //                         //                 textAlign: TextAlign.center,
 //                         //               ),
@@ -520,7 +520,7 @@
 //                       style: TextStyle(
 //                         fontFamily: 'Sarabun',
 //                         fontSize: 15,
-//                         color: Color(0xFF9C0000),
+//                         color: Color(0xFFC9166D),
 //                       ),
 //                     ),
 //                   ),

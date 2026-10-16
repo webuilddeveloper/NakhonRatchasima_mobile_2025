@@ -4,6 +4,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../component/blurred_network_image.dart';
 import '../../shared/api_provider.dart';
 import 'privilege_main.dart';
 
@@ -96,7 +97,7 @@ class _PolicyPrivilegeState extends State<PolicyPrivilege> {
                 style: TextStyle(
                   fontSize: 13,
                   fontFamily: 'Sarabunun',
-                  color: Color(0xFF000070),
+                  color: Color(0xFFC9166D),
                   fontWeight: FontWeight.normal,
                 ),
               ),
@@ -153,7 +154,7 @@ class _PolicyPrivilegeState extends State<PolicyPrivilege> {
                   style: TextStyle(
                     fontSize: 13,
                     fontFamily: 'Sarabunun',
-                    color: Color(0xFF000070),
+                    color: Color(0xFFC9166D),
                     fontWeight: FontWeight.normal,
                   ),
                 ),
@@ -214,9 +215,10 @@ class _PolicyPrivilegeState extends State<PolicyPrivilege> {
                   Container(
                     height: MediaQuery.of(context).size.width * 0.5,
                     width: MediaQuery.of(context).size.width,
-                    child: Image.network(
-                      item['imageUrl'],
-                      fit: BoxFit.cover,
+                    child: BlurredNetworkImage(
+                      imageUrl: '${item['imageUrl'] ?? ''}',
+                      width: double.infinity,
+                      height: double.infinity,
                     ),
                   ),
                   new Text(
@@ -229,12 +231,11 @@ class _PolicyPrivilegeState extends State<PolicyPrivilege> {
                     ),
                   ),
                   new Html(
-                    data: item['description'].toString(),
-                    onLinkTap: (url, context, attributes) {
-                      // ignore: deprecated_member_use
-                      launch(url!);
-                    }
-                  ),
+                      data: item['description'].toString(),
+                      onLinkTap: (url, context, attributes) {
+                        // ignore: deprecated_member_use
+                        launch(url!);
+                      }),
                   // new HtmlView(
                   //   data: item['description'].toString(),
                   //   scrollable:
@@ -339,17 +340,17 @@ class _PolicyPrivilegeState extends State<PolicyPrivilege> {
         Center(
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18),
-                  side: BorderSide(
-                    color: Color(0xFF000070),
-                  ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18),
+                side: BorderSide(
+                  color: Color(0xFFC9166D),
                 ),
-                backgroundColor: Color(0xFF000070),
-                textStyle: TextStyle(
-                  color: Colors.white,
-                ),),
-            
+              ),
+              backgroundColor: Color(0xFFC9166D),
+              textStyle: TextStyle(
+                color: Colors.white,
+              ),
+            ),
             onPressed: () {
               sendPolicy();
             },

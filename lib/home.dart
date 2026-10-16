@@ -2,11 +2,14 @@
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:ratchasima/apptheme.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ratchasima/component/carousel_rotation.dart';
+import 'package:ratchasima/component/blurred_network_image.dart';
+import 'package:ratchasima/component/korat_ui.dart';
 import 'package:ratchasima/pages/complain/complain_detail.dart';
 import 'package:ratchasima/pages/contact/contact_list.dart';
 import 'package:ratchasima/pages/event_calendar/event_calendar_list.dart';
@@ -88,7 +91,7 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.background,
       body: WillPopScope(
         child: _buildBackground(),
         onWillPop: confirmExit,
@@ -145,17 +148,17 @@ class HomePageState extends State<HomePage> {
           children: [
             _buildHeader(),
             _buildQuickAccess(),
-            const SizedBox(height: 20),
+            const SizedBox(height: KoratSpacing.sm),
+            _buildCurrentEventCard(),
+            const SizedBox(height: KoratSpacing.lg),
             _buildRotation(),
-            const SizedBox(height: 20),
+            const SizedBox(height: KoratSpacing.xl),
             _buildService(),
-            const SizedBox(height: 20),
+            const SizedBox(height: KoratSpacing.xl),
             _buildNews(),
-            const SizedBox(height: 20),
+            const SizedBox(height: KoratSpacing.xl),
             _buildTravel(context),
-            const SizedBox(height: 20),
-            _buildEmergencySection(),
-            const SizedBox(height: 50),
+            const SizedBox(height: KoratSpacing.xxl),
           ],
         ),
       ),
@@ -198,30 +201,31 @@ class HomePageState extends State<HomePage> {
                 child: Container(
                   height: 75,
                   decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Color(0xFFf59e0b),
-                        Color(0xFFfbbf24),
-                        Color(0xFFfcd34d),
-                      ],
-                      stops: [0.0, 0.5, 1.0],
-                    ),
+                    // gradient: const LinearGradient(
+                    //   begin: Alignment.topLeft,
+                    //   end: Alignment.bottomRight,
+                    //   colors: [
+                    //     AppColors.primary,
+                    //     AppColors.primaryBright,
+                    //     AppColors.primarySoft
+                    //   ],
+                    //   stops: [0.0, 0.5, 1.0],
+                    // ),
+                    color: AppColors.primary,
                     borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xFFf59e0b).withOpacity(0.3),
-                        blurRadius: 12,
-                        offset: const Offset(0, 6),
-                        spreadRadius: 2,
-                      ),
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.08),
-                        blurRadius: 8,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
+                    // boxShadow: [
+                    //   BoxShadow(
+                    //     color: AppColors.primaryBright,
+                    //     blurRadius: 12,
+                    //     offset: const Offset(0, 6),
+                    //     spreadRadius: 2,
+                    //   ),
+                    //   BoxShadow(
+                    //     color: Colors.black.withOpacity(0.08),
+                    //     blurRadius: 8,
+                    //     offset: const Offset(0, 2),
+                    //   ),
+                    // ],
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -235,10 +239,10 @@ class HomePageState extends State<HomePage> {
                       Text(
                         'แหล่งท่องเที่ยว',
                         style: const TextStyle(
-                          fontFamily: 'Charmonman',
-                          fontSize: 36,
+                          // fontFamily: 'Charmonman',
+                          fontSize: 28,
                           color: Colors.white,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ],
@@ -252,12 +256,14 @@ class HomePageState extends State<HomePage> {
 
   _buildQuickAccess() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: KoratSpacing.md),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
-            child: InkWell(
+            child: _buildQuickAccessCard(
+              icon: Icons.assignment_outlined,
+              title: 'สินค้า OTOP',
+              subtitle: 'ของดีเมืองโคราช',
               onTap: () {
                 Navigator.push(
                   context,
@@ -266,41 +272,14 @@ class HomePageState extends State<HomePage> {
                   ),
                 );
               },
-              child: Container(
-                height: 55,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                      colors: [Color(0xFF9e6e19), Color(0xFFe7b014)],
-                      stops: [0.0, 0.8]),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.assignment_outlined,
-                      color: Colors.white,
-                      size: 20,
-                    ),
-                    const SizedBox(width: 5),
-                    Text(
-                      'สินค้า OTOP',
-                      style: TextStyle(
-                        fontFamily: 'Kanit',
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
             ),
           ),
-          SizedBox(width: 16),
+          const SizedBox(width: KoratSpacing.md),
           Expanded(
-            child: InkWell(
+            child: _buildQuickAccessCard(
+              icon: Icons.wallet_giftcard_sharp,
+              title: 'สวัสดิการ',
+              subtitle: 'สิทธิและความช่วยเหลือ',
               onTap: () {
                 Navigator.push(
                   context,
@@ -309,35 +288,171 @@ class HomePageState extends State<HomePage> {
                   ),
                 );
               },
-              child: Container(
-                height: 55,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                      colors: [Color(0xFF9e6e19), Color(0xFFe7b014)],
-                      stops: [0.0, 0.8]),
-                  borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildQuickAccessCard({
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required VoidCallback onTap,
+  }) {
+    return Material(
+      color: AppColors.primaryBright,
+      borderRadius: BorderRadius.circular(10),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(10),
+        child: Container(
+          height: 58,
+          decoration: BoxDecoration(
+            color: AppColors.primarySoft,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, color: AppColors.primary, size: 20),
+              const SizedBox(width: KoratSpacing.xs),
+              Flexible(
+                child: Text(
+                  title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: AppColors.primary,
+                    fontFamily: 'Kanit',
+                    fontSize: 16,
+                  ),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.wallet_giftcard_sharp,
-                      color: Colors.white,
-                      size: 20,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCurrentEventCard() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: KoratSpacing.md),
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: AppColors.surface,
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(
+                color: AppColors.error.withValues(alpha: 0.22),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.error.withValues(alpha: 0.08),
+                  blurRadius: 14,
+                  offset: const Offset(0, 6),
+                ),
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(14),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(width: 5, height: 72, color: AppColors.error),
+                  const SizedBox(width: 10),
+                  Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                    const SizedBox(width: 5),
-                    Text(
-                      'สวัสดิการ',
-                      style: TextStyle(
-                        fontFamily: 'Kanit',
-                        fontSize: 16,
-                        color: Colors.white,
+                    child: Image.asset('assets/logo/event.png'),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 9),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              const DecoratedBox(
+                                decoration: BoxDecoration(
+                                  color: AppColors.primarySoft,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(99)),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 8,
+                                    vertical: 4,
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      _UrgentPulseDot(),
+                                      SizedBox(width: 5),
+                                      Text(
+                                        'ด่วน',
+                                        style: TextStyle(
+                                          fontFamily: 'Sarabun',
+                                          fontSize: 11,
+                                          height: 1.1,
+                                          fontWeight: FontWeight.w800,
+                                          color: AppColors.error,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 7),
+                              const Text(
+                                'กิจกรรมช่วงนี้',
+                                style: TextStyle(
+                                  fontFamily: 'Sarabun',
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w800,
+                                  color: AppColors.error,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 2),
+                          const Text(
+                            'ฉีดวัคซีนไข้หวัดใหญ่ฟรี • รพ.สต. ใกล้บ้าน',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontFamily: 'Sarabun',
+                              fontSize: 13,
+                              fontWeight: FontWeight.w800,
+                              color: AppColors.textPrimary,
+                            ),
+                          ),
+                          const SizedBox(height: 1),
+                          const Text(
+                            'เริ่ม 1 ก.ย. 2569 • สิ้นสุด 30 ก.ย. 2569',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontFamily: 'Sarabun',
+                              fontSize: 11,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.textSecondary,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -346,9 +461,50 @@ class HomePageState extends State<HomePage> {
     );
   }
 
+  Widget _buildHomeSectionHeader({
+    required IconData icon,
+    required String title,
+    String? subtitle,
+    VoidCallback? onSeeAll,
+  }) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          child: Text(
+            title,
+            style: const TextStyle(
+              color: AppColors.primary,
+              fontSize: 20,
+              fontFamily: 'Kanit',
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+        ),
+        if (onSeeAll != null)
+          TextButton(
+            onPressed: onSeeAll,
+            style: TextButton.styleFrom(
+              foregroundColor: const Color(0XFF27544F),
+              padding: EdgeInsets.zero,
+              minimumSize: const Size(0, 32),
+            ),
+            child: const Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text('ดูทั้งหมด', style: TextStyle(fontSize: 12)),
+                Icon(Icons.chevron_right, size: 17),
+              ],
+            ),
+          ),
+      ],
+    );
+  }
+
   _buildBanner() {
     return CarouselRotation(
       model: _futureBanner,
+      blurOverflow: false,
       nav: (String path, String action, dynamic model, String code) {
         if (action == 'out') {
           launchUrl(Uri.parse(path));
@@ -371,9 +527,10 @@ class HomePageState extends State<HomePage> {
 
   _buildRotation() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
+      padding: const EdgeInsets.symmetric(horizontal: KoratSpacing.md),
       child: CarouselBanner(
         model: _futureRotation,
+        blurOverflow: false,
         nav: (String path, String action, dynamic model, String code,
             String urlGallery) {
           if (action == 'out') {
@@ -398,57 +555,27 @@ class HomePageState extends State<HomePage> {
 
   _buildNews() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
+      padding: const EdgeInsets.symmetric(horizontal: KoratSpacing.md),
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'ข่าวประกาศ',
-                style: TextStyle(
-                  color: Color(0xFFbf9000),
-                  fontSize: 20.0,
-                  fontFamily: 'Kanit',
-                  fontWeight: FontWeight.w400,
+          _buildHomeSectionHeader(
+            icon: Icons.newspaper_rounded,
+            title: 'ข่าวประกาศ',
+            subtitle: 'ติดตามข่าวสารล่าสุดจากจังหวัด',
+            onSeeAll: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NewsList(
+                    title: 'ข่าวประชาสัมพันธ์',
+                  ),
                 ),
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => NewsList(
-                        title: 'ข่าวประชาสัมพันธ์',
-                      ),
-                    ),
-                  );
-                },
-                child: const Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'ดูทั้งหมด',
-                      style: TextStyle(
-                        fontSize: 12.0,
-                        fontFamily: 'Kanit',
-                        fontWeight: FontWeight.w400,
-                        color: Color(0XFF27544F),
-                      ),
-                    ),
-                    Icon(
-                      Icons.chevron_right,
-                      size: 17,
-                      color: Color(0XFF27544F),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+              );
+            },
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: KoratSpacing.sm),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.22,
+            height: 190,
             child: FutureBuilder(
               future: _futureNews,
               builder: (context, snapshot) {
@@ -488,18 +615,19 @@ class HomePageState extends State<HomePage> {
                           );
                         },
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          padding: const EdgeInsets.symmetric(vertical: 4),
                           child: Container(
-                            width: MediaQuery.of(context).size.width * 0.55,
-                            margin: const EdgeInsets.only(right: 15),
+                            width: MediaQuery.of(context).size.width * 0.62,
+                            margin:
+                                const EdgeInsets.only(right: KoratSpacing.md),
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(10),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.grey.withOpacity(0.15),
+                                  color: Colors.grey.withValues(alpha: 0.15),
                                   blurRadius: 4,
-                                  offset: Offset(4, 0),
+                                  offset: const Offset(4, 0),
                                 ),
                               ],
                             ),
@@ -515,72 +643,26 @@ class HomePageState extends State<HomePage> {
                                     height: MediaQuery.of(context).size.height *
                                         0.12,
                                     width: double.infinity,
-                                    child: Image.network(
-                                      newsItem['imageUrl'],
-                                      fit: BoxFit.cover,
-                                      loadingBuilder:
-                                          (context, child, loadingProgress) {
-                                        if (loadingProgress == null)
-                                          return child;
-                                        return Container(
-                                          color: Colors.grey[200],
-                                          child: Center(
-                                            child: CircularProgressIndicator(
-                                              value: loadingProgress
-                                                          .expectedTotalBytes !=
-                                                      null
-                                                  ? loadingProgress
-                                                          .cumulativeBytesLoaded /
-                                                      loadingProgress
-                                                          .expectedTotalBytes!
-                                                  : null,
-                                              strokeWidth: 2,
-                                              color: const Color(0xFFbf9000),
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      errorBuilder:
-                                          (context, error, stackTrace) {
-                                        return Container(
-                                          color: Colors.grey[200],
-                                          child: const Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Icon(
-                                                Icons
-                                                    .image_not_supported_outlined,
-                                                color: Colors.grey,
-                                                size: 30,
-                                              ),
-                                              SizedBox(height: 4),
-                                              Text(
-                                                'ไม่สามารถโหลดรูปภาพ',
-                                                style: TextStyle(
-                                                  fontSize: 10,
-                                                  color: Colors.grey,
-                                                  fontFamily: 'Kanit',
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        );
-                                      },
+                                    child: BlurredNetworkImage(
+                                      imageUrl: '${newsItem['imageUrl'] ?? ''}',
+                                      width: double.infinity,
+                                      height: double.infinity,
                                     ),
                                   ),
                                 ),
                                 Expanded(
                                   child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
+                                    padding: const EdgeInsets.all(8),
                                     child: Text(
-                                      newsItem['title'],
+                                      (newsItem['title'] ?? '').toString(),
                                       style: const TextStyle(
                                         fontSize: 14,
                                         fontFamily: 'Kanit',
                                         fontWeight: FontWeight.w500,
+                                        color: AppColors.textPrimary,
                                       ),
                                       maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
                                 ),
@@ -618,13 +700,13 @@ class HomePageState extends State<HomePage> {
       },
       {
         'path': 'assets/icons/calendar_icon.png',
-        'title': 'ปฏิทินกิจกรรมจังหวัด ',
+        'title': 'ปฏิทินกิจกรรม',
         'callBack': () {
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => EventCalendarList(
-                title: 'ปฏิทินกิจกรรมจังหวัด',
+                title: 'ปฏิทินกิจกรรม',
               ),
             ),
           );
@@ -665,29 +747,29 @@ class HomePageState extends State<HomePage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+          padding: const EdgeInsets.symmetric(horizontal: KoratSpacing.md),
           child: const Text(
             'บริการสมาชิก',
             style: TextStyle(
-              color: Color(0xFFbf9000),
-              fontSize: 20.0,
+              color: AppColors.primary,
+              fontSize: 20,
               fontFamily: 'Kanit',
-              fontWeight: FontWeight.w400,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ),
-        const SizedBox(height: 16),
-        SizedBox(
-          height: (serviceItems.length / 4).ceil() * 130,
-          width: MediaQuery.of(context).size.width,
+        const SizedBox(height: KoratSpacing.sm),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: KoratSpacing.md),
           child: GridView.builder(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            shrinkWrap: true,
+            padding: EdgeInsets.zero,
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 4,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              childAspectRatio: 1 / 1.4,
+              crossAxisSpacing: KoratSpacing.sm,
+              mainAxisSpacing: KoratSpacing.sm,
+              childAspectRatio: 0.88,
             ),
             itemCount: serviceItems.length,
             itemBuilder: (context, index) {
@@ -703,64 +785,45 @@ class HomePageState extends State<HomePage> {
     );
   }
 
-  _buildServiceIcon({path, title, callBack}) {
-    return Container(
-      width: 80,
-      margin: const EdgeInsets.only(right: 5),
+  Widget _buildServiceIcon({
+    required String path,
+    required String title,
+    required VoidCallback callBack,
+  }) {
+    return InkWell(
+      onTap: callBack,
+      borderRadius: BorderRadius.circular(16),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Material(
-            elevation: 0,
-            borderRadius: BorderRadius.circular(15),
-            child: InkWell(
-              onTap: callBack,
-              borderRadius: BorderRadius.circular(15),
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Color(0xFFbf9000),
-                      Color(0xFFffd700),
-                    ],
-                  ),
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Theme.of(context).primaryColor.withOpacity(0.3),
-                      blurRadius: 8,
-                      offset: const Offset(0, 4),
-                      spreadRadius: 0,
-                    ),
-                  ],
-                ),
-                child: Image.asset(
-                  path,
-                  height: 40,
-                  fit: BoxFit.contain,
-                  width: 40,
-                  color: Colors.white,
-                ),
+          Container(
+            width: 56,
+            height: 56,
+            decoration: BoxDecoration(
+              color: AppColors.primary.withOpacity(0.08),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(KoratSpacing.sm),
+              child: Image.asset(
+                path,
+                color: AppColors.primary,
+                fit: BoxFit.contain,
               ),
             ),
           ),
-          const SizedBox(height: 10),
-          Container(
-            height: 40,
-            width: 90,
-            alignment: Alignment.topCenter,
-            child: Text(
-              title,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 14.0,
-                fontFamily: 'Kanit',
-                fontWeight: FontWeight.w400,
-                color: Color(0xFFbf9000),
-              ),
+          const SizedBox(height: KoratSpacing.xs),
+          Text(
+            title,
+            textAlign: TextAlign.center,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              fontSize: 12,
+              fontFamily: 'Kanit',
+              fontWeight: FontWeight.w400,
+              color: Colors.black87,
+              height: 1.2,
             ),
           ),
         ],
@@ -782,7 +845,7 @@ class HomePageState extends State<HomePage> {
                 fontSize: 18,
                 fontFamily: 'Kanit',
                 fontWeight: FontWeight.w500,
-                color: Color(0xFFbf9000),
+                color: Color(0xFFC9166D),
               ),
             ),
           ),
@@ -999,149 +1062,148 @@ class HomePageState extends State<HomePage> {
     );
   }
 
-  final List<Map<String, String>> nakhonPhanomTravelPlaces = [
+  final List<Map<String, String>> nakhonRatchasimaTravelPlaces = [
     {
-      'name': 'วัดพระธาตุพนมวรมหาวิหาร',
-      'location': 'อำเภอธาตุพนม จังหวัดนครพนม',
-      'review': '⭐ 4.7 (มากกว่า 100,000 คนเคารพสักการะ)',
+      'name': 'อนุสาวรีย์ท้าวสุรนารี (ย่าโม)',
+      'location': 'อำเภอเมืองนครราชสีมา จังหวัดนครราชสีมา',
+      'review': '⭐ แลนด์มาร์กคู่เมืองโคราช',
       'imageUrl':
-          'http://www2.nakhonphanom.go.th/files/com_travel/2022-03_01516888244fa1d.jpg',
-      'url': 'https://thai.tourismthailand.org/Attraction/พระธาตุพนม',
-      'description':
-          'พระธาตุประจำปีวอกและวันอาทิตย์ เป็นสถานที่ศักดิ์สิทธิ์สำคัญของภาคอีสาน'
-    },
-    {
-      'name': 'ท่าน้ำนครพนม (ริมฝั่งโขง)',
-      'location': 'อำเภอเมืองนครพนม',
-      'review': '⭐ 4.5 (นักท่องเที่ยวนิยมมาชมพระอาทิตย์ตก)',
-      'imageUrl': 'https://s.isanook.com/tr/0/ui/285/1425165/Image-1.jpg',
-      'url': 'https://www.wongnai.com/attractions/nakhon-phanom-mekong-river',
-      'description': 'จุดชมวิวแม่น้ำโขงและฝั่งลาวตรงข้าม บรรยากาศสงบร่มรื่น'
-    },
-    {
-      'name': 'อนุสาวรีย์ประธานโฮจิมินต์',
-      'location': 'อำเภอเมืองนครพนม',
-      'review': '⭐ 4.3 (สถานที่ประวัติศาสตร์สำคัญ)',
-      'imageUrl':
-          'https://themomentum.co/wp-content/uploads/2023/05/Body-Web_Vietnam-Feature1.jpg',
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQUT9JighyBOtliJaqTNa_tNPSv0jWYsDtGfCKuMMquOHppchvWrRzldw&s=10',
       'url':
-          'https://www.tat.or.th/th/attractions/อนุสาวรีย์ประธานโฮจิมินต์-จังหวัดนครพนม',
+          'https://www.google.com/maps/search/?api=1&query=14.974193,102.097966',
       'description':
-          'อนุสาวรีย์เพื่อระลึกถึงผู้นำเวียดนามที่เคยอาศัยในจังหวัดนครพนม'
+          'จุดสักการะท้าวสุรนารี วีรสตรีของชาวโคราช ตั้งอยู่ใจกลางเมือง ใกล้ย่านการค้าและประตูชุมพล',
+      'category': 'ประวัติศาสตร์',
+      'distance': 'ใจกลางเมือง',
     },
     {
-      'name': 'พระธาตุเรณู',
-      'location': 'อำเภอเรณูนคร',
-      'review': '⭐ 4.6 (พระธาตุสีชมพูเฉพาะตัว)',
+      'name': 'ประตูชุมพล',
+      'location': 'อำเภอเมืองนครราชสีมา จังหวัดนครราชสีมา',
+      'review': '⭐ จุดถ่ายรูปยอดนิยมใจกลางเมือง',
       'imageUrl':
-          'https://scontent.fbkk13-3.fna.fbcdn.net/v/t1.6435-9/109502390_1530647907115809_4776549909297713209_n.jpg?_nc_cat=110&_nc_cb=64d46a15-5a82848f&ccb=1-7&_nc_sid=833d8c&_nc_ohc=QwCrPBJEgtEQ7kNvwGze1fG&_nc_oc=Adm67iLL-s20rgYvcU45YBRB-qQaBz77gtezhRrIQBetfksBG-wkgqtwJH0j-VYblUQ&_nc_zt=23&_nc_ht=scontent.fbkk13-3.fna&_nc_gid=9Y9qXZjMv3n7HbPkzgftPQ&oh=00_AfIc3YiUqKZincJk0NLRAinPIlxvZTvW-KK_JLRokFY-nQ&oe=6864C442',
-      'url': 'https://www.wongnai.com/attractions/phra-that-raenu',
-      'description': 'พระธาตุประจำวันจันทร์ มีสีชมพูสวยงามเป็นเอกลักษณ์'
+          'https://cms.dmpcdn.com/travel/2022/06/29/ad3fb0c0-f766-11ec-99fd-db3af2a5f38c_webp_original.jpg',
+      'url':
+          'https://www.google.com/maps/search/?api=1&query=14.974594,102.097158',
+      'description':
+          'ประตูเมืองเก่าแก่ที่เป็นสัญลักษณ์ของนครราชสีมา อยู่ติดกับลานย่าโม เหมาะกับการเดินชมเมืองเก่า',
+      'category': 'ประวัติศาสตร์',
+      'distance': 'ใกล้อนุสาวรีย์ย่าโม',
     },
     {
-      'name': 'วัดนักบุญอันนา หนองแสง',
-      'location': 'อำเภอเมืองนครพนม',
-      'review': '⭐ 4.4 (โบสถ์คาทอลิกริมโขง)',
+      'name': 'วัดศาลาลอย',
+      'location': 'อำเภอเมืองนครราชสีมา จังหวัดนครราชสีมา',
+      'review': '⭐ วัดสำคัญและสถาปัตยกรรมเด่นของโคราช',
       'imageUrl':
-          'https://mpics.mgronline.com/pics/Images/566000005562101.JPEG',
-      'url': 'https://www.wongnai.com/attractions/st-anna-nong-saeng-church',
-      'description': 'โบสถ์คาทอลิกสไตล์โคโลเนียลสวยงามริมแม่น้ำโขง'
+          'https://nkr.mcu.ac.th/tour/wp-content/uploads/2015/03/I-San-in-The-Rain_83.jpg',
+      'url':
+          'https://www.google.com/maps/search/?api=1&query=14.982028,102.116126',
+      'description':
+          'วัดเก่าแก่ริมลำตะคอง มีอุโบสถรูปเรือสำเภาและบรรยากาศสงบ เหมาะกับการไหว้พระและพักใจ',
+      'category': 'วัดและศาสนา',
+      'distance': 'ประมาณ 4 กม. จากลานย่าโม',
     },
     {
-      'name': 'หาดทรายทองแก้ว (สันทรายริมโขง)',
-      'location': 'อำเภอธาตุพนม',
-      'review': '⭐ 4.2 (หาดทรายธรรมชาติริมโขง)',
+      'name': 'อุทยานแห่งชาติเขาใหญ่',
+      'location': 'อำเภอปากช่อง จังหวัดนครราชสีมา',
+      'review': '⭐ แหล่งธรรมชาติยอดนิยมของโคราช',
       'imageUrl':
-          'https://cms.dmpcdn.com/travel/2020/05/14/462cab90-95c5-11ea-bcb3-0320ce420b5e_original.jpg',
-      'url': 'https://www.wongnai.com/trips/golden-sand-beach-nakhon-phanom',
-      'description': 'หาดทรายริมแม่น้ำโขง บรรยากาศธรรมชาติสงบเงียบ'
+          'https://my.kapook.com/imagescontent/fb_img/772/s_110442_7165.jpg',
+      'url':
+          'https://www.google.com/maps/search/?api=1&query=14.439232,101.372508',
+      'description':
+          'ผืนป่ามรดกโลกที่มีเส้นทางศึกษาธรรมชาติ จุดชมวิว น้ำตก และอากาศเย็นสบายตลอดปี',
+      'category': 'ธรรมชาติ',
+      'distance': 'อำเภอปากช่อง',
     },
     {
-      'name': 'พิพิธภัณฑ์โฮจิมินต์',
-      'location': 'อำเภอเมืองนครพนม',
-      'review': '⭐ 4.1 (พิพิธภัณฑ์ประวัติศาสตร์)',
+      'name': 'ฟาร์มโชคชัย',
+      'location': 'อำเภอปากช่อง จังหวัดนครราชสีมา',
+      'review': '⭐ แหล่งท่องเที่ยวสำหรับครอบครัว',
       'imageUrl':
-          'https://media.timeout.com/images/103951834/750/562/image.jpg',
-      'url': 'https://www.matichon.co.th/travel/nakhon-phanom-museum',
-      'description': 'พิพิธภัณฑ์แสดงประวัติความสัมพันธ์ไทย-เวียดนาม'
+          'https://img.salehere.co.th/p/600x0/2022/07/06/dy4spmdfpmbi.jpg',
+      'url':
+          'https://www.google.com/maps/search/?api=1&query=14.657847,101.348875',
+      'description':
+          'ฟาร์มโคนมและแหล่งท่องเที่ยวเชิงเกษตร มีกิจกรรมเรียนรู้ เหมาะกับครอบครัวและเด็ก ๆ',
+      'category': 'ครอบครัว',
+      'distance': 'อำเภอปากช่อง',
     },
     {
-      'name': 'ประตูเมืองนครพนม',
-      'location': 'อำเภอเมืองนครพนม',
-      'review': '⭐ 4.0 (สัญลักษณ์ของเมือง)',
+      'name': 'อ่างเก็บน้ำลำตะคอง',
+      'location': 'อำเภอสีคิ้ว จังหวัดนครราชสีมา',
+      'review': '⭐ จุดชมวิวธรรมชาติและพระอาทิตย์ตก',
       'imageUrl':
-          'https://travel.mthai.com/app/uploads/2018/05/nakhon-phanom-gate.jpg',
-      'url': 'https://travel.mthai.com/nakhon-phanom-city-gate',
-      'description': 'ประตูเมืองที่เป็นสัญลักษณ์และจุดเช็คอินยอดนิยม'
+          'https://cms.dmpcdn.com/travel/2020/06/10/51ac4e40-ab0e-11ea-b79d-0ddf2d8ccf90_original.jpg',
+      'url':
+          'https://www.google.com/maps/search/?api=1&query=14.802022,101.585233',
+      'description':
+          'อ่างเก็บน้ำขนาดใหญ่ท่ามกลางภูเขา เป็นจุดพักผ่อน ชมวิว และแวะถ่ายรูปยอดนิยมบนเส้นทางมิตรภาพ',
+      'category': 'ธรรมชาติ',
+      'distance': 'อำเภอสีคิ้ว',
+    },
+    {
+      'name': 'วัดบ้านไร่',
+      'location': 'อำเภอด่านขุนทด จังหวัดนครราชสีมา',
+      'review': '⭐ วัดสวยและงานศิลปะร่วมสมัย',
+      'imageUrl': 'https://img.thaicdn.net/u/2019/supattra_wat/watt/wat2.jpg',
+      'url':
+          'https://www.google.com/maps/search/?api=1&query=15.216413,101.771731',
+      'description':
+          'วัดชื่อดังของหลวงพ่อคูณ โดดเด่นด้วยหอเทพวิทยาคมและงานศิลปะที่เล่าเรื่องพุทธศาสนาอย่างร่วมสมัย',
+      'category': 'วัดและศาสนา',
+      'distance': 'อำเภอด่านขุนทด',
+    },
+    {
+      'name': 'สวนสัตว์นครราชสีมา',
+      'location': 'อำเภอเมืองนครราชสีมา จังหวัดนครราชสีมา',
+      'review': '⭐ เที่ยวสนุกสำหรับครอบครัว',
+      'imageUrl':
+          'https://img.wongnai.com/p/1600x0/2021/12/12/8c2713da5fea4bccb147c2348a10782f.jpg',
+      'url':
+          'https://www.google.com/maps/search/?api=1&query=14.853152,102.089157',
+      'description':
+          'สวนสัตว์ขนาดใหญ่ของโคราช มีสัตว์หลากหลาย โซนเรียนรู้ และพื้นที่กิจกรรมสำหรับเด็กและครอบครัว',
+      'category': 'ครอบครัว',
+      'distance': 'ประมาณ 20 กม. จากตัวเมือง',
     }
   ];
 
   Widget _buildTravel(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
+      padding: const EdgeInsets.symmetric(horizontal: KoratSpacing.md),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'ท่องเที่ยวยอดนิยม',
-                style: TextStyle(
-                  color: Color(0xFFbf9000),
-                  fontSize: 20.0,
-                  fontFamily: 'Kanit',
-                  fontWeight: FontWeight.w400,
+          _buildHomeSectionHeader(
+            icon: Icons.explore_rounded,
+            title: 'ท่องเที่ยวยอดนิยม',
+            subtitle: 'สถานที่น่าเที่ยวและจุดเช็กอิน',
+            onSeeAll: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => TravelPlacesList(
+                    title: 'สถานที่ท่องเที่ยวยอดนิยม',
+                    places: nakhonRatchasimaTravelPlaces,
+                  ),
                 ),
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => TravelPlacesList(
-                        title: 'สถานที่ท่องยอดนิ',
-                        places: nakhonPhanomTravelPlaces,
-                      ),
-                    ),
-                  );
-                },
-                child: const Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'ดูทั้งหมด',
-                      style: TextStyle(
-                        fontSize: 12.0,
-                        fontFamily: 'Kanit',
-                        fontWeight: FontWeight.w400,
-                        color: Color(0XFF27544F),
-                      ),
-                    ),
-                    Icon(
-                      Icons.chevron_right,
-                      size: 17,
-                      color: Color(0XFF27544F),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+              );
+            },
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.3,
+            height: 270,
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
+              padding: const EdgeInsets.only(top: KoratSpacing.xs),
               child: ListView.builder(
                 physics: const ClampingScrollPhysics(), // เพิ่ม physics
                 scrollDirection: Axis.horizontal,
-                itemCount: nakhonPhanomTravelPlaces.length,
+                itemCount: nakhonRatchasimaTravelPlaces.length,
                 itemBuilder: (context, index) {
-                  final place = nakhonPhanomTravelPlaces[index];
+                  final place = nakhonRatchasimaTravelPlaces[index];
                   return InkWell(
                     onTap: () async {
                       try {
-                        final uri = Uri.parse(place['url']!);
+                        final uri = Uri.parse(Uri.encodeFull(place['url']!));
                         if (await canLaunchUrl(uri)) {
                           await launchUrl(uri,
                               mode: LaunchMode.externalApplication);
@@ -1162,15 +1224,15 @@ class HomePageState extends State<HomePage> {
                     },
                     borderRadius: BorderRadius.circular(12),
                     child: Container(
-                      height: MediaQuery.of(context).size.height * 0.22,
-                      width: MediaQuery.of(context).size.width * 0.55,
-                      margin: const EdgeInsets.only(right: 15),
+                      height: 250,
+                      width: MediaQuery.of(context).size.width * 0.62,
+                      margin: const EdgeInsets.only(right: KoratSpacing.md),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(12),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.grey.withOpacity(0.15),
+                            color: Colors.grey.withValues(alpha: 0.15),
                             spreadRadius: 1,
                             blurRadius: 5,
                             offset: const Offset(2, 2),
@@ -1186,63 +1248,20 @@ class HomePageState extends State<HomePage> {
                               topRight: Radius.circular(12),
                             ),
                             child: SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.12,
+                              height: 126,
                               width: double.infinity,
-                              child: Image.network(
-                                place['imageUrl']!,
-                                fit: BoxFit.cover,
-                                loadingBuilder:
-                                    (context, child, loadingProgress) {
-                                  if (loadingProgress == null) return child;
-                                  return Container(
-                                    color: Colors.grey[200],
-                                    child: Center(
-                                      child: CircularProgressIndicator(
-                                        value: loadingProgress
-                                                    .expectedTotalBytes !=
-                                                null
-                                            ? loadingProgress
-                                                    .cumulativeBytesLoaded /
-                                                loadingProgress
-                                                    .expectedTotalBytes!
-                                            : null,
-                                        strokeWidth: 2,
-                                        color: const Color(0xFFbf9000),
-                                      ),
-                                    ),
-                                  );
-                                },
-                                errorBuilder: (context, error, stackTrace) {
-                                  return Container(
-                                    color: Colors.grey[200],
-                                    child: const Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.image_not_supported_outlined,
-                                          color: Colors.grey,
-                                          size: 30,
-                                        ),
-                                        SizedBox(height: 4),
-                                        Text(
-                                          'ไม่สามารถโหลดรูปภาพ',
-                                          style: TextStyle(
-                                            fontSize: 10,
-                                            color: Colors.grey,
-                                            fontFamily: 'Kanit',
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
+                              child: BlurredNetworkImage(
+                                imageUrl: '${place['imageUrl'] ?? ''}',
+                                width: double.infinity,
+                                height: 126,
+                                placeholder:
+                                    const _HomeTravelImagePlaceholder(),
                               ),
                             ),
                           ),
                           Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.all(10.0),
+                              padding: const EdgeInsets.all(10),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment:
@@ -1254,7 +1273,7 @@ class HomePageState extends State<HomePage> {
                                       fontSize: 14,
                                       fontFamily: 'Kanit',
                                       fontWeight: FontWeight.w600,
-                                      color: Color(0xFFbf9000),
+                                      color: AppColors.primary,
                                     ),
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
@@ -1346,7 +1365,7 @@ class HomePageState extends State<HomePage> {
 
     _futureMainPopUp = postDio('${mainPopupHomeApi}read', {'limit': 10});
 
-    profileCode = (await storage.read(key: 'profileCode2'))!;
+    profileCode = await storage.read(key: 'profileCode2') ?? '';
     if (profileCode != '') {
       setState(() {
         _futureProfile = postDio(profileReadApi, {"code": profileCode});
@@ -1525,5 +1544,90 @@ class HomePageState extends State<HomePage> {
     } catch (e) {
       print('Error getting location: $e');
     }
+  }
+}
+
+class _UrgentPulseDot extends StatefulWidget {
+  const _UrgentPulseDot();
+
+  @override
+  State<_UrgentPulseDot> createState() => _UrgentPulseDotState();
+}
+
+class _UrgentPulseDotState extends State<_UrgentPulseDot>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation<double> _opacity;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 850),
+    );
+    _opacity = Tween<double>(begin: 0.35, end: 1).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
+    );
+    _controller.repeat(reverse: true);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 14,
+      height: 14,
+      child: Center(
+        child: FadeTransition(
+          opacity: _opacity,
+          child: Container(
+            width: 12,
+            height: 12,
+            decoration: const BoxDecoration(
+              color: AppColors.error,
+              shape: BoxShape.circle,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _HomeTravelImagePlaceholder extends StatelessWidget {
+  const _HomeTravelImagePlaceholder();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: AppColors.surfaceWarm,
+      child: const Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.landscape_rounded,
+              color: AppColors.primary,
+              size: 30,
+            ),
+            SizedBox(height: 4),
+            Text(
+              'รอเพิ่มรูป',
+              style: TextStyle(
+                fontSize: 10,
+                color: AppColors.textSecondary,
+                fontFamily: 'Kanit',
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

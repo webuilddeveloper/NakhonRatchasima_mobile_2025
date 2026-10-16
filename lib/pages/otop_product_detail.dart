@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:ratchasima/apptheme.dart';
+import 'package:ratchasima/component/korat_ui.dart';
+
+import '../component/blurred_network_image.dart';
+import 'otop_cart.dart';
 
 class OtopProductDetailPage extends StatefulWidget {
   final Map<String, String> product;
@@ -15,27 +20,6 @@ class _OtopProductDetailPageState extends State<OtopProductDetailPage>
   late AnimationController _slideController;
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideAnimation;
-
-  final List<Map<String, String>> comments = [
-    {
-      'name': 'คุณสมศรี',
-      'comment': 'กลิ่นหอมมาก ใช้แล้วผิวนุ่มสุด ๆ เลยค่ะ',
-      'rating': '5.0',
-      'date': '2 วันที่แล้ว',
-    },
-    {
-      'name': 'คุณเอกชัย',
-      'comment': 'แพ็กเกจดูดี สะอาด น่าซื้ออีกแน่นอนครับ',
-      'rating': '4.5',
-      'date': '1 สัปดาห์ที่แล้ว',
-    },
-    {
-      'name': 'คุณมาลี',
-      'comment': 'คุณภาพดี ส่งเร็ว บรรจุภัณฑ์สวยงาม',
-      'rating': '5.0',
-      'date': '2 สัปดาห์ที่แล้ว',
-    },
-  ];
 
   @override
   void initState() {
@@ -73,69 +57,12 @@ class _OtopProductDetailPageState extends State<OtopProductDetailPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF8FAFC),
-      appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Container(
-              padding: EdgeInsets.all(4),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Icon(
-                Icons.arrow_back_ios_new_rounded,
-                color: Colors.white,
-                size: 18,
-              ),
-            ),
-          ),
-        ),
-        title: Text(
-          'รายละเอียดสินค้า',
-          style: TextStyle(
-            fontFamily: 'Kanit',
-            fontWeight: FontWeight.w600,
-            color: Colors.white,
-            fontSize: 18,
-          ),
-        ),
-        backgroundColor: Color(0xFFe7b014),
-        elevation: 0,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Color(0xFFe7b014),
-                Color(0xFFf4c430),
-                Color(0xFFe7b014),
-              ],
-            ),
-          ),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              padding: EdgeInsets.all(6),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Icon(
-                Icons.favorite_border_rounded,
-                color: Colors.white,
-                size: 18,
-              ),
-            ),
-          ),
-        ],
+      backgroundColor: Color(0xFFFFFBF7),
+      appBar: KoratAppBar(
+        title: 'รายละเอียดสินค้า',
+        showBack: true,
+        onBack: () => Navigator.pop(context),
+        actions: const [OtopCartButton()],
       ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
@@ -153,26 +80,10 @@ class _OtopProductDetailPageState extends State<OtopProductDetailPage>
                   borderRadius: BorderRadius.circular(12),
                   child: Hero(
                     tag: 'product_image',
-                    child: Image.network(
-                      widget.product['image']!,
-                      fit: BoxFit.cover,
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Container(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [Colors.grey[200]!, Colors.grey[100]!],
-                            ),
-                          ),
-                          child: Center(
-                            child: CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                Color(0xFFe7b014),
-                              ),
-                            ),
-                          ),
-                        );
-                      },
+                    child: BlurredNetworkImage(
+                      imageUrl: '${widget.product['image'] ?? ''}',
+                      width: double.infinity,
+                      height: double.infinity,
                     ),
                   ),
                 ),
@@ -211,13 +122,13 @@ class _OtopProductDetailPageState extends State<OtopProductDetailPage>
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
-                              Color(0xFFe7b014).withOpacity(0.2),
-                              Color(0xFFf4c430).withOpacity(0.2),
+                              Color(0xFFC9166D).withOpacity(0.2),
+                              Color(0xFFF670C3).withOpacity(0.2),
                             ],
                           ),
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(
-                            color: Color(0xFFe7b014).withOpacity(0.3),
+                            color: Color(0xFFC9166D).withOpacity(0.3),
                           ),
                         ),
                         child: Text(
@@ -225,7 +136,7 @@ class _OtopProductDetailPageState extends State<OtopProductDetailPage>
                           style: TextStyle(
                             fontFamily: 'Kanit',
                             fontSize: 10,
-                            color: Color(0xFFe7b014),
+                            color: Color(0xFFC9166D),
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -273,7 +184,7 @@ class _OtopProductDetailPageState extends State<OtopProductDetailPage>
                                   return Icon(
                                     Icons.star_rounded,
                                     color: index < 4
-                                        ? Color(0xFFffa726)
+                                        ? Color(0xFFF670C3)
                                         : Colors.grey[300],
                                     size: 20,
                                   );
@@ -297,7 +208,7 @@ class _OtopProductDetailPageState extends State<OtopProductDetailPage>
                                 fontFamily: 'Kanit',
                                 fontSize: 26,
                                 fontWeight: FontWeight.w800,
-                                color: Color(0xFFe7b014),
+                                color: Color(0xFFC9166D),
                               ),
                             ),
                           ],
@@ -311,235 +222,74 @@ class _OtopProductDetailPageState extends State<OtopProductDetailPage>
 
             SizedBox(height: 20),
 
-            // Comments Section
-            SlideTransition(
-              position: _slideAnimation,
-              child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 16),
-                padding: EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [Colors.white, Colors.grey[50]!],
-                  ),
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
-                      blurRadius: 20,
-                      offset: Offset(0, 8),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.chat_bubble_outline_rounded,
-                          color: Color(0xFFe7b014),
-                          size: 20,
-                        ),
-                        SizedBox(width: 10),
-                        Text(
-                          'ความคิดเห็นจากผู้ใช้',
-                          style: TextStyle(
-                            fontFamily: 'Kanit',
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.grey[800],
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 16),
-                    ...comments
-                        .map((comment) => _buildCommentCard(comment))
-                        .toList(),
-                  ],
-                ),
-              ),
-            ),
-
-            SizedBox(height: 28),
-
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      height: 50,
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.transparent,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                            side: BorderSide(
-                              color: Color(0xFFe7b014),
-                              width: 2,
-                            ),
-                          ),
-                        ),
-                        child: Text(
-                          'เพิ่มลงตะกร้า',
-                          style: TextStyle(
-                            fontFamily: 'Kanit',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: Color(0xFFe7b014),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 12),
-                  Expanded(
-                    child: Container(
-                      height: 50,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [Color(0xFFe7b014), Color(0xFFf4c430)],
-                        ),
-                        borderRadius: BorderRadius.circular(16),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color(0xFFe7b014).withOpacity(0.3),
-                            blurRadius: 15,
-                            offset: Offset(0, 6),
-                          ),
-                        ],
-                      ),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Buy now action
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.transparent,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                        ),
-                        child: Text(
-                          'ซื้อเลย',
-                          style: TextStyle(
-                            fontFamily: 'Kanit',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            SizedBox(height: 32),
+            const SizedBox(height: 24),
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildCommentCard(Map<String, String> comment) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 12),
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.grey[50],
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: Colors.grey[200]!,
-          width: 1,
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+      bottomNavigationBar: SafeArea(
+        top: false,
+        child: Container(
+          padding: const EdgeInsets.fromLTRB(16, 10, 16, 12),
+          decoration: BoxDecoration(
+            color: AppColors.surface,
+            border: Border(top: BorderSide(color: AppColors.border)),
+          ),
+          child: Row(
             children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Color(0xFFe7b014), Color(0xFFf4c430)],
-                  ),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Center(
-                  child: Text(
-                    comment['name']![2], // Get 3rd character for Thai names
-                    style: TextStyle(
+              Expanded(
+                child: OutlinedButton.icon(
+                  onPressed: () {
+                    OtopCartController.instance.add(widget.product);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('เพิ่มสินค้าลงตะกร้าแล้ว')),
+                    );
+                  },
+                  icon: const Icon(Icons.add_shopping_cart_rounded),
+                  label: const Text('เพิ่มลงตะกร้า'),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: AppColors.primary,
+                    side: const BorderSide(color: AppColors.primary),
+                    padding: const EdgeInsets.symmetric(vertical: 13),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(13),
+                    ),
+                    textStyle: const TextStyle(
                       fontFamily: 'Kanit',
-                      color: Colors.white,
                       fontWeight: FontWeight.w600,
-                      fontSize: 16,
                     ),
                   ),
                 ),
               ),
-              SizedBox(width: 12),
+              const SizedBox(width: 10),
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      comment['name']!,
-                      style: TextStyle(
-                        fontFamily: 'Kanit',
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14,
-                        color: Colors.grey[800],
+                child: ElevatedButton(
+                  onPressed: () {
+                    OtopCartController.instance.add(widget.product);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const OtopCartPage(),
                       ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: AppColors.surface,
+                    padding: const EdgeInsets.symmetric(vertical: 13),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(13),
                     ),
-                    Row(
-                      children: [
-                        Row(
-                          children: List.generate(5, (index) {
-                            return Icon(
-                              Icons.star_rounded,
-                              size: 12,
-                              color: index < double.parse(comment['rating']!)
-                                  ? Color(0xFFffa726)
-                                  : Colors.grey[300],
-                            );
-                          }),
-                        ),
-                        SizedBox(width: 6),
-                        Text(
-                          comment['date']!,
-                          style: TextStyle(
-                            fontFamily: 'Kanit',
-                            fontSize: 11,
-                            color: Colors.grey[500],
-                          ),
-                        ),
-                      ],
+                    textStyle: const TextStyle(
+                      fontFamily: 'Kanit',
+                      fontWeight: FontWeight.w600,
                     ),
-                  ],
+                  ),
+                  child: const Text('ซื้อเลย'),
                 ),
               ),
             ],
           ),
-          SizedBox(height: 10),
-          Text(
-            comment['comment']!,
-            style: TextStyle(
-              fontFamily: 'Kanit',
-              fontSize: 13,
-              color: Colors.grey[700],
-              height: 1.3,
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

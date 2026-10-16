@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+import '../../component/blurred_network_image.dart';
 import '../../shared/extension.dart';
 import 'news_form.dart';
 
@@ -126,10 +127,11 @@ newsList(BuildContext context, Future<dynamic> model, String title) {
                                     ],
                                   ),
                                 ),
-                                Container(
-                                  child: Image.network(
-                                    '${snapshot.data[index]['imageUrl']}',
-                                    fit: BoxFit.cover,
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: BlurredNetworkImage(
+                                    imageUrl:
+                                        '${snapshot.data[index]['imageUrl'] ?? ''}',
                                   ),
                                 ),
                                 Container(

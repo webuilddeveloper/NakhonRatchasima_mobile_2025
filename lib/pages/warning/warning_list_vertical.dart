@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
+import '../../component/blurred_network_image.dart';
 import '../blank_page/blank_data.dart';
 import '../blank_page/blank_loading.dart';
 import 'warning_form.dart';
@@ -122,7 +123,7 @@ class _WarningListVertical extends State<WarningListVertical> {
                                   Container(
                                     height: 55,
                                     decoration: BoxDecoration(
-                                      color: Color(0xFF000070),
+                                      color: Color(0xFFC9166D),
                                       borderRadius: new BorderRadius.only(
                                         topLeft: const Radius.circular(5.0),
                                         topRight: const Radius.circular(5.0),
@@ -192,15 +193,13 @@ class _WarningListVertical extends State<WarningListVertical> {
                                       maxHeight: 200,
                                       minWidth: double.infinity,
                                     ),
-                                    child:
-                                        snapshot.data[index]['imageUrl'] != null
-                                            ? Image.network(
-                                                '${snapshot.data[index]['imageUrl']}',
-                                                fit: BoxFit.cover,
-                                              )
-                                            : BlankLoading(
-                                                height: 200,
-                                              ),
+                                    child: BlurredNetworkImage(
+                                      imageUrl:
+                                          '${snapshot.data[index]['imageUrl'] ?? ''}',
+                                      width: double.infinity,
+                                      height: 200,
+                                      placeholder: BlankLoading(height: 200),
+                                    ),
                                   ),
                                   Container(
                                     height: 60,

@@ -73,7 +73,7 @@
 //           );
 //           // Navigator.pop(context,false);
 //         }, title: 'ตรวจสอบข้อมูลทะเบียนรถที่ครอบครอง'),
-//         backgroundColor: Color(0xFFF5F8FB),
+//         backgroundColor: Color(0xFFFFFBF7),
 //         body: InkWell(
 //           splashColor: Colors.transparent,
 //           highlightColor: Colors.transparent,
@@ -153,7 +153,7 @@
 //             child: Material(
 //               elevation: 5.0,
 //               borderRadius: BorderRadius.circular(10.0),
-//               color: Color(0xFF9C0000),
+//               color: Color(0xFFC9166D),
 //               child: MaterialButton(
 //                 minWidth: 200,
 //                 height: 40,
@@ -269,7 +269,7 @@
 //                             style: TextStyle(
 //                               fontFamily: 'Sarabun',
 //                               fontSize: 15,
-//                               color: Color(0xFF9C0000),
+//                               color: Color(0xFFC9166D),
 //                             ),
 //                           ),
 //                         ),
@@ -384,7 +384,7 @@
 //                               },
 //                               child: Container(
 //                                 decoration: BoxDecoration(
-//                                   color: Color(0xFF9C0000),
+//                                   color: Color(0xFFC9166D),
 //                                   borderRadius: BorderRadius.only(
 //                                     bottomLeft: Radius.circular(10),
 //                                     bottomRight: Radius.circular(10),
@@ -497,7 +497,7 @@
 //                                 style: TextStyle(
 //                                   fontFamily: 'Sarabun',
 //                                   fontSize: 15,
-//                                   color: Color(0xFF9C0000),
+//                                   color: Color(0xFFC9166D),
 //                                 ),
 //                               ),
 //                             ),
@@ -575,7 +575,7 @@
 //                         fontSize: 15.00,
 //                         fontFamily: 'Kanit',
 //                         color: Color(
-//                           0xFF000070,
+//                           0xFFC9166D,
 //                         ),
 //                       ),
 //                       overflow: TextOverflow.visible,

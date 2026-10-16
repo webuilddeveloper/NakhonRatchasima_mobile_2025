@@ -6,6 +6,7 @@ import 'package:ratchasima/login.dart';
 import 'package:ratchasima/menu.dart';
 import 'package:ratchasima/shared/api_provider.dart';
 
+import 'component/blurred_network_image.dart';
 import 'pages/blank_page/dialog_fail.dart';
 // import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 // import 'package:weconnectsecurity/menu.dart';
@@ -99,9 +100,8 @@ class _SplashPageState extends State<SplashPage> {
 
               return snapshot.data.length > 0
                   ? Center(
-                      child: Image.network(
-                        snapshot.data[0]['imageUrl'],
-                        fit: BoxFit.fill,
+                      child: BlurredNetworkImage(
+                        imageUrl: '${snapshot.data[0]['imageUrl'] ?? ''}',
                         height: double.infinity,
                         width: double.infinity,
                       ),

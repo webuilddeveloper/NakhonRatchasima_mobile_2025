@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:ratchasima/pages/coming_soon.dart' show ComingSoon;
+import 'package:ratchasima/apptheme.dart';
 import 'package:ratchasima/pages/complain/complain.dart';
 import 'package:ratchasima/pages/history.dart';
 import 'package:ratchasima/pages/search_nakhonphanom.dart';
 
 import 'component/material/check_avatar.dart';
 import 'home.dart';
-import 'pages/event_calendar/event_calendar_main.dart';
-import 'pages/my_license.dart';
-import 'pages/notification/notification_list.dart';
 import 'pages/profile/user_information.dart';
-import 'shared/api_provider.dart';
 
 class Menu extends StatefulWidget {
   const Menu({super.key, this.pageIndex});
@@ -119,7 +115,7 @@ class _MenuState extends State<Menu> {
     return Scaffold(
       extendBody: true,
       resizeToAvoidBottomInset: true,
-      backgroundColor: const Color(0xFF1E1E1E),
+      backgroundColor: AppColors.background,
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: WillPopScope(
@@ -151,47 +147,49 @@ class _MenuState extends State<Menu> {
 
   Widget _buildBottomNavBar() {
     return MediaQuery(
-      data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+      data: MediaQuery.of(context).copyWith(
+        textScaler: const TextScaler.linear(1),
+      ),
       child: Container(
-        height: 66 + MediaQuery.of(context).padding.bottom,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
+        height: 66 + MediaQuery.paddingOf(context).bottom,
+        padding: EdgeInsets.only(bottom: MediaQuery.paddingOf(context).bottom),
+        decoration: const BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+          border: Border(top: BorderSide(color: AppColors.border, width: 0.6)),
           boxShadow: [
             BoxShadow(
-              color: const Color(0xFF000000).withOpacity(0.10),
-              blurRadius: 4,
-              offset: const Offset(0, -3),
+              color: Color(0x18282429),
+              blurRadius: 14,
+              offset: Offset(0, -4),
             ),
           ],
         ),
         child: Row(
-          mainAxisAlignment:
-              MainAxisAlignment.spaceBetween, // กระจายปุ่มให้เท่ากัน
           children: [
             Expanded(
               child: _buildTap(
                 0,
                 'หน้าหลัก',
                 iconData: Icons.home_outlined,
-                iconDataActive: Icons.home,
+                iconDataActive: Icons.home_rounded,
               ),
             ),
             Expanded(
               child: _buildTap(
                 1,
                 'ค้นหา',
-                iconData: Icons.search_outlined,
-                iconDataActive: Icons.search,
+                iconData: Icons.search_rounded,
+                iconDataActive: Icons.manage_search_rounded,
               ),
             ),
             Expanded(
               child: _buildTap(
                 2,
                 'ร้องเรียน',
-                iconData: Icons.add,
-                iconDataActive: Icons.add,
-                isNoti: true,
+                iconData: Icons.add_rounded,
+                iconDataActive: Icons.add_rounded,
+                isLicense: true,
               ),
             ),
             Expanded(
@@ -207,8 +205,8 @@ class _MenuState extends State<Menu> {
               child: _buildTap(
                 4,
                 'โปรไฟล์',
-                iconData: Icons.person_outline,
-                iconDataActive: Icons.person,
+                iconData: Icons.person_outline_rounded,
+                iconDataActive: Icons.person_rounded,
               ),
             ),
           ],
@@ -289,7 +287,7 @@ class _MenuState extends State<Menu> {
   //                     ? Container(
   //                         padding: const EdgeInsets.all(10),
   //                         decoration: BoxDecoration(
-  //                           color: const Color(0xFF0C387D),
+  //                           color: const Color(0xFFC9166D),
   //                           borderRadius: BorderRadius.circular(15),
   //                         ),
   //                         child: Image.asset(
@@ -321,9 +319,8 @@ class _MenuState extends State<Menu> {
     IconData? iconData,
     IconData? iconDataActive,
   }) {
-    Color color = _currentPage == index
-        ? const Color(0xFFfad84c)
-        : const Color(0XFFd9d9d9);
+    Color color =
+        _currentPage == index ? AppColors.primary : AppColors.textSecondary;
 
     return GestureDetector(
       onTap: () {
@@ -382,31 +379,35 @@ class _MenuState extends State<Menu> {
                       ? Container(
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
-                            color: const Color(0xFF0C387D),
+                            color: const Color(0xFFC9166D),
                             borderRadius: BorderRadius.circular(15),
                           ),
-                          child:
-                              Icon(Icons.badge, size: 30, color: Colors.white),
+                          child: Icon(
+                            iconData ?? Icons.add_rounded,
+                            size: 30,
+                            color: Colors.white,
+                          ),
                         )
                       : Icon(
                           _currentPage == index ? iconDataActive : iconData,
                           size: 30,
                           color: color,
                         ),
-          const SizedBox(height: 4),
+          if (!isLicense) const SizedBox(height: 4),
 
           // แสดง title
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 12,
-              color: color,
-              fontWeight:
-                  _currentPage == index ? FontWeight.bold : FontWeight.normal,
+          if (!isLicense)
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 12,
+                color: color,
+                fontWeight:
+                    _currentPage == index ? FontWeight.bold : FontWeight.normal,
+              ),
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
             ),
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-          ),
         ],
       ),
     );

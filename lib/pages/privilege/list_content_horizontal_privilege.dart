@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../../component/blurred_network_image.dart';
+
 import '../../component/sso/list_content_horizontal_loading.dart';
+import '../../apptheme.dart';
 import '../../shared/api_provider.dart';
 import '../../shared/extension.dart';
 
@@ -55,15 +58,15 @@ class _ListContentHorizontalPrivilege
                   children: [
                     Container(
                       alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.only(left: 10.0),
-                      margin: EdgeInsets.only(bottom: 5.0, top: 10.0),
+                      padding: const EdgeInsets.only(left: 10.0),
+                      margin: const EdgeInsets.only(bottom: 8.0, top: 18.0),
                       child: Text(
                         widget.title!,
                         style: TextStyle(
-                          color: Colors.black,
+                          color: AppColors.textPrimary,
                           fontWeight: FontWeight.bold,
-                          fontSize: 18.0,
-                          fontFamily: 'Sarabun',
+                          fontSize: 17.0,
+                          fontFamily: 'Kanit',
                         ),
                       ),
                     ),
@@ -72,19 +75,21 @@ class _ListContentHorizontalPrivilege
                         widget.navigationList!();
                       },
                       child: Container(
-                        padding: EdgeInsets.only(right: 10.0),
-                        margin: EdgeInsets.only(bottom: 5.0, top: 10.0),
+                        padding: const EdgeInsets.only(right: 10.0),
+                        margin: const EdgeInsets.only(bottom: 8.0, top: 10.0),
                         child: Text(
                           'ดูทั้งหมด',
-                          style:
-                              TextStyle(fontSize: 12.0, fontFamily: 'Sarabun'),
+                          style: TextStyle(
+                              fontSize: 12.0,
+                              fontFamily: 'Kanit',
+                              color: AppColors.primary),
                         ),
                       ),
                     ),
                   ],
                 ),
                 Container(
-                  height: 200,
+                  height: 224,
                   color: Colors.transparent,
                   child: renderCard(
                     widget.title!,
@@ -105,15 +110,15 @@ class _ListContentHorizontalPrivilege
                 children: [
                   Container(
                     alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.only(left: 10.0),
-                    margin: EdgeInsets.only(bottom: 5.0),
+                    padding: const EdgeInsets.only(left: 10.0),
+                    margin: const EdgeInsets.only(bottom: 8.0),
                     child: Text(
                       widget.title!,
                       style: TextStyle(
-                        color: Colors.black,
+                        color: AppColors.textPrimary,
                         fontWeight: FontWeight.bold,
-                        fontSize: 18.0,
-                        fontFamily: 'Sarabun',
+                        fontSize: 17.0,
+                        fontFamily: 'Kanit',
                       ),
                     ),
                   ),
@@ -122,8 +127,8 @@ class _ListContentHorizontalPrivilege
                       widget.navigationList!();
                     },
                     child: Container(
-                        padding: EdgeInsets.only(right: 10.0),
-                        margin: EdgeInsets.only(bottom: 5.0),
+                        padding: const EdgeInsets.only(right: 10.0),
+                        margin: const EdgeInsets.only(bottom: 8.0),
                         child: Image.asset(
                           'assets/images/double_arrow_right.png',
                           height: 15.0,
@@ -132,7 +137,7 @@ class _ListContentHorizontalPrivilege
                 ],
               ),
               Container(
-                height: 200,
+                height: 224,
                 color: Colors.transparent,
                 child: renderCard(
                     widget.title!, widget.model!, widget.navigationForm!),
@@ -201,27 +206,27 @@ myCard(int index, int lastIndex, dynamic model, BuildContext context,
               ? EdgeInsets.only(left: 5.0, right: 15.0)
               : EdgeInsets.symmetric(horizontal: 5.0),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5), color: Colors.transparent),
-      width: 170.0,
+        borderRadius: BorderRadius.circular(14),
+        color: AppColors.surface,
+        border: Border.all(color: AppColors.border),
+      ),
+      width: 184.0,
       child: Stack(
         alignment: Alignment.topCenter,
         children: [
-          Container(
-            height: 150.0,
-            decoration: BoxDecoration(
-              borderRadius: new BorderRadius.only(
-                topLeft: const Radius.circular(5.0),
-                topRight: const Radius.circular(5.0),
-              ),
-              color: Colors.white.withAlpha(220),
-              image: DecorationImage(
-                fit: BoxFit.contain,
-                image: NetworkImage(model['imageUrl']),
-              ),
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(5.0),
+              topRight: Radius.circular(5.0),
+            ),
+            child: BlurredNetworkImage(
+              imageUrl: '${model['imageUrl'] ?? ''}',
+              width: double.infinity,
+              height: 170.0,
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 150.0),
+            margin: const EdgeInsets.only(top: 170.0),
             padding: EdgeInsets.all(5),
             alignment: Alignment.topLeft,
             height: 40,
@@ -230,7 +235,7 @@ myCard(int index, int lastIndex, dynamic model, BuildContext context,
                 bottomLeft: const Radius.circular(5.0),
                 bottomRight: const Radius.circular(5.0),
               ),
-              color: Theme.of(context).primaryColor,
+              color: AppColors.primary,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

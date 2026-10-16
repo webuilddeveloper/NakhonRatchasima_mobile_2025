@@ -51,7 +51,7 @@
 //           );
 //         },
 //       ),
-//       backgroundColor: const Color(0xFFF5F8FB),
+//       backgroundColor: const Color(0xFFFFFBF7),
 //       body: InkWell(
 //         splashColor: Colors.transparent,
 //         highlightColor: Colors.transparent,
@@ -120,7 +120,7 @@
 //                     child: Material(
 //                       elevation: 2.0,
 //                       borderRadius: BorderRadius.circular(5.0),
-//                       color: const Color(0xFFEBC22B),
+//                       color: const Color(0xFFF670C3),
 //                       child: MaterialButton(
 //                         // minWidth: MediaQuery.of(context).size.width,
 //                         onPressed: () {},
@@ -128,7 +128,7 @@
 //                           'ชำระเงินภาษี',
 //                           style: new TextStyle(
 //                             fontSize: 13.0,
-//                             color: const Color(0xFF4E2B68),
+//                             color: const Color(0xFFC9166D),
 //                             fontWeight: FontWeight.normal,
 //                             fontFamily: 'Sarabun',
 //                           ),

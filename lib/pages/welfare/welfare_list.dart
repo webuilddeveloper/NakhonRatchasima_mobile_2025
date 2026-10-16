@@ -137,6 +137,7 @@ class _WelfareList extends State<WelfareList> {
               SizedBox(height: 5),
               KeySearch(
                 show: hideSearch,
+                hintext: 'ค้นหาสวัสดิการ',
                 onKeySearchChange: (String val) {
                   // welfareList(context, service.post('${service.welfareApi}read', {'skip': 0, 'limit': 100,"keySearch": val}),'');
                   setState(

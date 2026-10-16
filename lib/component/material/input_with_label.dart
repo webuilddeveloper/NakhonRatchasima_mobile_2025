@@ -15,8 +15,8 @@ inputWithLabel({
   Function? validator,
   bool isShowPattern = false,
   bool hasBorder = false,
-  Color enabledBorderColor = const Color(0xFF9A1120),
-  Color focusedBorderColor = const Color(0xFF9A1120),
+  Color enabledBorderColor = const Color(0xFFC9166D),
+  Color focusedBorderColor = const Color(0xFFC9166D),
   bool isShowIcon = false,
   TextInputType? keyboardType, //TextInputType.multiline
   int maxLines = 1,

@@ -34,7 +34,7 @@ class _ScoreCriteriaPageState extends State<ScoreCriteria> {
       appBar: header(context, () {
         Navigator.pop(context);
       }, title: 'หลักเกณฑ์คะแนนความประพฤติ'),
-      backgroundColor: Color(0xFFF5F8FB),
+      backgroundColor: Color(0xFFFFFBF7),
       body: InkWell(
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,

@@ -1,14 +1,16 @@
 import 'package:badges/badges.dart' as badges;
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:ratchasima/apptheme.dart';
 import 'package:ratchasima/pages/notification/notification_list.dart';
 
 import '../../shared/api_provider.dart';
-import '../blank_page/dialog_fail.dart';
+import '../qr_scanner_page.dart';
 
 import 'change_password.dart';
-import 'connect_social.dart';
 import 'edit_user_information.dart';
 
 import 'identity_verification.dart';
@@ -45,14 +47,14 @@ class _UserInformationPageState extends State<UserInformationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.background,
       body: FutureBuilder<dynamic>(
         future: _futureProfile,
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.hasData) {
             return card(snapshot.data);
           } else if (snapshot.hasError) {
-            return dialogFail(context);
+            return card(_tempData);
           } else {
             return card(_tempData);
           }
@@ -77,34 +79,58 @@ class _UserInformationPageState extends State<UserInformationPage> {
   int notiCount = 0;
   _read() async {
     print('--------read profile---------');
-    final profileCode = await storage.read(key: 'profileCode2');
-
-    if (profileCode?.isNotEmpty ?? false) {
-      final response = await postDio(profileReadApi, {"code": profileCode});
-      print('----------response---------\n${response}');
-      if (response.isNotEmpty) {
-        final data = response[0];
-        setState(() {
-          _futureProfile = Future.value(data);
-        });
-
-        final noti = await postDio(notificationApi + 'count', {
-          "username": data["username"],
-          "category": data["category"],
-        });
-
-        setState(
-          () => notiCount = noti['total'],
-        );
-        print('--------notiCount--------->> ${notiCount}');
-      }
+    final localProfile = await storage.read(key: 'localProfile');
+    if (localProfile != null && localProfile.isNotEmpty) {
+      final data = jsonDecode(localProfile) as Map<String, dynamic>;
+      setState(() {
+        _futureProfile = Future.value(data);
+        notiCount = 2;
+      });
+      return;
     }
-  }
 
-  int SelectedIndex = 0;
+    final firstName = await storage.read(key: 'profileFirstName') ?? '';
+    final lastName = await storage.read(key: 'profileLastName') ?? '';
+    final username = await storage.read(key: 'username') ?? '';
+    final imageUrl = await storage.read(key: 'profileImageUrl') ?? '';
+    final idcard = await storage.read(key: 'idcard') ?? '';
+    final category = await storage.read(key: 'profileCategory') ?? 'guest';
+    setState(() {
+      _futureProfile = Future.value({
+        'firstName': firstName,
+        'lastName': lastName,
+        'username': username,
+        'imageUrl': imageUrl,
+        'idcard': idcard,
+        'category': category,
+        'province': 'นครราชสีมา',
+      });
+      notiCount = 2;
+    });
+  }
 
   card(dynamic model) {
     double statusBarHeight = MediaQuery.of(context).padding.top;
+    final firstName = (model['firstName'] ?? '').toString().trim();
+    final lastName = (model['lastName'] ?? '').toString().trim();
+    final fullName = '$firstName $lastName'.trim();
+    final hasName = fullName.isNotEmpty;
+    final badgeTop = statusBarHeight + (hasName ? 138 : 108);
+    final actionsTop = statusBarHeight + (hasName ? 176 : 146);
+    final heroHeight = (statusBarHeight + (hasName ? 242 : 212))
+        .clamp(270.0, 310.0)
+        .toDouble();
+
+    Future<void> open(Widget page, {bool refreshProfile = false}) async {
+      await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => page),
+      );
+      if (refreshProfile && mounted) {
+        await _read();
+      }
+    }
+
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -115,16 +141,16 @@ class _UserInformationPageState extends State<UserInformationPage> {
                 child: Stack(
                   children: [
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.42,
+                      height: heroHeight,
                       child: ClipRRect(
                         borderRadius: const BorderRadius.only(
                           bottomLeft: Radius.circular(30),
                           bottomRight: Radius.circular(30),
                         ),
                         child: Opacity(
-                          opacity: 0.2,
+                          opacity: 0.28,
                           child: Image.asset(
-                            'assets/background/profile_bg.jpg',
+                            'assets/images/2023092591204e43fd5532c7506d03b582dc08c7152255.png',
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -134,29 +160,33 @@ class _UserInformationPageState extends State<UserInformationPage> {
                 ),
               ),
               Positioned(
-                top: statusBarHeight + 10,
-                left: 10,
+                top: statusBarHeight + 8,
+                left: 16,
                 child: InkWell(
                   onTap: () {
-                    widget.changePage!(0);
+                    if (widget.changePage != null) {
+                      widget.changePage!(0);
+                    } else {
+                      Navigator.maybePop(context);
+                    }
                   },
                   child: Container(
-                    padding: EdgeInsets.all(6),
+                    padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.7),
+                      color: Colors.white.withValues(alpha: 0.7),
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Icon(
                       Icons.arrow_back_ios_new,
-                      color: Theme.of(context).primaryColor,
-                      size: 30,
+                      color: AppColors.primary,
+                      size: 22,
                     ),
                   ),
                 ),
               ),
               Positioned(
-                top: statusBarHeight + 10,
-                right: 10,
+                top: statusBarHeight + 8,
+                right: 16,
                 child: Material(
                   color: Colors.transparent,
                   child: InkWell(
@@ -172,12 +202,12 @@ class _UserInformationPageState extends State<UserInformationPage> {
                       );
                     },
                     child: Container(
-                      padding: EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(9),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.7),
+                        color: Colors.white.withValues(alpha: 0.7),
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(
-                          color: Colors.white.withOpacity(0.2),
+                          color: Colors.white.withValues(alpha: 0.2),
                           width: 1,
                         ),
                       ),
@@ -201,143 +231,28 @@ class _UserInformationPageState extends State<UserInformationPage> {
                         ),
                         child: Icon(
                           Icons.notifications_outlined,
-                          color: Color(0xFF9e6e19),
-                          size: 26,
+                          color: AppColors.primary,
+                          size: 23,
                         ),
                       ),
                     ),
                   ),
-                ),
-              ),
-              Positioned(
-                top: statusBarHeight + 70,
-                right: 10,
-                child: Column(
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          SelectedIndex = 0;
-                        });
-                      },
-                      child: Container(
-                        height: 30,
-                        width: 45,
-                        decoration: BoxDecoration(
-                          color: SelectedIndex == 0
-                              ? Color(0xFF9e6e19)
-                              : Colors.white,
-                          border: Border.all(
-                            color: SelectedIndex == 0
-                                ? Colors.transparent
-                                : Color(0xFF9e6e19),
-                          ),
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'TH',
-                            style: TextStyle(
-                              fontFamily: 'Sarabun',
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: SelectedIndex == 0
-                                  ? Colors.white
-                                  : Color(0xFF9e6e19),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 12),
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          SelectedIndex = 1;
-                        });
-                      },
-                      child: Container(
-                        height: 30,
-                        width: 45,
-                        decoration: BoxDecoration(
-                          color: SelectedIndex == 1
-                              ? Color(0xFF9e6e19)
-                              : Colors.white,
-                          border: Border.all(
-                            color: SelectedIndex == 1
-                                ? Colors.transparent
-                                : Color(0xFF9e6e19),
-
-                            // width: 1.5,
-                          ),
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'EN',
-                            style: TextStyle(
-                              fontFamily: 'Sarabun',
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: SelectedIndex == 1
-                                  ? Colors.white
-                                  : Color(0xFF9e6e19),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 12),
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          SelectedIndex = 2;
-                        });
-                      },
-                      child: Container(
-                        height: 30,
-                        width: 45,
-                        decoration: BoxDecoration(
-                          color: SelectedIndex == 2
-                              ? Color(0xFF9e6e19)
-                              : Colors.white,
-                          border: Border.all(
-                            color: SelectedIndex == 2
-                                ? Colors.transparent
-                                : Color(0xFF9e6e19),
-
-                            // width: 1.5,
-                          ),
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'CH',
-                            style: TextStyle(
-                              fontFamily: 'Sarabun',
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: SelectedIndex == 2
-                                  ? Colors.white
-                                  : Color(0xFF9e6e19),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
                 ),
               ),
               Container(
-                height: 110,
-                width: 110,
-                margin: EdgeInsets.only(top: 50),
+                height: 80,
+                width: 80,
+                margin: EdgeInsets.only(top: statusBarHeight + 24),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  border: Border.all(
-                    color: Colors.transparent,
-                    width: 1,
-                  ),
+                  border: Border.all(color: Colors.white, width: 3),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0x24282429),
+                      blurRadius: 14,
+                      offset: Offset(0, 5),
+                    ),
+                  ],
                 ),
                 child: ClipOval(
                   child: model['imageUrl'] != ''
@@ -348,50 +263,43 @@ class _UserInformationPageState extends State<UserInformationPage> {
                               : null,
                         )
                       : Container(
-                          color: Colors.black12,
+                          padding: const EdgeInsets.all(14),
+                          color: AppColors.primarySoft,
                           child: Image.asset(
                             'assets/icons/profile_icon.png',
-                            fit: BoxFit.cover,
+                            fit: BoxFit.contain,
+                            color: AppColors.primary,
                           ),
                         ),
                 ),
               ),
-              Container(
-                height: 35,
-                margin: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.2,
-                  left: 20.0,
-                  right: 20.0,
-                  bottom: 30.0,
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: Container(
-                        alignment: Alignment.center,
-                        child: Text(
-                          model['firstName'] + '   ' + model['lastName'],
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontFamily: 'Sarabun',
-                              fontSize: 24.0,
-                              color: Color(0xFF9e6e19)),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
+              if (hasName)
+                Container(
+                  height: 30,
+                  margin: EdgeInsets.only(
+                    top: statusBarHeight + 108,
+                    left: 20.0,
+                    right: 20.0,
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    fullName,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Sarabun',
+                      fontSize: 18.0,
+                      color: AppColors.primary,
                     ),
-                  ],
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
+                  ),
                 ),
-              ),
               Container(
-                height: 35,
-                padding: const EdgeInsets.symmetric(horizontal: 8),
+                height: 30,
+                padding: const EdgeInsets.symmetric(horizontal: 11),
                 margin: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.25,
+                  top: badgeTop,
                   left: 20.0,
                   right: 20.0,
                   bottom: 30.0,
@@ -400,7 +308,7 @@ class _UserInformationPageState extends State<UserInformationPage> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(
-                    color: Color(0xFF9e6e19),
+                    color: AppColors.primary,
                     width: 1.5,
                   ),
                 ),
@@ -410,15 +318,15 @@ class _UserInformationPageState extends State<UserInformationPage> {
                   children: [
                     Icon(
                       Icons.check_circle,
-                      color: Color(0xFF9e6e19),
-                      size: 20,
+                      color: AppColors.primary,
+                      size: 17,
                     ),
                     SizedBox(width: 4),
                     Text(
-                      'ชาวนครพนม',
+                      'ชาวโคราช',
                       style: TextStyle(
-                        color: Color(0xFF9e6e19),
-                        fontSize: 12,
+                        color: AppColors.primary,
+                        fontSize: 11.5,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -428,7 +336,7 @@ class _UserInformationPageState extends State<UserInformationPage> {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 margin: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.32,
+                  top: actionsTop,
                   left: 20.0,
                   right: 20.0,
                   bottom: 30.0,
@@ -437,65 +345,26 @@ class _UserInformationPageState extends State<UserInformationPage> {
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Column(
-                      children: [
-                        Container(
-                          height: 45,
-                          width: 45,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: Icon(
-                            Icons.qr_code_scanner,
-                            color: Colors.black,
-                            size: 25,
-                          ),
-                        ),
-                        Text(
-                          'QR Code',
-                          style: TextStyle(
-                            fontFamily: 'Sarabun',
-                            fontSize: 12,
-                            color: Colors.black,
-                          ),
-                        )
-                      ],
+                    _profileActionButton(
+                      icon: Icons.qr_code_scanner_rounded,
+                      label: 'สแกน QR',
+                      onTap: () => open(const QrScannerPage()),
                     ),
-                    SizedBox(width: 12),
-                    Column(
-                      children: [
-                        Container(
-                          height: 45,
-                          width: 45,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: Icon(
-                            Icons.edit_square,
-                            color: Colors.black,
-                            size: 25,
-                          ),
-                        ),
-                        Text(
-                          'แก้ไขข้อมูล',
-                          style: TextStyle(
-                            fontFamily: 'Sarabun',
-                            fontSize: 12,
-                            color: Colors.black,
-                          ),
-                        )
-                      ],
+                    const SizedBox(width: 18),
+                    _profileActionButton(
+                      icon: Icons.edit_square,
+                      label: 'แก้ไขข้อมูล',
+                      onTap: () => open(
+                        EditUserInformationPage(),
+                        refreshProfile: true,
+                      ),
                     ),
                   ],
                 ),
               ),
               Container(
-                padding: const EdgeInsets.all(10),
-                margin: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.42,
-                    bottom: 30.0),
+                padding: const EdgeInsets.fromLTRB(16, 14, 16, 24),
+                margin: EdgeInsets.only(top: heroHeight),
                 constraints: const BoxConstraints(
                   minHeight: 200,
                 ),
@@ -506,29 +375,18 @@ class _UserInformationPageState extends State<UserInformationPage> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: const EdgeInsets.fromLTRB(2, 4, 2, 10),
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
                             'ตั้งค่าผู้ใช้',
                             style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                                color: Theme.of(context).primaryColor),
+                              fontSize: 17,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.primary,
+                            ),
                           ),
                         ),
-                      ),
-                      InkWell(
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => EditUserInformationPage(),
-                          ),
-                        ),
-                        child: buttonMenuUser(
-                            'assets/icons/person.png',
-                            'ข้อมูลผู้ใช้งาน',
-                            'ดูและแก้ไขข้อมูลส่วนตัวของคุณ เช่น ชื่อ, เบอร์โทร, อีเมล'),
                       ),
                       InkWell(
                         onTap: () => Navigator.push(
@@ -538,21 +396,22 @@ class _UserInformationPageState extends State<UserInformationPage> {
                           ),
                         ),
                         child: buttonMenuUser(
-                          'assets/icons/papers.png',
+                          Icons.badge_outlined,
                           'ข้อมูลสมาชิก',
                           'ดูรายละเอียดข้อมูลของสมาชิก เช่น ชื่อ ที่อยู่ และเบอร์โทรศัพท์',
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: const EdgeInsets.fromLTRB(2, 12, 2, 10),
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
                             'ตั้งค่าอื่นๆ',
                             style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                                color: Theme.of(context).primaryColor),
+                              fontSize: 17,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.primary,
+                            ),
                           ),
                         ),
                       ),
@@ -564,22 +423,9 @@ class _UserInformationPageState extends State<UserInformationPage> {
                           ),
                         ),
                         child: buttonMenuUser(
-                          'assets/icons/bell.png',
+                          Icons.notifications_none_rounded,
                           'ตั้งค่าการแจ้งเตือน',
                           'ตั้งเวลาและรูปแบบการแจ้งเตือนสำหรับกิจกรรมต่าง ๆ',
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ConnectSocialPage(),
-                          ),
-                        ),
-                        child: buttonMenuUser(
-                          'assets/icons/link.png',
-                          'การเชื่อมต่อ',
-                          'จัดการการเชื่อมต่อกับบัญชีอื่น เช่น Google, Facebook',
                         ),
                       ),
                       InkWell(
@@ -590,12 +436,13 @@ class _UserInformationPageState extends State<UserInformationPage> {
                           ),
                         ),
                         child: buttonMenuUser(
-                          'assets/icons/lock.png',
+                          Icons.lock_outline_rounded,
                           'เปลี่ยนรหัสผ่าน',
                           'เปลี่ยนรหัสผ่านบัญชีของคุณได้ที่นี่',
                         ),
                       ),
                       Container(
+                        padding: const EdgeInsets.only(top: 4),
                         alignment: Alignment.centerRight,
                         child: Text(
                           versionName,
@@ -605,33 +452,18 @@ class _UserInformationPageState extends State<UserInformationPage> {
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.only(top: 20.0),
-                        child: Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              InkWell(
-                                onTap: () => logout(context),
-                                child: Icon(
-                                  Icons.power_settings_new,
-                                  color: Colors.red,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              InkWell(
-                                onTap: () => logout(context),
-                                child: Text(
-                                  'ออกจากระบบ',
-                                  style: TextStyle(
-                                    fontFamily: 'Sarabun',
-                                    fontSize: 15,
-                                    color: Colors.red,
-                                  ),
-                                ),
-                              )
-                            ],
+                        margin: const EdgeInsets.only(top: 14),
+                        child: TextButton.icon(
+                          onPressed: () => logout(context),
+                          icon: const Icon(Icons.power_settings_new, size: 20),
+                          label: const Text('ออกจากระบบ'),
+                          style: TextButton.styleFrom(
+                            foregroundColor: AppColors.error,
+                            textStyle: const TextStyle(
+                              fontFamily: 'Sarabun',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                       )
@@ -649,66 +481,119 @@ class _UserInformationPageState extends State<UserInformationPage> {
     );
   }
 
-  buttonMenuUser(String image, String title, String subtitle) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-      child: Container(
-        padding: EdgeInsets.only(bottom: 2.0),
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.white12),
-          borderRadius: BorderRadius.circular(15),
-          color: Colors.black.withOpacity(0.02),
-        ),
-        margin: EdgeInsets.only(bottom: 10.0),
+  Widget _profileActionButton({
+    required IconData icon,
+    required String label,
+    required VoidCallback onTap,
+  }) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(14),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 46,
+                height: 46,
+                decoration: BoxDecoration(
+                  color: AppColors.surface,
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(color: AppColors.primarySoft),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0x14282429),
+                      blurRadius: 8,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: Icon(icon, color: AppColors.primary, size: 24),
+              ),
+              const SizedBox(height: 5),
+              Text(
+                label,
+                style: const TextStyle(
+                  fontFamily: 'Sarabun',
+                  fontSize: 12,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buttonMenuUser(IconData icon, String title, String subtitle) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: AppColors.border),
+          borderRadius: BorderRadius.circular(16),
+          color: AppColors.surface,
+        ),
+        margin: const EdgeInsets.only(bottom: 6),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              Container(
+                width: 42,
+                height: 42,
+                decoration: BoxDecoration(
+                  color: AppColors.primarySoft,
+                  borderRadius: BorderRadius.circular(13),
+                ),
+                child: Icon(icon, color: AppColors.primary, size: 22),
+              ),
+              const SizedBox(width: 12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      child: Text(
-                        title,
-                        style: TextStyle(
-                          fontFamily: 'Sarabun',
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18.0,
-                          color: Theme.of(context).primaryColor,
-                        ),
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        fontFamily: 'Sarabun',
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
+                        color: AppColors.textPrimary,
                       ),
                     ),
-                    SizedBox(height: 8),
-                    Container(
-                      child: Text(
-                        subtitle,
-                        style: TextStyle(
-                          fontFamily: 'Sarabun',
-                          fontSize: 12.0,
-                          color: Colors.black,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.start,
+                    const SizedBox(height: 3),
+                    Text(
+                      subtitle,
+                      style: const TextStyle(
+                        fontFamily: 'Sarabun',
+                        fontSize: 12,
+                        height: 1.3,
+                        color: AppColors.textSecondary,
                       ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ],
                 ),
               ),
+              const SizedBox(width: 8),
               Container(
-                height: 35,
-                width: 35,
+                height: 32,
+                width: 32,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: const Color(0xFFfffadd),
+                  borderRadius: BorderRadius.circular(11),
+                  color: AppColors.primarySoft,
                 ),
-                child: Icon(
-                  Icons.arrow_forward_ios,
-                  color: Theme.of(context).primaryColor,
-                  size: 20,
+                child: const Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  color: AppColors.primary,
+                  size: 16,
                 ),
               ),
             ],

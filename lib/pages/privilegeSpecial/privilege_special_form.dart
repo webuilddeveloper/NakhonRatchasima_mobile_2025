@@ -378,7 +378,7 @@ class _PrivilegeSpecialDetailPageState extends State<PrivilegeSpecialForm> {
                               Text(
                                 'อ่าน',
                                 style: TextStyle(
-                                  color: Color(0xFF1B6CA8),
+                                  color: Color(0xFFF670C3),
                                   fontFamily: 'Kanit',
                                 ),
                               ),
@@ -414,7 +414,7 @@ class _PrivilegeSpecialDetailPageState extends State<PrivilegeSpecialForm> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5.0),
             border: Border.all(
-              color: Color(0xFF1B6CA8),
+              color: Color(0xFFF670C3),
             ),
           ),
           child: MaterialButton(
@@ -425,7 +425,7 @@ class _PrivilegeSpecialDetailPageState extends State<PrivilegeSpecialForm> {
             child: Text(
               '${model['textButton']}',
               style: TextStyle(
-                color: Color(0xFF1B6CA8),
+                color: Color(0xFFF670C3),
                 fontFamily: 'Kanit',
               ),
               textAlign: TextAlign.center,

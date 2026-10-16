@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../component/blurred_network_image.dart';
+
 import '../../component/sso/list_content_horizontal_loading.dart';
 import '../../shared/api_provider.dart';
 import '../../shared/extension.dart';
@@ -60,7 +62,7 @@ class _ListContentHorizontalPrivilegeSpecial
                       child: Text(
                         widget.title!,
                         style: TextStyle(
-                          color: Color(0xFF1B6CA8),
+                          color: Color(0xFFF670C3),
                           fontWeight: FontWeight.bold,
                           fontSize: 18.0,
                           fontFamily: 'Kanit',
@@ -182,18 +184,15 @@ myCard(int index, int lastIndex, dynamic model, BuildContext context,
       child: Stack(
         alignment: Alignment.topCenter,
         children: [
-          Container(
-            height: 165,
-            decoration: BoxDecoration(
-              borderRadius: new BorderRadius.only(
-                topLeft: const Radius.circular(5.0),
-                topRight: const Radius.circular(5.0),
-              ),
-              color: Colors.white.withAlpha(220),
-              image: DecorationImage(
-                fit: BoxFit.fill,
-                image: NetworkImage(model['imageUrl']),
-              ),
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(5.0),
+              topRight: Radius.circular(5.0),
+            ),
+            child: BlurredNetworkImage(
+              imageUrl: '${model['imageUrl'] ?? ''}',
+              width: double.infinity,
+              height: 165,
             ),
           ),
           Container(

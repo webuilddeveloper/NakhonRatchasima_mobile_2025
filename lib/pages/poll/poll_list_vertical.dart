@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+import '../../component/blurred_network_image.dart';
 import '../../shared/extension.dart';
 import '../blank_page/blank_data.dart';
 import '../blank_page/toast_fail.dart';
@@ -136,9 +137,11 @@ class _PollListVertical extends State<PollListVertical> {
                                           height: 90,
                                           width: 90,
                                           child: Container(
-                                            child: Image.network(
-                                              '${snapshot.data[index]['imageUrl']}',
-                                              fit: BoxFit.cover,
+                                            child: BlurredNetworkImage(
+                                              imageUrl:
+                                                  '${snapshot.data[index]['imageUrl'] ?? ''}',
+                                              width: double.infinity,
+                                              height: double.infinity,
                                               // loadingBuilder: (BuildContext context,
                                               //     Widget child,
                                               //     ImageChunkEvent loadingProgress) {

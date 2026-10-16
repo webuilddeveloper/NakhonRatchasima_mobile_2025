@@ -493,7 +493,7 @@
 //                   style: const TextStyle(
 //                     fontSize: 13,
 //                     fontFamily: 'Kanit',
-//                     color: Color(0xFF9A1120),
+//                     color: Color(0xFFC9166D),
 //                     fontWeight: FontWeight.normal,
 //                   ),
 //                 ),
@@ -567,7 +567,7 @@
 //     //             style: TextStyle(
 //     //               fontSize: 13,
 //     //               fontFamily: 'Kanit',
-//     //               color: Color(0xFF9A1120),
+//     //               color: Color(0xFFC9166D),
 //     //               fontWeight: FontWeight.normal,
 //     //             ),
 //     //           ),
@@ -706,7 +706,7 @@
 //                 style: const TextStyle(
 //                   fontSize: 13,
 //                   fontFamily: 'Kanit',
-//                   color: Color(0xFF9A1120),
+//                   color: Color(0xFFC9166D),
 //                   fontWeight: FontWeight.normal,
 //                 ),
 //               ),
@@ -774,19 +774,19 @@
 //           containerHeight: 210.0,
 //           itemStyle: TextStyle(
 //             fontSize: 16.0,
-//             color: Color(0xFF9A1120),
+//             color: Color(0xFFC9166D),
 //             fontWeight: FontWeight.normal,
 //             fontFamily: 'Kanit',
 //           ),
 //           doneStyle: TextStyle(
 //             fontSize: 16.0,
-//             color: Color(0xFF9A1120),
+//             color: Color(0xFFC9166D),
 //             fontWeight: FontWeight.normal,
 //             fontFamily: 'Kanit',
 //           ),
 //           cancelStyle: TextStyle(
 //             fontSize: 16.0,
-//             color: Color(0xFF9A1120),
+//             color: Color(0xFFC9166D),
 //             fontWeight: FontWeight.normal,
 //             fontFamily: 'Kanit',
 //           ),
@@ -924,7 +924,7 @@
 //                 vertical: 0,
 //               ),
 //               // decoration: BoxDecoration(
-//               //   color: Color(0xFFC5DAFC),
+//               //   color: Color(0xFFFFE3F0),
 //               //   borderRadius: BorderRadius.circular(
 //               //     10,
 //               //   ),
@@ -977,7 +977,7 @@
 //                             style: const TextStyle(
 //                               fontSize: 15.00,
 //                               fontFamily: 'Kanit',
-//                               color: Color(0xFF1B6CA8),
+//                               color: Color(0xFFF670C3),
 //                             ),
 //                           ),
 //                           value: item['code'],
@@ -1031,7 +1031,7 @@
 //                             style: const TextStyle(
 //                               fontSize: 15.00,
 //                               fontFamily: 'Kanit',
-//                               color: Color(0xFF1B6CA8),
+//                               color: Color(0xFFF670C3),
 //                             ),
 //                           ),
 //                           value: item['code'],
@@ -1120,7 +1120,7 @@
 //               fontSize: 15.00,
 //               fontFamily: 'Kanit',
 //               color: Color(
-//                 0xFF9A1120,
+//                 0xFFC9166D,
 //               ),
 //             ),
 //           ),
@@ -1168,7 +1168,7 @@
 //               fontSize: 15.00,
 //               fontFamily: 'Kanit',
 //               color: Color(
-//                 0xFF9A1120,
+//                 0xFFC9166D,
 //               ),
 //             ),
 //           ),
@@ -1194,7 +1194,7 @@
 //             ),
 //             decoration: BoxDecoration(
 //               borderRadius: BorderRadius.circular(5.0),
-//               color: const Color(0xFF0B5C9E),
+//               color: const Color(0xFFC9166D),
 //             ),
 //             width: 30.0,
 //             height: 30.0,
@@ -1206,7 +1206,7 @@
 //               title,
 //               style: new TextStyle(
 //                 fontSize: 12.0,
-//                 color: const Color(0xFF9A1120),
+//                 color: const Color(0xFFC9166D),
 //                 fontWeight: FontWeight.normal,
 //                 fontFamily: 'Kanit',
 //               ),

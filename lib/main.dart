@@ -1,6 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_line_sdk/flutter_line_sdk.dart';
+import 'package:ratchasima/apptheme.dart';
+import 'package:ratchasima/component/korat_ui.dart';
+import 'package:ratchasima/shared/local_notification_service.dart';
 import 'package:ratchasima/splash.dart';
 
 Future<void> main() async {
@@ -20,6 +23,8 @@ Future<void> main() async {
     print("LINE SDK Setup Failed: $e");
   }
 
+  await KoratNotificationService.instance.initialize();
+
   // await Firebase.initializeApp();
   runApp(const MyApp());
 }
@@ -31,16 +36,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: appNavigatorKey,
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primaryColor: const Color(0XFFfad84c),
-        primaryColorDark: const Color(0xFF9C0000),
-        // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-        fontFamily: 'Sarabun',
-      ),
-      home: SplashPage(),
+      theme: AppTheme.light,
+      home: KoratStartupNotificationGate(child: SplashPage()),
       builder: (context, child) {
         return MediaQuery(
           data: MediaQuery.of(
@@ -51,6 +51,49 @@ class MyApp extends StatelessWidget {
       },
     );
   }
+}
+
+class KoratStartupNotificationGate extends StatefulWidget {
+  const KoratStartupNotificationGate({
+    super.key,
+    required this.child,
+  });
+
+  final Widget child;
+
+  @override
+  State<KoratStartupNotificationGate> createState() =>
+      _KoratStartupNotificationGateState();
+}
+
+class _KoratStartupNotificationGateState
+    extends State<KoratStartupNotificationGate> {
+  static bool _shownThisSession = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _showStartupNotification();
+    });
+  }
+
+  Future<void> _showStartupNotification() async {
+    if (_shownThisSession) return;
+    _shownThisSession = true;
+
+    await Future<void>.delayed(const Duration(milliseconds: 350));
+    await KoratNotificationService.instance.requestPermissions();
+    await KoratNotificationService.instance.show(
+      id: 2026090101,
+      title: 'กิจกรรมจาก Korat Connect',
+      body: 'ฉีดวัคซีนไข้หวัดใหญ่ฟรี เริ่ม 1 ก.ย. 2569 ถึง 30 ก.ย. 2569',
+      payload: 'activity_reminder',
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) => widget.child;
 }
 
 class MyHomePage extends StatefulWidget {
@@ -94,15 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
+      appBar: KoratAppBar(title: widget.title),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.

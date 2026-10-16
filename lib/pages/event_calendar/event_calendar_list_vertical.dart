@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../apptheme.dart';
+import '../../component/blurred_network_image.dart';
 import '../blank_page/blank_data.dart';
 import 'event_calendar_form.dart';
 
@@ -54,12 +56,15 @@ class _EventCalendarListVertical extends State<EventCalendarListVertical> {
             );
           } else {
             return Container(
-              padding: EdgeInsets.all(10.0),
+              padding: const EdgeInsets.fromLTRB(16, 4, 16, 16),
               child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                  mainAxisExtent: 246,
                 ),
-                physics: ClampingScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: snapshot.data.length,
                 itemBuilder: (context, index) {
@@ -102,7 +107,7 @@ class _EventCalendarListVertical extends State<EventCalendarListVertical> {
               decoration: new BoxDecoration(
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
+                  color: Colors.grey.withValues(alpha: 0.5),
                     spreadRadius: 0,
                     blurRadius: 7,
                     offset: Offset(0, 3), // changes position of shadow
@@ -112,8 +117,9 @@ class _EventCalendarListVertical extends State<EventCalendarListVertical> {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10.0),
-                child: Image.network(
-                  model['imageUrl'],
+                child: BlurredNetworkImage(
+                  imageUrl: '${model['imageUrl'] ?? ''}',
+                  width: double.infinity,
                 ),
               ),
             ),
@@ -145,69 +151,51 @@ class _EventCalendarListVertical extends State<EventCalendarListVertical> {
         );
       },
       child: Container(
-        margin: index % 2 == 0
-            ? EdgeInsets.only(bottom: 5.0, right: 5.0)
-            : EdgeInsets.only(bottom: 5.0, left: 5.0),
+        margin: EdgeInsets.zero,
         decoration: BoxDecoration(
-          borderRadius: new BorderRadius.circular(5),
-          color: Colors.white,
+          borderRadius: BorderRadius.circular(14),
+          color: AppColors.surface,
+          border: Border.all(color: AppColors.border),
         ),
         child: Column(
           // alignment: Alignment.topCenter,
           children: [
             Expanded(
-              child: Container(
-                height: 157.0,
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
-                    topLeft: const Radius.circular(5.0),
-                    topRight: const Radius.circular(5.0),
-                  ),
-                  color: Colors.white.withAlpha(220),
-                  image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: NetworkImage(model['imageUrl']),
-                  ),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(14.0),
+                  topRight: Radius.circular(14.0),
+                ),
+                child: BlurredNetworkImage(
+                  imageUrl: '${model['imageUrl'] ?? ''}',
+                  width: double.infinity,
+                  height: double.infinity,
                 ),
               ),
             ),
             Container(
-              // margin: EdgeInsets.only(top: 157.0),
-              padding: EdgeInsets.all(5),
-              alignment: Alignment.topLeft,
-              height: 40,
+              constraints: const BoxConstraints(minHeight: 58),
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.only(
-                  bottomLeft: const Radius.circular(5.0),
-                  bottomRight: const Radius.circular(5.0),
+                  bottomLeft: Radius.circular(14.0),
+                  bottomRight: Radius.circular(14.0),
                 ),
-                color: Colors.black.withAlpha(10),
+                color: AppColors.surface,
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    model['title'],
-                    style: const TextStyle(
-                      // fontWeight: FontWeight.bold,
-                      fontSize: 10,
-                      // color: Colors.white,
-                      fontFamily: 'Sarabun',
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(10, 9, 10, 10),
+                child: Text(
+                  '${model['title'] ?? ''}',
+                  style: const TextStyle(
+                    fontSize: 12,
+                    height: 1.3,
+                    color: AppColors.textPrimary,
+                    fontFamily: 'Kanit',
+                    fontWeight: FontWeight.w500,
                   ),
-                  // Text(
-                  //   dateStringToDate(model['createDate']),
-                  //   style: TextStyle(
-                  //     fontWeight: FontWeight.normal,
-                  //     fontSize: 8,
-                  //     fontFamily: 'Sarabun',
-                  //     color: Colors.white,
-                  //   ),
-                  //   overflow: TextOverflow.ellipsis,
-                  // ),
-                ],
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
               ),
             ),
           ],

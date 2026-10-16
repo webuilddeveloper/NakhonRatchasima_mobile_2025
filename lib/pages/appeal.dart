@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../component/material/custom_alert_dialog.dart';
 import '../component/material/input_with_label.dart';
+import '../component/blurred_network_image.dart';
 import '../home_v2.dart';
 import '../shared/api_provider.dart';
 import '../widget/header.dart';
@@ -202,7 +203,7 @@ class AppealState extends State<Appeal> {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: Color(0xFFEBC22B),
+                    color: Color(0xFFF670C3),
                   ),
                   child: Text(
                     'ส่งเรื่องโต้แย้ง',
@@ -271,7 +272,7 @@ class AppealState extends State<Appeal> {
                     width: 40.0,
                     height: 20.0,
                     decoration: BoxDecoration(
-                      color: Color(0xFF6F267B),
+                      color: Color(0xFFC9166D),
                       borderRadius: BorderRadius.circular(5),
                     ),
                     child: MaterialButton(
@@ -318,20 +319,9 @@ class AppealState extends State<Appeal> {
                     },
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8.0),
-                      child: Image.network(
-                        _itemImage[index],
-                        fit: BoxFit.cover,
-                        loadingBuilder: (context, child, loadingProgress) {
-                          if (loadingProgress == null) return child;
-                          return Center(
-                            child: CircularProgressIndicator(
-                              value: loadingProgress.expectedTotalBytes != null
-                                  ? loadingProgress.cumulativeBytesLoaded /
-                                      loadingProgress.expectedTotalBytes!
-                                  : null,
-                            ),
-                          );
-                        },
+                      child: BlurredNetworkImage(
+                        imageUrl: '${_itemImage[index]}',
+                        width: double.infinity,
                       ),
                     ),
                   ),
@@ -461,7 +451,7 @@ class AppealState extends State<Appeal> {
               style: TextStyle(
                 fontSize: 13,
                 fontFamily: 'Sarabun',
-                color: Color(0xFF005C9E),
+                color: Color(0xFFC9166D),
                 fontWeight: FontWeight.normal,
               ),
             ),
@@ -556,7 +546,7 @@ class AppealState extends State<Appeal> {
                             },
                             child: Container(
                               decoration: BoxDecoration(
-                                color: Color(0xFFEBC22B),
+                                color: Color(0xFFF670C3),
                                 borderRadius: BorderRadius.only(
                                   bottomLeft: Radius.circular(10),
                                   bottomRight: Radius.circular(10),
@@ -669,7 +659,7 @@ class AppealState extends State<Appeal> {
                               style: TextStyle(
                                 fontFamily: 'Sarabun',
                                 fontSize: 15,
-                                color: Color(0xFF9C0000),
+                                color: Color(0xFFC9166D),
                               ),
                             ),
                           ),
@@ -738,7 +728,7 @@ class AppealState extends State<Appeal> {
   //                 },
   //                 child: Container(
   //                   decoration: BoxDecoration(
-  //                     color: Color(0xFF9C0000),
+  //                     color: Color(0xFFC9166D),
   //                     borderRadius: BorderRadius.only(
   //                       bottomLeft: Radius.circular(10),
   //                       bottomRight: Radius.circular(10),
@@ -765,4 +755,3 @@ class AppealState extends State<Appeal> {
   //   );
   // }
 }
-

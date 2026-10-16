@@ -50,7 +50,7 @@ class _ContentReporter extends State<ContentReporter> {
 
   Future<dynamic> readGallery() async {
     final result =
-        await postObjectData('m/Reporter/gallery/read', {'code': widget.code});
+        await postObjectData('/m/Reporter/gallery/read', {'code': widget.code});
 
     if (result['status'] == 'S') {
       List data = [];

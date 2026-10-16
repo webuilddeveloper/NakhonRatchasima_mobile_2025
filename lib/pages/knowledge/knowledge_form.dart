@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 
 import '../../component/link_url_out.dart';
+import '../../component/link_url_in.dart';
 import '../../shared/api_provider.dart';
 import '../../shared/extension.dart';
 
@@ -183,6 +184,9 @@ class _KnowledgeDetailPageState extends State<KnowledgeForm> {
   }
 
   myContent(dynamic model) {
+    final fileUrl = model['fileUrl']?.toString().trim() ?? '';
+    final linkUrl = model['linkUrl']?.toString().trim() ?? '';
+    final hasResource = fileUrl.isNotEmpty || linkUrl.isNotEmpty;
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -246,58 +250,69 @@ class _KnowledgeDetailPageState extends State<KnowledgeForm> {
                   const SizedBox(
                     height: 10.0,
                   ),
-                  Container(
-                    width: 400.0,
-                    padding: EdgeInsets.only(left: 90.0, right: 90.0),
-                    child: Material(
-                      elevation: 5.0,
-                      borderRadius: BorderRadius.circular(10.0),
-                      color: Colors.white,
-                      child: Container(
-                        alignment: Alignment(1, 1),
-                        child: MaterialButton(
-                          minWidth: MediaQuery.of(context).size.width,
-                          onPressed: () {
-                            launchURL(model['linkUrl']);
-                            // launchInWebViewWithJavaScript(model['fileUrl']);
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) => PdfViewerPage(
-                            //       path: model['fileUrl'],
-                            //     ),
-                            //   ),
-                            // );
-                          },
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              SizedBox(
-                                width: 35.0,
-                                height: 35.0,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(5.0),
-                                  child: Image.asset(
-                                    'assets/logo/icons/Group337.png',
-                                    height: 5.0,
-                                    width: 5.0,
-                                    color: Theme.of(context).primaryColor,
+                  if (hasResource) ...[
+                    Container(
+                      width: 400.0,
+                      padding: EdgeInsets.only(left: 90.0, right: 90.0),
+                      child: Material(
+                        elevation: 5.0,
+                        borderRadius: BorderRadius.circular(10.0),
+                        color: Colors.white,
+                        child: Container(
+                          alignment: Alignment(1, 1),
+                          child: MaterialButton(
+                            minWidth: MediaQuery.of(context).size.width,
+                            onPressed: hasResource
+                                ? () {
+                                    if (fileUrl.isNotEmpty) {
+                                      launchURL(fileUrl);
+                                    } else {
+                                      launchInWebViewWithJavaScript(linkUrl);
+                                    }
+                                  }
+                                : null,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                SizedBox(
+                                  width: 35.0,
+                                  height: 35.0,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Image.asset(
+                                      'assets/logo/icons/Group337.png',
+                                      height: 5.0,
+                                      width: 5.0,
+                                      color: Theme.of(context).primaryColor,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Text(
-                                'อ่าน',
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontFamily: 'Sarabun',
+                                Text(
+                                  fileUrl.isNotEmpty
+                                      ? 'เปิดเอกสาร PDF'
+                                      : 'เปิดลิงก์',
+                                  style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    fontFamily: 'Sarabun',
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
+                            /*
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) => PdfViewerPage(
+                              //       path: model['fileUrl'],
+                              //     ),
+                              //   ),
+                              // );
+                            */
                           ),
                         ),
                       ),
                     ),
-                  ),
+                  ],
                 ],
               ),
             ],

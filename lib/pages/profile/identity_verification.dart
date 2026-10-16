@@ -441,7 +441,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                   style: const TextStyle(
                     fontSize: 13,
                     fontFamily: 'Sarabun',
-                    color: Color(0xFF9A1120),
+                    color: Color(0xFFC9166D),
                     fontWeight: FontWeight.normal,
                   ),
                 ),
@@ -513,7 +513,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                 style: const TextStyle(
                   fontSize: 13,
                   fontFamily: 'Sarabun',
-                  color: Color(0xFF9A1120),
+                  color: Color(0xFFC9166D),
                   fontWeight: FontWeight.normal,
                 ),
               ),
@@ -668,7 +668,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                         style: const TextStyle(
                           fontSize: 13,
                           fontFamily: 'Sarabun',
-                          color: Color(0xFF9A1120),
+                          color: Color(0xFFC9166D),
                           fontWeight: FontWeight.normal,
                         ),
                       ),
@@ -718,7 +718,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                   style: const TextStyle(
                     fontSize: 13,
                     fontFamily: 'Sarabun',
-                    color: Color(0xFF9A1120),
+                    color: Color(0xFFC9166D),
                     fontWeight: FontWeight.normal,
                   ),
                 ),
@@ -786,19 +786,19 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
           containerHeight: 210.0,
           itemStyle: TextStyle(
             fontSize: 16.0,
-            color: Color(0xFF9A1120),
+            color: Color(0xFFC9166D),
             fontWeight: FontWeight.normal,
             fontFamily: 'Sarabun',
           ),
           doneStyle: TextStyle(
             fontSize: 16.0,
-            color: Color(0xFF9A1120),
+            color: Color(0xFFC9166D),
             fontWeight: FontWeight.normal,
             fontFamily: 'Sarabun',
           ),
           cancelStyle: TextStyle(
             fontSize: 16.0,
-            color: Color(0xFF9A1120),
+            color: Color(0xFFC9166D),
             fontWeight: FontWeight.normal,
             fontFamily: 'Sarabun',
           ),
@@ -859,7 +859,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                                   fontSize: 13.00,
                                   fontFamily: 'Sarabun',
                                   color: Color(
-                                    0xFF9A1120,
+                                    0xFFC9166D,
                                   ),
                                 ),
                                 maxLines: 2,
@@ -870,7 +870,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                                   fontSize: 13.00,
                                   fontFamily: 'Sarabun',
                                   color: Color(
-                                    0xFF9A1120,
+                                    0xFFC9166D,
                                   ),
                                 ),
                                 maxLines: 2,
@@ -883,7 +883,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                                         fontSize: 13.00,
                                         fontFamily: 'Sarabun',
                                         color: Color(
-                                          0xFF9A1120,
+                                          0xFFC9166D,
                                         ),
                                       ),
                                       maxLines: 2,
@@ -897,7 +897,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                                         fontSize: 13.00,
                                         fontFamily: 'Sarabun',
                                         color: Color(
-                                          0xFF9A1120,
+                                          0xFFC9166D,
                                         ),
                                       ),
                                       maxLines: 2,
@@ -911,7 +911,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                                         fontSize: 13.00,
                                         fontFamily: 'Sarabun',
                                         color: Color(
-                                          0xFF9A1120,
+                                          0xFFC9166D,
                                         ),
                                       ),
                                       maxLines: 2,
@@ -925,7 +925,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                                         fontSize: 13.00,
                                         fontFamily: 'Sarabun',
                                         color: Color(
-                                          0xFF9A1120,
+                                          0xFFC9166D,
                                         ),
                                       ),
                                       maxLines: 2,
@@ -957,7 +957,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                       boxShadow: [
                         const BoxShadow(
                           color: Color(
-                            0xFF9A1120,
+                            0xFFC9166D,
                           ),
                           spreadRadius: 1,
                         ),
@@ -1026,7 +1026,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                             vertical: 0,
                           ),
                           decoration: BoxDecoration(
-                            color: const Color(0xFFEEBA33),
+                            color: const Color(0xFFF670C3),
                             borderRadius: BorderRadius.circular(
                               10,
                             ),
@@ -1092,7 +1092,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                                           fontSize: 15.00,
                                           fontFamily: 'Sarabun',
                                           color: Color(
-                                            0xFF9A1120,
+                                            0xFFC9166D,
                                           ),
                                         ),
                                       ),
@@ -1159,7 +1159,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                                           fontSize: 15.00,
                                           fontFamily: 'Sarabun',
                                           color: Color(
-                                            0xFF9A1120,
+                                            0xFFC9166D,
                                           ),
                                         ),
                                       ),
@@ -1180,7 +1180,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                               vertical: 0,
                             ),
                             decoration: BoxDecoration(
-                              color: const Color(0xFFEEBA33),
+                              color: const Color(0xFFF670C3),
                               borderRadius: BorderRadius.circular(
                                 10,
                               ),
@@ -1244,7 +1244,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                                             fontSize: 15.00,
                                             fontFamily: 'Sarabun',
                                             color: Color(
-                                              0xFF9A1120,
+                                              0xFFC9166D,
                                             ),
                                           ),
                                         ),
@@ -1309,7 +1309,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                                             fontSize: 15.00,
                                             fontFamily: 'Sarabun',
                                             color: Color(
-                                              0xFF9A1120,
+                                              0xFFC9166D,
                                             ),
                                           ),
                                         ),
@@ -1330,7 +1330,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                               vertical: 0,
                             ),
                             decoration: BoxDecoration(
-                              color: const Color(0xFFEEBA33),
+                              color: const Color(0xFFF670C3),
                               borderRadius: BorderRadius.circular(
                                 10,
                               ),
@@ -1392,7 +1392,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                                             fontSize: 15.00,
                                             fontFamily: 'Sarabun',
                                             color: Color(
-                                              0xFF9A1120,
+                                              0xFFC9166D,
                                             ),
                                           ),
                                         ),
@@ -1455,7 +1455,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                                             fontSize: 15.00,
                                             fontFamily: 'Sarabun',
                                             color: Color(
-                                              0xFF9A1120,
+                                              0xFFC9166D,
                                             ),
                                           ),
                                         ),
@@ -1476,7 +1476,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                               vertical: 0,
                             ),
                             decoration: BoxDecoration(
-                              color: const Color(0xFFEEBA33),
+                              color: const Color(0xFFF670C3),
                               borderRadius: BorderRadius.circular(
                                 10,
                               ),
@@ -1536,7 +1536,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                                             fontSize: 15.00,
                                             fontFamily: 'Sarabun',
                                             color: Color(
-                                              0xFF9A1120,
+                                              0xFFC9166D,
                                             ),
                                           ),
                                         ),
@@ -1597,7 +1597,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                                             fontSize: 15.00,
                                             fontFamily: 'Sarabun',
                                             color: Color(
-                                              0xFF9A1120,
+                                              0xFFC9166D,
                                             ),
                                           ),
                                         ),
@@ -1618,7 +1618,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                               vertical: 0,
                             ),
                             decoration: BoxDecoration(
-                              color: const Color(0xFFEEBA33),
+                              color: const Color(0xFFF670C3),
                               borderRadius: BorderRadius.circular(
                                 10,
                               ),
@@ -1676,7 +1676,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                                             fontSize: 15.00,
                                             fontFamily: 'Sarabun',
                                             color: Color(
-                                              0xFF9A1120,
+                                              0xFFC9166D,
                                             ),
                                           ),
                                         ),
@@ -1735,7 +1735,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                                             fontSize: 15.00,
                                             fontFamily: 'Sarabun',
                                             color: Color(
-                                              0xFF9A1120,
+                                              0xFFC9166D,
                                             ),
                                           ),
                                         ),
@@ -1756,7 +1756,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                               vertical: 0,
                             ),
                             decoration: BoxDecoration(
-                              color: const Color(0xFFEEBA33),
+                              color: const Color(0xFFF670C3),
                               borderRadius: BorderRadius.circular(
                                 10,
                               ),
@@ -1810,7 +1810,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                                             fontSize: 15.00,
                                             fontFamily: 'Sarabun',
                                             color: Color(
-                                              0xFF9A1120,
+                                              0xFFC9166D,
                                             ),
                                           ),
                                         ),
@@ -1865,7 +1865,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                                             fontSize: 15.00,
                                             fontFamily: 'Sarabun',
                                             color: Color(
-                                              0xFF9A1120,
+                                              0xFFC9166D,
                                             ),
                                           ),
                                         ),
@@ -1881,7 +1881,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                             child: Material(
                               elevation: 5.0,
                               borderRadius: BorderRadius.circular(10.0),
-                              color: const Color(0xFF9A1120),
+                              color: const Color(0xFFC9166D),
                               child: MaterialButton(
                                 minWidth: MediaQuery.of(context).size.width,
                                 height: 40,
@@ -1913,7 +1913,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                             child: Material(
                               elevation: 5.0,
                               borderRadius: BorderRadius.circular(10.0),
-                              color: const Color(0xFF9A1120),
+                              color: const Color(0xFFC9166D),
                               child: MaterialButton(
                                 minWidth: MediaQuery.of(context).size.width,
                                 height: 40,
@@ -1957,7 +1957,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                   boxShadow: [
                     const BoxShadow(
                         color: Color(
-                          0xFF9A1120,
+                          0xFFC9166D,
                         ),
                         spreadRadius: 1),
                   ],
@@ -2015,7 +2015,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
             //     vertical: 0,
             //   ),
             //   decoration: BoxDecoration(
-            //     color: Color(0xFFEEBA33),
+            //     color: Color(0xFFF670C3),
             //     borderRadius: BorderRadius.circular(
             //       10,
             //     ),
@@ -2058,7 +2058,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
             //             fontSize: 15.00,
             //             fontFamily: 'Sarabun',
             //             color: Color(
-            //               0xFF9A1120,
+            //               0xFFC9166D,
             //             ),
             //           ),
             //         ),
@@ -2099,14 +2099,14 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                 child: TextFormField(
                   controller: txtDate,
                   style: const TextStyle(
-                    // color: Color(0xFF9A1120),
+                    // color: Color(0xFFC9166D),
                     fontWeight: FontWeight.normal,
                     fontFamily: 'Sarabun',
                     fontSize: 15.0,
                   ),
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: const Color(0xFFfffadd),
+                    fillColor: const Color(0xFFFFE3F0),
                     contentPadding:
                         const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
                     hintText: "วันเดือนปีเกิด",
@@ -2171,7 +2171,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                 vertical: 0,
               ),
               decoration: BoxDecoration(
-                color: const Color(0xFFfffadd),
+                color: const Color(0xFFFFE3F0),
                 borderRadius: BorderRadius.circular(
                   10,
                 ),
@@ -2217,7 +2217,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                               fontSize: 15.00,
                               fontFamily: 'Sarabun',
                               color: Color(
-                                0xFF9A1120,
+                                0xFFC9166D,
                               ),
                             ),
                           ),
@@ -2265,7 +2265,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                               fontSize: 15.00,
                               fontFamily: 'Sarabun',
                               color: Color(
-                                0xFF9A1120,
+                                0xFFC9166D,
                               ),
                             ),
                           ),
@@ -2310,7 +2310,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                 vertical: 0,
               ),
               decoration: BoxDecoration(
-                color: const Color(0xFFfffadd),
+                color: const Color(0xFFFFE3F0),
                 borderRadius: BorderRadius.circular(
                   10,
                 ),
@@ -2364,7 +2364,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                               fontSize: 15.00,
                               fontFamily: 'Sarabun',
                               color: Color(
-                                0xFF9A1120,
+                                0xFFC9166D,
                               ),
                             ),
                           ),
@@ -2419,7 +2419,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                               fontSize: 15.00,
                               fontFamily: 'Sarabun',
                               color: Color(
-                                0xFF9A1120,
+                                0xFFC9166D,
                               ),
                             ),
                           ),
@@ -2436,7 +2436,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                 vertical: 0,
               ),
               decoration: BoxDecoration(
-                color: const Color(0xFFfffadd),
+                color: const Color(0xFFFFE3F0),
                 borderRadius: BorderRadius.circular(
                   10,
                 ),
@@ -2488,7 +2488,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                               fontSize: 15.00,
                               fontFamily: 'Sarabun',
                               color: Color(
-                                0xFF9A1120,
+                                0xFFC9166D,
                               ),
                             ),
                           ),
@@ -2541,7 +2541,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                               fontSize: 15.00,
                               fontFamily: 'Sarabun',
                               color: Color(
-                                0xFF9A1120,
+                                0xFFC9166D,
                               ),
                             ),
                           ),
@@ -2558,7 +2558,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                 vertical: 0,
               ),
               decoration: BoxDecoration(
-                color: const Color(0xFFfffadd),
+                color: const Color(0xFFFFE3F0),
                 borderRadius: BorderRadius.circular(
                   10,
                 ),
@@ -2608,7 +2608,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                               fontSize: 15.00,
                               fontFamily: 'Sarabun',
                               color: Color(
-                                0xFF9A1120,
+                                0xFFC9166D,
                               ),
                             ),
                           ),
@@ -2659,7 +2659,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                               fontSize: 15.00,
                               fontFamily: 'Sarabun',
                               color: Color(
-                                0xFF9A1120,
+                                0xFFC9166D,
                               ),
                             ),
                           ),
@@ -2676,7 +2676,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                 vertical: 0,
               ),
               decoration: BoxDecoration(
-                color: const Color(0xFFfffadd),
+                color: const Color(0xFFFFE3F0),
                 borderRadius: BorderRadius.circular(
                   10,
                 ),
@@ -2723,7 +2723,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                               fontSize: 15.00,
                               fontFamily: 'Sarabun',
                               color: Color(
-                                0xFF9A1120,
+                                0xFFC9166D,
                               ),
                             ),
                           ),
@@ -2771,7 +2771,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
                               fontSize: 15.00,
                               fontFamily: 'Sarabun',
                               color: Color(
-                                0xFF9A1120,
+                                0xFFC9166D,
                               ),
                             ),
                           ),
@@ -2860,7 +2860,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
               fontSize: 15.00,
               fontFamily: 'Sarabun',
               color: Color(
-                0xFF9A1120,
+                0xFFC9166D,
               ),
             ),
           ),
@@ -2910,7 +2910,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
               fontSize: 15.00,
               fontFamily: 'Sarabun',
               color: Color(
-                0xFF9A1120,
+                0xFFC9166D,
               ),
             ),
           ),
@@ -2936,7 +2936,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
             ),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5.0),
-              color: const Color(0xFF0B5C9E),
+              color: const Color(0xFFC9166D),
             ),
             width: 30.0,
             height: 30.0,
@@ -2948,7 +2948,7 @@ class _IdentityVerificationPageState extends State<IdentityVerificationPage> {
               title,
               style: new TextStyle(
                 fontSize: 12.0,
-                color: const Color(0xFF9A1120),
+                color: const Color(0xFFC9166D),
                 fontWeight: FontWeight.normal,
                 fontFamily: 'Sarabun',
               ),

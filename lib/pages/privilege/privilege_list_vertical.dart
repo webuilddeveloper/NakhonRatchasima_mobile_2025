@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../apptheme.dart';
+import '../../component/blurred_network_image.dart';
 
 import 'privilege_form.dart';
 
@@ -26,23 +28,26 @@ class _PrivilegeListVertical extends State<PrivilegeListVertical> {
         if (snapshot.hasData) {
           if (snapshot.data.length == 0) {
             return Container(
-              height: 200,
+              height: 220,
               alignment: Alignment.center,
               child: Text(
                 'ไม่พบข้อมูล',
                 style: TextStyle(
                   fontSize: 18,
                   fontFamily: 'Sarabun',
-                  color: Color.fromRGBO(0, 0, 0, 0.6),
+                  color: AppColors.textSecondary,
                 ),
               ),
             );
           } else {
             return Container(
-              padding: EdgeInsets.all(10.0),
+              padding: const EdgeInsets.fromLTRB(16, 4, 16, 16),
               child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                  childAspectRatio: 0.78,
                 ),
                 physics: ClampingScrollPhysics(),
                 shrinkWrap: true,
@@ -91,8 +96,9 @@ class _PrivilegeListVertical extends State<PrivilegeListVertical> {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10.0),
-                child: Image.network(
-                  model['imageUrl'],
+                child: BlurredNetworkImage(
+                  imageUrl: '${model['imageUrl'] ?? ''}',
+                  width: double.infinity,
                 ),
               ),
             ),
@@ -119,41 +125,37 @@ class _PrivilegeListVertical extends State<PrivilegeListVertical> {
         );
       },
       child: Container(
-        margin: index % 2 == 0
-            ? EdgeInsets.only(bottom: 5.0, right: 5.0)
-            : EdgeInsets.only(bottom: 5.0, left: 5.0),
+        margin: EdgeInsets.zero,
         decoration: BoxDecoration(
-          borderRadius: new BorderRadius.circular(5),
-          color: Color(0xFFFFFFFF),
+          borderRadius: BorderRadius.circular(14),
+          color: AppColors.surface,
+          border: Border.all(color: AppColors.border),
         ),
         child: Column(
           children: [
             Expanded(
-              child: Container(
-                height: 157.0,
-                decoration: BoxDecoration(
-                  borderRadius: new BorderRadius.only(
-                    topLeft: const Radius.circular(5.0),
-                    topRight: const Radius.circular(5.0),
-                  ),
-                  color: Colors.white.withAlpha(220),
-                  image: DecorationImage(
-                    fit: BoxFit.contain,
-                    image: NetworkImage(model['imageUrl']),
-                  ),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(14.0),
+                  topRight: Radius.circular(14.0),
+                ),
+                child: BlurredNetworkImage(
+                  imageUrl: '${model['imageUrl'] ?? ''}',
+                  width: double.infinity,
+                  height: 157.0,
                 ),
               ),
             ),
             Container(
-              padding: EdgeInsets.all(5),
+              padding: const EdgeInsets.all(8),
               alignment: Alignment.topLeft,
-              height: 40,
+              height: 48,
               decoration: BoxDecoration(
-                borderRadius: new BorderRadius.only(
-                  bottomLeft: const Radius.circular(5.0),
-                  bottomRight: const Radius.circular(5.0),
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(14.0),
+                  bottomRight: Radius.circular(14.0),
                 ),
-                color: Theme.of(context).primaryColor,
+                color: AppColors.primary,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -161,10 +163,10 @@ class _PrivilegeListVertical extends State<PrivilegeListVertical> {
                   Text(
                     model['title'],
                     style: TextStyle(
-                      fontWeight: FontWeight.w300,
-                      fontSize: 10,
-                      color: Color(0xFFFFFFFF),
-                      fontFamily: 'Sarabun',
+                      fontWeight: FontWeight.w500,
+                      fontSize: 11,
+                      color: AppColors.surface,
+                      fontFamily: 'Kanit',
                     ),
                     overflow: TextOverflow.ellipsis,
                   ),

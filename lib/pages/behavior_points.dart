@@ -53,7 +53,7 @@ class _BehaviorPointsPageState extends State<BehaviorPoints> {
           );
         },
       ),
-      backgroundColor: Color(0xFFF5F8FB),
+      backgroundColor: Color(0xFFFFFBF7),
       body: InkWell(
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
@@ -104,7 +104,7 @@ class _BehaviorPointsPageState extends State<BehaviorPoints> {
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Sarabun',
                       fontSize: 30.0,
-                      color: Color(0xFFEBC22B),
+                      color: Color(0xFFF670C3),
                     ),
                   ),
                 ),
@@ -227,7 +227,7 @@ class _BehaviorPointsPageState extends State<BehaviorPoints> {
                 style: TextStyle(
                   fontFamily: 'Sarabun',
                   fontSize: 20,
-                  color: Color(0xFFFF7B06),
+                  color: Color(0xFFF670C3),
                 ),
               ),
             ],
@@ -241,7 +241,7 @@ class _BehaviorPointsPageState extends State<BehaviorPoints> {
     return Container(
       height: 2,
       margin: EdgeInsets.symmetric(vertical: 10),
-      color: Color(0xFFEDF0F3),
+      color: Color(0xFFFFF3F8),
     );
   }
 

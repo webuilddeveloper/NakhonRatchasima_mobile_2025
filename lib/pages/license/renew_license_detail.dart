@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:ratchasima/component/header.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:ratchasima/pages/license/renew_license_payment.dart';
+
+import '../../component/blurred_network_image.dart';
 
 class RenewLicenseDetail extends StatefulWidget {
   RenewLicenseDetail({super.key, this.model});
@@ -60,7 +63,7 @@ class _RenewLicenseDetail extends State<RenewLicenseDetail> {
                   'รายละเอียดข้อมูล',
                   style: TextStyle(
                     fontSize: 20.0,
-                    color: Color(0xFF213F91),
+                    color: Color(0xFFC9166D),
                     fontFamily: 'Kanit',
                     fontWeight: FontWeight.bold,
                   ),
@@ -222,7 +225,7 @@ class _RenewLicenseDetail extends State<RenewLicenseDetail> {
                           textAlign: TextAlign.start,
                           style: TextStyle(
                             fontSize: 15.0,
-                            color: Color(0xFF0C387D),
+                            color: Color(0xFFC9166D),
                             fontFamily: 'Kanit',
                             fontWeight: FontWeight.w400,
                             decoration: TextDecoration.underline,
@@ -259,7 +262,7 @@ class _RenewLicenseDetail extends State<RenewLicenseDetail> {
                           textAlign: TextAlign.start,
                           style: TextStyle(
                             fontSize: 15.0,
-                            color: Color(0xFF0C387D),
+                            color: Color(0xFFC9166D),
                             fontFamily: 'Kanit',
                             fontWeight: FontWeight.w400,
                             decoration: TextDecoration.underline,
@@ -293,11 +296,11 @@ class _RenewLicenseDetail extends State<RenewLicenseDetail> {
                               widget.model['fileImageOther'] != null
                           ? Expanded(
                               flex: 1,
-                              child: Image.network(
-                                widget.model['fileImageOther'],
+                              child: BlurredNetworkImage(
+                                imageUrl:
+                                    '${widget.model['fileImageOther'] ?? ''}',
                                 width: 120,
                                 height: 120,
-                                fit: BoxFit.fill,
                               ),
                             )
                           : Container(),
@@ -330,7 +333,7 @@ class _RenewLicenseDetail extends State<RenewLicenseDetail> {
                       'แก้ไขข้อมูล',
                       style: new TextStyle(
                         fontSize: 16.0,
-                        color: Color(0xFF0C387D),
+                        color: Color(0xFFC9166D),
                         fontWeight: FontWeight.normal,
                         fontFamily: 'Kanit',
                       ),
@@ -384,58 +387,7 @@ class _RenewLicenseDetail extends State<RenewLicenseDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        // forceMaterialTransparency: true,
-        elevation: 0,
-        backgroundColor: Color(0xFFF3F5F5),
-        titleSpacing: 5,
-        automaticallyImplyLeading: false,
-        flexibleSpace: Container(
-          width: double.infinity,
-          padding: EdgeInsets.only(
-            top: MediaQuery.of(context).padding.top + 20,
-            left: 15,
-            right: 15,
-          ),
-          child: Row(
-            children: [
-              InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  // alignment: Alignment.center,
-                  width: 35,
-                  decoration: BoxDecoration(
-                    color: Color(0XFF213F91),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Center(
-                    child: Icon(
-                      Icons.arrow_back_ios_new,
-                      size: 20,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(width: 10),
-              Expanded(
-                child: Text(
-                  '',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: 'Kanit',
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+      appBar: header(context, goBack),
       backgroundColor: Color(0xFFF3F5F5),
       body: Container(
         child: ListView(

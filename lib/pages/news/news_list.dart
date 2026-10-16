@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ratchasima/apptheme.dart';
 import 'package:ratchasima/component/header.dart' show header;
 import 'package:ratchasima/shared/api_provider.dart';
 
@@ -53,22 +54,27 @@ class _NewsList extends State<NewsList> {
   void _onLoading() async {
     setState(() {
       _limit = _limit + 10;
-
-      news = new NewsListVertical(
-        site: 'DDPM',
-        model: postDio('${newsApi}read', {
-          'skip': 0,
-          'limit': _limit,
-          "keySearch": keySearch,
-        }),
-        url: '${service.newsApi}read',
-        urlGallery: '${service.newsGalleryApi}',
-      );
+      _loadNews();
     });
 
     await Future.delayed(Duration(milliseconds: 1000));
 
     _refreshController.loadComplete();
+  }
+
+  void _loadNews() {
+    news = NewsListVertical(
+      site: 'DDPM',
+      model: postDio('${newsApi}read', {
+        'skip': 0,
+        'limit': _limit,
+        'category': category ?? '',
+        'keySearch': keySearch ?? '',
+      }),
+      url: '${service.newsApi}read',
+      urlComment: '${service.newsCommentApi}read',
+      urlGallery: '${service.newsGalleryApi}',
+    );
   }
 
   void goBack() async {
@@ -78,8 +84,8 @@ class _NewsList extends State<NewsList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: header(context, goBack, title: 'ข่าวประกาศ'),
+      backgroundColor: AppColors.background,
+      appBar: header(context, goBack, title: widget.title ?? 'ข่าวประกาศ'),
       body: NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (OverscrollIndicatorNotification overScroll) {
           overScroll.disallowIndicator();
@@ -100,48 +106,28 @@ class _NewsList extends State<NewsList> {
             physics: ScrollPhysics(),
             shrinkWrap: true,
             children: [
-              SizedBox(height: 30),
+              const SizedBox(height: 18),
+              KeySearch(
+                show: hideSearch,
+                hintext: 'ค้นหาข่าวสาร',
+                onKeySearchChange: (String val) {
+                  setState(() {
+                    keySearch = val;
+                    _loadNews();
+                  });
+                },
+              ),
+              const SizedBox(height: 12),
               CategorySelector(
                 model: service.postCategory(
                   '${service.newsCategoryApi}read',
                   {'skip': 0, 'limit': 100, 'code': '20241028102515-482-400'},
                 ),
                 onChange: (String val) {
-                  setState(
-                    () {
-                      news = new NewsListVertical(
-                        site: 'DDPM',
-                        model: postDio('${newsApi}read', {
-                          'skip': 0,
-                          'limit': _limit,
-                          "keySearch": keySearch
-                        }),
-                        url: '${service.newsApi}read',
-                        urlGallery: '${service.newsGalleryApi}',
-                      );
-                    },
-                  );
-                },
-              ),
-              const SizedBox(height: 5),
-              KeySearch(
-                show: hideSearch,
-                onKeySearchChange: (String val) {
-                  setState(
-                    () {
-                      keySearch = val;
-                      news = new NewsListVertical(
-                        site: 'DDPM',
-                        model: postDio('${newsApi}read', {
-                          'skip': 0,
-                          'limit': _limit,
-                          "keySearch": keySearch,
-                        }),
-                        url: '${service.newsApi}read',
-                        urlGallery: '${service.newsGalleryApi}',
-                      );
-                    },
-                  );
+                  setState(() {
+                    category = val;
+                    _loadNews();
+                  });
                 },
               ),
               SizedBox(height: 10),

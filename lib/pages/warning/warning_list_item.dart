@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../component/blurred_network_image.dart';
 import '../../shared/extension.dart';
 import 'warning_form.dart';
 
@@ -125,9 +126,10 @@ warningList(BuildContext context, Future<dynamic> model, String title) {
                                     ],
                                   ),
                                 ),
-                                Image.network(
-                                  '${snapshot.data[index]['imageUrl']}',
-                                  fit: BoxFit.cover,
+                                BlurredNetworkImage(
+                                  imageUrl:
+                                      '${snapshot.data[index]['imageUrl'] ?? ''}',
+                                  width: double.infinity,
                                 ),
                                 Container(
                                   height: 50,

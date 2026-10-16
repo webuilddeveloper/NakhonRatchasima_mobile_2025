@@ -1,9 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ratchasima/component/header.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../component/blurred_network_image.dart';
 import '../../shared/api_provider.dart';
 
 class RenewLicensePayment extends StatefulWidget {
@@ -67,7 +69,7 @@ class _RenewLicensePayment extends State<RenewLicensePayment> {
                   fontFamily: 'Kanit',
                   fontWeight: FontWeight.normal,
                   decoration: TextDecoration.underline,
-                  color: Color(0xFF213F91),
+                  color: Color(0xFFC9166D),
                 ),
               ),
             ),
@@ -95,7 +97,7 @@ class _RenewLicensePayment extends State<RenewLicensePayment> {
                   'ชำระค่าธรรมเนียม',
                   style: TextStyle(
                     fontSize: 20.0,
-                    color: Color(0xFF213F91),
+                    color: Color(0xFFC9166D),
                     fontFamily: 'Kanit',
                     fontWeight: FontWeight.bold,
                   ),
@@ -207,7 +209,7 @@ class _RenewLicensePayment extends State<RenewLicensePayment> {
                         child: const Icon(
                           Icons.upload_file,
                           size: 50,
-                          color: Color(0xFF0C387D),
+                          color: Color(0xFFC9166D),
                         ),
                       ),
                     ),
@@ -229,11 +231,10 @@ class _RenewLicensePayment extends State<RenewLicensePayment> {
                 const SizedBox(height: 20),
                 widget.model['imageUrlPayment'] != '' &&
                         widget.model['imageUrlPayment'] != null
-                    ? Image.network(
-                        widget.model['imageUrlPayment'],
+                    ? BlurredNetworkImage(
+                        imageUrl: '${widget.model['imageUrlPayment'] ?? ''}',
                         width: 150,
                         height: 150,
-                        fit: BoxFit.fill,
                       )
                     : Container(),
                 const SizedBox(height: 20),
@@ -409,7 +410,7 @@ class _RenewLicensePayment extends State<RenewLicensePayment> {
                   style: TextStyle(
                     fontSize: 15,
                     fontFamily: 'Kanit',
-                    color: Color(0xFF0C387D),
+                    color: Color(0xFFC9166D),
                     fontWeight: FontWeight.normal,
                   ),
                 ),
@@ -442,58 +443,7 @@ class _RenewLicensePayment extends State<RenewLicensePayment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        // forceMaterialTransparency: true,
-        elevation: 0,
-        backgroundColor: const Color(0xFFF3F5F5),
-        titleSpacing: 5,
-        automaticallyImplyLeading: false,
-        flexibleSpace: Container(
-          width: double.infinity,
-          padding: EdgeInsets.only(
-            top: MediaQuery.of(context).padding.top + 20,
-            left: 15,
-            right: 15,
-          ),
-          child: Row(
-            children: [
-              InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  // alignment: Alignment.center,
-                  width: 35,
-                  decoration: BoxDecoration(
-                    color: const Color(0XFF213F91),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: const Center(
-                    child: Icon(
-                      Icons.arrow_back_ios_new,
-                      size: 20,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 10),
-              const Expanded(
-                child: Text(
-                  '',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: 'Kanit',
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+      appBar: header(context, goBack),
       backgroundColor: const Color(0xFFF3F5F5),
       body: Container(
         child: ListView(

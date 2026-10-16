@@ -68,7 +68,7 @@
 //       appBar: header(context, () {
 //         Navigator.pop(context, false);
 //       }, title: 'เพิ่มข้อมูลบัตรประชาชน'),
-//       backgroundColor: Color(0xFFF5F8FB),
+//       backgroundColor: Color(0xFFFFFBF7),
 //       body: InkWell(
 //         splashColor: Colors.transparent,
 //         highlightColor: Colors.transparent,
@@ -207,7 +207,7 @@
 //               alignment: Alignment.center,
 //               decoration: BoxDecoration(
 //                 borderRadius: BorderRadius.circular(10),
-//                 color: Color(0xFF9C0000),
+//                 color: Color(0xFFC9166D),
 //               ),
 //               child: Text(
 //                 'ตรวจสอบ',
@@ -319,7 +319,7 @@
 //                             style: TextStyle(
 //                               fontFamily: 'Sarabun',
 //                               fontSize: 15,
-//                               color: Color(0xFF9C0000),
+//                               color: Color(0xFFC9166D),
 //                             ),
 //                           ),
 //                         ),
@@ -481,7 +481,7 @@
 //                                 style: TextStyle(
 //                                   fontFamily: 'Sarabun',
 //                                   fontSize: 15,
-//                                   color: Color(0xFF9C0000),
+//                                   color: Color(0xFFC9166D),
 //                                 ),
 //                               ),
 //                             ),
@@ -582,7 +582,7 @@
 //                                 style: TextStyle(
 //                                   fontFamily: 'Sarabun',
 //                                   fontSize: 15,
-//                                   color: Color(0xFF9C0000),
+//                                   color: Color(0xFFC9166D),
 //                                 ),
 //                               ),
 //                             ),
@@ -607,19 +607,19 @@
 //           containerHeight: 210.0,
 //           itemStyle: TextStyle(
 //             fontSize: 16.0,
-//             color: Color(0xFF9A1120),
+//             color: Color(0xFFC9166D),
 //             fontWeight: FontWeight.normal,
 //             fontFamily: 'Sarabun',
 //           ),
 //           doneStyle: TextStyle(
 //             fontSize: 16.0,
-//             color: Color(0xFF9A1120),
+//             color: Color(0xFFC9166D),
 //             fontWeight: FontWeight.normal,
 //             fontFamily: 'Sarabun',
 //           ),
 //           cancelStyle: TextStyle(
 //             fontSize: 16.0,
-//             color: Color(0xFF9A1120),
+//             color: Color(0xFFC9166D),
 //             fontWeight: FontWeight.normal,
 //             fontFamily: 'Sarabun',
 //           ),

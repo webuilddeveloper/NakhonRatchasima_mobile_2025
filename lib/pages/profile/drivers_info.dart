@@ -65,7 +65,7 @@ class _DriversInfoPageState extends State<DriversInfo> {
           );
         },
       ),
-      backgroundColor: Color(0xFFF5F8FB),
+      backgroundColor: Color(0xFFFFFBF7),
       body: InkWell(
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
@@ -280,8 +280,8 @@ class _DriversInfoPageState extends State<DriversInfo> {
                                               ]
                                             : [
                                                 Color(0xFFF1E8F8),
-                                                Color(0xFFF9E6BA),
-                                                Color(0xFFF9E6BA),
+                                                Color(0xFFFFE3F0),
+                                                Color(0xFFFFE3F0),
                                                 Color(0xFFFFFFFF),
                                                 Color(0xFFF1E8F8),
                                               ],
@@ -475,7 +475,7 @@ class _DriversInfoPageState extends State<DriversInfo> {
                                     height: 25,
                                     padding: EdgeInsets.all(5),
                                     decoration: BoxDecoration(
-                                      color: Color(0xFFEBC22B),
+                                      color: Color(0xFFF670C3),
                                       borderRadius: BorderRadius.circular(5),
                                     ),
                                     child: Text(
@@ -495,7 +495,7 @@ class _DriversInfoPageState extends State<DriversInfo> {
                               height: 25,
                               padding: EdgeInsets.all(5),
                               decoration: BoxDecoration(
-                                color: Color(0xFF6F267B),
+                                color: Color(0xFFC9166D),
                                 borderRadius: BorderRadius.circular(5),
                               ),
                               child: Text(
@@ -613,7 +613,7 @@ class _DriversInfoPageState extends State<DriversInfo> {
                     height: 60,
                     padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: Color(0xFF6F267B),
+                      color: Color(0xFFC9166D),
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(15),
                         topRight: Radius.circular(15),

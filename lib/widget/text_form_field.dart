@@ -45,14 +45,14 @@ textFormFieldPasswordOldNew(
   return TextFormField(
     obscureText: isPassword,
     style: TextStyle(
-      color: enabled ? Color(0xFF000070) : Color(0xFFFFFFFF),
+      color: enabled ? Color(0xFFC9166D) : Color(0xFFFFFFFF),
       fontWeight: FontWeight.normal,
       fontFamily: 'Sarabun',
       fontSize: 15.00,
     ),
     decoration: InputDecoration(
       filled: true,
-      fillColor: enabled ? Color(0xFFC5DAFC) : Color(0xFF707070),
+      fillColor: enabled ? Color(0xFFFFE3F0) : Color(0xFF707070),
       contentPadding: EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
       hintText: hintText,
       border: OutlineInputBorder(
@@ -144,18 +144,18 @@ textFormField(
   return TextField(
     obscureText: isPassword!,
     style: TextStyle(
-      color: enabled! ? Color(0XFFfad84c) : const Color(0xFFFFFFFF),
+      color: enabled! ? Color(0xFFC9166D) : const Color(0xFFFFFFFF),
       fontWeight: FontWeight.normal,
       fontFamily: 'Kanit',
       fontSize: 15.00,
     ),
     decoration: InputDecoration(
       filled: true,
-      fillColor: enabled ? const Color(0xFFfffadd) : const Color(0xFFbfbfbf),
+      fillColor: enabled ? const Color(0xFFFFE3F0) : const Color(0xFFbfbfbf),
       contentPadding: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
       hintText: hintText,
       // focusedBorder: UnderlineInputBorder(
-      //   borderSide: BorderSide(color: Colors.amber, width: 0.5),
+      //   borderSide: BorderSide(color: Color(0xFFC9166D), width: 0.5),
       // ),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10.0),
@@ -212,7 +212,7 @@ textFormFieldNoValidator(
     ),
     decoration: InputDecoration(
       filled: true,
-      fillColor: enabled ? const Color(0xFFfffadd) : const Color(0xFFbfbfbf),
+      fillColor: enabled ? const Color(0xFFFFE3F0) : const Color(0xFFbfbfbf),
       contentPadding: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
       hintText: hintText,
       border: OutlineInputBorder(
@@ -251,14 +251,14 @@ textFormPhoneField(
   return TextFormField(
     keyboardType: TextInputType.number,
     style: TextStyle(
-      color: enabled ? Color(0XFFfad84c) : const Color(0xFFFFFFFF),
+      color: enabled ? Color(0xFFC9166D) : const Color(0xFFFFFFFF),
       fontWeight: FontWeight.normal,
       fontFamily: 'Sarabun',
       fontSize: 15.00,
     ),
     decoration: InputDecoration(
       filled: true,
-      fillColor: enabled ? const Color(0xFFfffadd) : const Color(0xFF707070),
+      fillColor: enabled ? const Color(0xFFFFE3F0) : const Color(0xFF707070),
       contentPadding: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
       hintText: hintText,
       border: OutlineInputBorder(
@@ -297,14 +297,14 @@ textFormIdCardField(
   return TextFormField(
     keyboardType: TextInputType.number,
     style: TextStyle(
-      color: enabled! ? const Color(0xFF000070) : const Color(0xFFFFFFFF),
+      color: enabled! ? const Color(0xFFC9166D) : const Color(0xFFFFFFFF),
       fontWeight: FontWeight.normal,
       fontFamily: 'Sarabun',
       fontSize: 15.00,
     ),
     decoration: InputDecoration(
       filled: true,
-      fillColor: enabled ? const Color(0xFFfffadd) : const Color(0xFF707070),
+      fillColor: enabled ? const Color(0xFFFFE3F0) : const Color(0xFF707070),
       contentPadding: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
       hintText: hintText,
       border: OutlineInputBorder(
@@ -362,7 +362,7 @@ textFormFieldEdit(
   return TextFormField(
     obscureText: isPassword!,
     style: TextStyle(
-      color: enabled! ? Color(0xFF1B6CA8) : Color(0xFFFFFFFF),
+      color: enabled! ? Color(0xFFF670C3) : Color(0xFFFFFFFF),
       fontWeight: FontWeight.normal,
       fontFamily: 'Kanit',
       fontSize: 15.00,
@@ -451,7 +451,7 @@ textFormPhoneFieldEdit(
   return TextFormField(
     keyboardType: TextInputType.number,
     style: TextStyle(
-      color: enabled! ? const Color(0xFF1B6CA8) : const Color(0xFFFFFFFF),
+      color: enabled! ? const Color(0xFFF670C3) : const Color(0xFFFFFFFF),
       fontWeight: FontWeight.normal,
       fontFamily: 'Kanit',
       fontSize: 15.00,
@@ -494,14 +494,14 @@ textFormLicenseField(
   return TextFormField(
     keyboardType: TextInputType.number,
     style: TextStyle(
-      color: enabled! ? const Color(0xFF000070) : const Color(0xFFFFFFFF),
+      color: enabled! ? const Color(0xFFC9166D) : const Color(0xFFFFFFFF),
       fontWeight: FontWeight.normal,
       fontFamily: 'Kanit',
       fontSize: 15.00,
     ),
     decoration: InputDecoration(
       filled: true,
-      fillColor: enabled ? const Color(0xFFfffadd) : const Color(0xFF707070),
+      fillColor: enabled ? const Color(0xFFFFE3F0) : const Color(0xFF707070),
       contentPadding: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
       hintText: hintText,
       border: OutlineInputBorder(
@@ -543,7 +543,7 @@ textFormLicenseFieldEdit(
   return TextFormField(
     // keyboardType: TextInputType.number,
     style: TextStyle(
-      color: enabled! ? const Color(0xFF1B6CA8) : const Color(0xFFFFFFFF),
+      color: enabled! ? const Color(0xFFF670C3) : const Color(0xFFFFFFFF),
       fontWeight: FontWeight.normal,
       fontFamily: 'Kanit',
       fontSize: 15.00,
@@ -590,7 +590,7 @@ textFormFieldIsEmptyEdit(
   return TextFormField(
     obscureText: isPassword!,
     style: TextStyle(
-      color: enabled! ? const Color(0xFF1B6CA8) : const Color(0xFFFFFFFF),
+      color: enabled! ? const Color(0xFFF670C3) : const Color(0xFFFFFFFF),
       fontWeight: FontWeight.normal,
       fontFamily: 'Kanit',
       fontSize: 15.00,
@@ -654,7 +654,7 @@ textFormIdCardFieldEdit(
   return TextFormField(
     keyboardType: TextInputType.number,
     style: TextStyle(
-      color: enabled! ? const Color(0xFF1B6CA8) : const Color(0xFFFFFFFF),
+      color: enabled! ? const Color(0xFFF670C3) : const Color(0xFFFFFFFF),
       fontWeight: FontWeight.normal,
       fontFamily: 'Kanit',
       fontSize: 15.00,

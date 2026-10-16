@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../blurred_network_image.dart';
+
 import 'list_content_horizontal_loading.dart';
 
 // ignore: must_be_immutable
@@ -51,7 +53,7 @@ class _ListContentKnowledgeHorizontal
               child: Text(
                 widget.title!,
                 style: TextStyle(
-                  color: Color(0xFF000070),
+                  color: Color(0xFFC9166D),
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
                   fontFamily: 'Sarabun',
@@ -69,7 +71,7 @@ class _ListContentKnowledgeHorizontal
                 child: Text(
                   'ดูทั้งหมด',
                   style: TextStyle(
-                    color: Color(0xFFFFC324),
+                    color: Color(0xFFF670C3),
                     decoration: TextDecoration.underline,
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
@@ -137,29 +139,18 @@ myCard(String title, int index, int lastIndex, String url, dynamic model,
               : EdgeInsets.all(5),
       decoration: BoxDecoration(
           borderRadius: new BorderRadius.circular(5),
-          // color: Color(0xFF000070),
+          // color: Color(0xFFC9166D),
           color: Colors.transparent),
       width: 150,
       child: Stack(
         alignment: Alignment.topCenter,
         children: [
-          Container(
-            height: 150,
-            decoration: BoxDecoration(
-              borderRadius: new BorderRadius.circular(8.0),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 0,
-                  blurRadius: 7,
-                  offset: Offset(0, 3), // changes position of shadow
-                ),
-              ],
-              color: Colors.transparent,
-              image: DecorationImage(
-                fit: BoxFit.fill,
-                image: NetworkImage(model['imageUrl']),
-              ),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8.0),
+            child: BlurredNetworkImage(
+              imageUrl: '${model['imageUrl'] ?? ''}',
+              width: double.infinity,
+              height: 150,
             ),
           ),
           Container(

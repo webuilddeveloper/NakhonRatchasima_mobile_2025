@@ -21,7 +21,7 @@ datePicker(
           style: const TextStyle(
             fontSize: 15.000,
             fontFamily: 'Sarabun',
-            color: Color(0xFFFF7514),
+            color: Color(0xFFF670C3),
           ),
         ),
         SizedBox(
@@ -29,14 +29,14 @@ datePicker(
           child: TextField(
             controller: controller,
             style: const TextStyle(
-              color: Color(0xFF000070),
+              color: Color(0xFFC9166D),
               fontWeight: FontWeight.normal,
               fontFamily: 'Sarabun',
               fontSize: 15.0,
             ),
             decoration: InputDecoration(
               filled: true,
-              fillColor: const Color(0xFFfffadd),
+              fillColor: const Color(0xFFFFE3F0),
               contentPadding: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
               hintText: "วันเดือนปีเกิด",
               border: OutlineInputBorder(
@@ -63,19 +63,19 @@ dialogOpenPickerDate(BuildContext context, TextEditingController controller) {
         containerHeight: 210.0,
         itemStyle: TextStyle(
           fontSize: 16.0,
-          color: Color(0xFF005C9E),
+          color: Color(0xFFC9166D),
           fontWeight: FontWeight.normal,
           fontFamily: 'Sarabun',
         ),
         doneStyle: TextStyle(
           fontSize: 16.0,
-          color: Color(0xFF005C9E),
+          color: Color(0xFFC9166D),
           fontWeight: FontWeight.normal,
           fontFamily: 'Sarabun',
         ),
         cancelStyle: TextStyle(
           fontSize: 16.0,
-          color: Color(0xFF005C9E),
+          color: Color(0xFFC9166D),
           fontWeight: FontWeight.normal,
           fontFamily: 'Sarabun',
         ),

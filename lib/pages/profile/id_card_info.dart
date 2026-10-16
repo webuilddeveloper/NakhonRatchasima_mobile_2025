@@ -113,7 +113,7 @@
 //           Container(
 //             height: 35,
 //             width: double.infinity,
-//             color: Color(0xFFEDF0F3),
+//             color: Color(0xFFFFF3F8),
 //             padding: EdgeInsets.symmetric(horizontal: 10),
 //             child: Row(
 //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -175,7 +175,7 @@
 //     String value = '',
 //   }) {
 //     return Container(
-//       color: Color(0xFFF5F8FB),
+//       color: Color(0xFFFFFBF7),
 //       height: 35,
 //       padding: EdgeInsets.symmetric(horizontal: 10),
 //       margin: EdgeInsets.only(bottom: 1),

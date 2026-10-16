@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'component/carousel_rotation.dart';
+import 'component/korat_ui.dart';
 import 'login.dart';
 import 'pages/about_us/about_us_form_bk.dart';
 import 'pages/blank_page/blank_loading.dart';
@@ -98,8 +99,8 @@ class _HomePageV2State extends State<HomePageV2> {
       // decoration: BoxDecoration(
       //   gradient: LinearGradient(
       //     colors: [
-      //       Color(0xFFFF7900),
-      //       Color(0xFFFF7900),
+      //       Color(0xFFF670C3),
+      //       Color(0xFFF670C3),
       //       Color(0xFFFFFFFF),
       //     ],
       //     begin: Alignment.topCenter,
@@ -223,110 +224,40 @@ class _HomePageV2State extends State<HomePageV2> {
   }
 
   _buildHeader() {
-    return PreferredSize(
-      preferredSize: Size.fromHeight(40 + MediaQuery.of(context).padding.top),
-      child: AppBar(
-        flexibleSpace: Container(
-          width: double.infinity,
-          // height: double.infinity,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/bg_header.png'),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              const SizedBox(
-                height: 10,
+    return KoratAppBar(
+      title: 'Korat Connect',
+      actions: [
+        KoratAppBarAction(
+          tooltip: 'แจ้งเตือน',
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => NotificationList(
+                  title: 'แจ้งเตือน',
+                ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.all(5),
-                      alignment: Alignment.centerLeft,
-                      height: 60,
-                      child: Image.asset(
-                        'assets/logo/bg_headlogo.png',
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => NotificationList(
-                            title: 'แจ้งเตือน',
-                          ),
-                        ),
-                      );
-                    },
-                    child: SizedBox(
-                      height: 30,
-                      child: Image.asset('assets/icons/bell.png'),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  InkWell(
-                    onTap: () async {
-                      final msg = await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => UserInformationPage(),
-                        ),
-                      );
-
-                      if (!msg) {
-                        _read();
-                      }
-                    },
-                    child: FutureBuilder<dynamic>(
-                      future: _futureProfile,
-                      builder: (BuildContext context,
-                          AsyncSnapshot<dynamic> snapshot) {
-                        if (snapshot.hasData) {
-                          if (profileCode == snapshot.data['code']) {
-                            return Container(
-                              height: 50,
-                              padding: const EdgeInsets.only(right: 10),
-                              child: checkAvatar(
-                                  context, '${snapshot.data['imageUrl']}'),
-                            );
-                          } else {
-                            return SizedBox(
-                              height: 30,
-                              child: Image.asset(
-                                'assets/images/user_not_found.png',
-                                color: Colors.white,
-                              ),
-                            );
-                          }
-                        } else if (snapshot.hasError) {
-                          return BlankLoading();
-                        } else {
-                          return SizedBox(
-                            height: 30,
-                            child: Image.asset(
-                              'assets/images/user_not_found.png',
-                              color: Colors.white,
-                            ),
-                          );
-                        }
-                      },
-                    ),
-                  )
-                ],
-              )
-            ],
-          ),
+            );
+          },
+          icon: Icons.notifications_outlined,
         ),
-      ),
+        KoratAppBarAction(
+          tooltip: 'โปรไฟล์',
+          onPressed: () async {
+            final msg = await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => UserInformationPage(),
+              ),
+            );
+
+            if (!msg) {
+              _read();
+            }
+          },
+          icon: Icons.person_outline_rounded,
+        ),
+      ],
     );
   }
 
@@ -414,7 +345,7 @@ class _HomePageV2State extends State<HomePageV2> {
                           TextSpan(
                             text: 'ยื่นอุทธรณ์',
                             style: TextStyle(
-                              color: Color(0xFF4E2B68),
+                              color: Color(0xFFC9166D),
                               fontSize: 20.0,
                               fontFamily: 'Sarabun',
                               fontWeight: FontWeight.bold,
@@ -423,7 +354,7 @@ class _HomePageV2State extends State<HomePageV2> {
                               TextSpan(
                                 text: '(Dispute)',
                                 style: TextStyle(
-                                  color: Color(0xFF4E2B68),
+                                  color: Color(0xFFC9166D),
                                   fontSize: 13.0,
                                   fontFamily: 'Sarabun',
                                 ),
@@ -435,7 +366,7 @@ class _HomePageV2State extends State<HomePageV2> {
                         Text(
                           'กรมการขนส่งทางบกอำนวยความสะดวกให้ท่าน',
                           style: TextStyle(
-                            color: Color(0xFF4E2B68),
+                            color: Color(0xFFC9166D),
                             fontSize: 13.0,
                             fontFamily: 'Sarabun',
                           ),
@@ -495,7 +426,7 @@ class _HomePageV2State extends State<HomePageV2> {
               linearGradient: const LinearGradient(
                 colors: [
                   Color(0xFF7847AB),
-                  Color(0xFF4E2B68),
+                  Color(0xFFC9166D),
                 ],
                 begin: Alignment.centerRight,
                 end: Alignment.centerLeft,
@@ -622,7 +553,7 @@ class _HomePageV2State extends State<HomePageV2> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
-          // color: Color(0xFF000070),
+          // color: Color(0xFFC9166D),
           // padding: EdgeInsets.symmetric(horizontal: 5),
           alignment: Alignment.center,
           padding: const EdgeInsets.only(left: 10),
@@ -641,7 +572,7 @@ class _HomePageV2State extends State<HomePageV2> {
           ),
         ),
         Container(
-          // color: Color(0xFF000070),
+          // color: Color(0xFFC9166D),
           // padding: EdgeInsets.symmetric(horizontal: 5),
           alignment: Alignment.center,
           padding: const EdgeInsets.only(right: 10),
@@ -650,13 +581,13 @@ class _HomePageV2State extends State<HomePageV2> {
             children: [
               Icon(
                 Icons.pin_drop,
-                color: Colors.orange[400],
+                color: Color(0xFFF670C3),
               ),
               Text(
                 // ' ' + currentLocation,
                 'กรุงเทพมหานคร',
                 style: TextStyle(
-                  fontFamily: 'Sarabun', color: Colors.orange[400],
+                  fontFamily: 'Sarabun', color: Color(0xFFF670C3),
                   // fontSize: 10,
                   // color: Colors.white,
                 ),
@@ -866,7 +797,7 @@ class _HomePageV2State extends State<HomePageV2> {
   //     decoration: BoxDecoration(
   //       gradient: LinearGradient(
   //         colors: [
-  //           Color(0xFFFF7514),
+  //           Color(0xFFF670C3),
   //           Color(0xFFF7E834),
   //         ],
   //         begin: Alignment.topLeft,

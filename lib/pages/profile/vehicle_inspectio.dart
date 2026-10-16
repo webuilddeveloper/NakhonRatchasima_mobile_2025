@@ -60,7 +60,7 @@ class _VehicleInspectioPageState extends State<VehicleInspectio> {
           );
         },
       ),
-      backgroundColor: Color(0xFFF5F8FB),
+      backgroundColor: Color(0xFFFFFBF7),
       body: InkWell(
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
@@ -160,7 +160,7 @@ class _VehicleInspectioPageState extends State<VehicleInspectio> {
               //               child: Material(
               //                 elevation: 2.0,
               //                 borderRadius: BorderRadius.circular(5.0),
-              //                 color: Color(0xFFEBC22B),
+              //                 color: Color(0xFFF670C3),
               //                 child: MaterialButton(
               //                   // minWidth: MediaQuery.of(context).size.width,
               //                   onPressed: () {},
@@ -168,7 +168,7 @@ class _VehicleInspectioPageState extends State<VehicleInspectio> {
               //                     'ชำระเงินภาษี',
               //                     style: new TextStyle(
               //                       fontSize: 13.0,
-              //                       color: Color(0xFF4E2B68),
+              //                       color: Color(0xFFC9166D),
               //                       fontWeight: FontWeight.normal,
               //                       fontFamily: 'Sarabun',
               //                     ),

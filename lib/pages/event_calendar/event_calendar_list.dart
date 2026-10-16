@@ -7,6 +7,7 @@ import 'package:ratchasima/component/key_search.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../component/header.dart';
+import '../../apptheme.dart';
 import '../../shared/api_provider.dart';
 import 'event_calendar_list_vertical.dart';
 
@@ -51,7 +52,7 @@ class _EventCalendarList extends State<EventCalendarList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.background,
       appBar: header(context, goBack, title: widget.title),
       body: NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (OverscrollIndicatorNotification overScroll) {
@@ -63,18 +64,19 @@ class _EventCalendarList extends State<EventCalendarList> {
           },
           child: Column(
             children: [
-              SizedBox(height: 5.0),
-              _buildCategory(),
-              SizedBox(height: 10.0),
+              const SizedBox(height: 12.0),
               KeySearch(
                 show: hideSearch,
+                hintext: 'ค้นหากิจกรรม',
                 onKeySearchChange: (String val) {
                   setState(() {
                     keySearch = val;
                   });
                 },
               ),
-              SizedBox(height: 10.0),
+              const SizedBox(height: 12.0),
+              _buildCategory(),
+              const SizedBox(height: 12.0),
               Expanded(
                 child: SmartRefresher(
                   enablePullDown: false,
@@ -112,25 +114,20 @@ class _EventCalendarList extends State<EventCalendarList> {
 
         if (snapshot.hasData) {
           return Container(
-            height: 45.0,
-            padding: EdgeInsets.only(left: 5.0, right: 5.0),
-            margin: EdgeInsets.symmetric(horizontal: 10.0),
+            height: 48.0,
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            margin: const EdgeInsets.symmetric(horizontal: 16.0),
             decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 0,
-                  blurRadius: 7,
-                  offset: Offset(0, 3), // changes position of shadow
-                ),
-              ],
-              borderRadius: BorderRadius.circular(6.0),
-              color: Colors.white,
+              color: AppColors.surface,
+              border: Border.all(color: AppColors.border),
+              borderRadius: BorderRadius.circular(14.0),
             ),
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: snapshot.data.length,
               itemBuilder: (BuildContext context, int index) {
+                final tabWidth = (MediaQuery.of(context).size.width - 48) /
+                    snapshot.data.length;
                 return GestureDetector(
                   onTap: () {
                     if (snapshot.data[index]['code'] != '') {
@@ -151,25 +148,33 @@ class _EventCalendarList extends State<EventCalendarList> {
                       // selectedIndex = index;
                     });
                   },
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 5.0,
-                      vertical: 10.0,
-                    ),
-                    child: Text(
-                      snapshot.data[index]['title'],
-                      style: TextStyle(
+                  child: SizedBox(
+                    width: tabWidth,
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 2),
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
                         color: categorySelected == snapshot.data[index]['code']
-                            ? Colors.black
-                            : Colors.grey,
-                        decoration:
-                            categorySelected == snapshot.data[index]['code']
-                                ? TextDecoration.underline
-                                : null,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.normal,
-                        letterSpacing: 1.2,
-                        fontFamily: 'Kanit',
+                            ? AppColors.primarySoft
+                            : Colors.transparent,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Text(
+                        snapshot.data[index]['title'],
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: categorySelected == snapshot.data[index]['code']
+                              ? AppColors.primary
+                              : AppColors.textSecondary,
+                          fontSize: 14.0,
+                          fontWeight: categorySelected == snapshot.data[index]['code']
+                              ? FontWeight.w600
+                              : FontWeight.w400,
+                          fontFamily: 'Kanit',
+                        ),
                       ),
                     ),
                   ),
@@ -179,20 +184,12 @@ class _EventCalendarList extends State<EventCalendarList> {
           );
         } else {
           return Container(
-            height: 45.0,
-            padding: EdgeInsets.only(left: 5.0, right: 5.0),
-            margin: EdgeInsets.symmetric(horizontal: 10.0),
+            height: 48.0,
+            margin: const EdgeInsets.symmetric(horizontal: 16.0),
             decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 0,
-                  blurRadius: 7,
-                  offset: Offset(0, 3), // changes position of shadow
-                ),
-              ],
-              borderRadius: BorderRadius.circular(6.0),
-              color: Colors.white,
+              color: AppColors.surface,
+              border: Border.all(color: AppColors.border),
+              borderRadius: BorderRadius.circular(14.0),
             ),
           );
         }

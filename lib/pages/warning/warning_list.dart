@@ -88,7 +88,7 @@ class _WarningList extends State<WarningList> {
       backgroundColor: Colors.white,
       appBar: header(context, goBack, title: widget.title),
       // AppBar(
-      //   backgroundColor: Color(0xFF000070),
+      //   backgroundColor: Color(0xFFC9166D),
       //   elevation: 0.0,
       //   // leading: FlutterLogo(),
       //   leading: Container(
@@ -107,7 +107,7 @@ class _WarningList extends State<WarningList> {
       //         topLeft: const Radius.circular(5.0),
       //         topRight: const Radius.circular(5.0),
       //       ),
-      //       color: Color(0xFF000070),
+      //       color: Color(0xFFC9166D),
       //     ),
       //   ),
 
@@ -166,6 +166,7 @@ class _WarningList extends State<WarningList> {
               SizedBox(height: 5),
               KeySearch(
                 show: hideSearch,
+                hintext: 'ค้นหาประกาศเตือน',
                 onKeySearchChange: (String val) {
                   // warningList(context, service.post('${service.warningApi}read', {'skip': 0, 'limit': 100,"keySearch": val}),'');
                   setState(

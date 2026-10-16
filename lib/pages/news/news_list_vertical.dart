@@ -1,21 +1,20 @@
-import 'dart:convert';
-import 'dart:io';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:ratchasima/apptheme.dart';
 
+import '../../component/blurred_network_image.dart';
+import '../../shared/extension.dart';
 import '../blank_page/blank_loading.dart';
 import 'news_form.dart';
 
-class NewsListVertical extends StatefulWidget {
-  NewsListVertical({
-    super.key,
-    this.site,
-    this.model,
-    this.title,
-    this.url,
-    this.urlComment,
-    this.urlGallery,
-  });
+class NewsListVertical extends StatelessWidget {
+  const NewsListVertical(
+      {super.key,
+      this.site,
+      this.model,
+      this.title,
+      this.url,
+      this.urlComment,
+      this.urlGallery});
 
   final String? site;
   final Future<dynamic>? model;
@@ -25,200 +24,117 @@ class NewsListVertical extends StatefulWidget {
   final String? urlGallery;
 
   @override
-  _NewsListVertical createState() => _NewsListVertical();
-}
-
-class _NewsListVertical extends State<NewsListVertical> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  final List<String> items =
-      List<String>.generate(10, (index) => "Item: ${++index}");
-
-  checkImageAvatar(String img) {
-    return CircleAvatar(
-      backgroundColor: Colors.white,
-      backgroundImage: NetworkImage(
-        img,
-      ),
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
     return FutureBuilder<dynamic>(
-      future: widget.model,
-      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        if (snapshot.hasData) {
-          if (snapshot.data.length == 0) {
-            return Container(
-              alignment: Alignment.center,
-              height: 200,
-              child: const Text(
-                'ไม่พบข้อมูล',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontFamily: 'Sarabun',
-                  color: Color.fromRGBO(0, 0, 0, 0.6),
-                ),
-              ),
-            );
-          } else {
-            print('1');
-            return Container(
-              color: Colors.transparent,
-              alignment: Alignment.center,
-              padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-              child: ListView.builder(
-                physics: const ScrollPhysics(),
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                itemCount: snapshot.data.length,
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => NewsForm(
-                            url: widget.url,
-                            code: snapshot.data[index]['code'],
-                            model: snapshot.data[index],
-                            urlComment: widget.urlComment,
-                            urlGallery: widget.urlGallery,
-                          ),
-                        ),
-                      );
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Column(
-                          children: [
-                            SizedBox(height: 10),
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.3),
-                                    spreadRadius: 0,
-                                    blurRadius: 7,
-                                    offset: const Offset(
-                                        1, 2), // changes position of shadow
-                                  ),
-                                ],
-                              ),
-                              margin: const EdgeInsets.only(bottom: 5.0),
-                              // height: 334,
-                              width: 600,
-                              child: Column(
-                                children: [
-                                  Container(
-                                    constraints: const BoxConstraints(
-                                      minHeight: 200,
-                                      maxHeight: 200,
-                                      minWidth: double.infinity,
-                                    ),
-                                    child:
-                                        snapshot.data[index]['imageUrl'] != null
-                                            ? Image.network(
-                                                '${snapshot.data[index]['imageUrl']}',
-                                                fit: BoxFit.cover,
-                                              )
-                                            : BlankLoading(
-                                                height: 200,
-                                              ),
-                                  ),
-                                  Container(
-                                    height: 60,
-                                    decoration: const BoxDecoration(
-                                      borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(5.0),
-                                        bottomRight: Radius.circular(5.0),
-                                      ),
-                                      color: Color(0xFFFFFFFF),
-                                    ),
-                                    padding: const EdgeInsets.all(5.0),
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      '${snapshot.data[index]['title']}',
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(
-                                        fontFamily: 'Sarabun',
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(height: 10),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            );
-          }
-        } else {
-          // print('2');
-          // print(snapshot.data);
-          return Container();
+      future: model,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Padding(
+              padding: EdgeInsets.all(32),
+              child: Center(child: CircularProgressIndicator()));
         }
+        if (snapshot.hasError || !snapshot.hasData || snapshot.data.isEmpty) {
+          return const Padding(
+              padding: EdgeInsets.symmetric(vertical: 48),
+              child: Center(
+                  child: Text('ไม่พบข่าวสาร',
+                      style: TextStyle(
+                          color: AppColors.textSecondary,
+                          fontFamily: 'Sarabun',
+                          fontSize: 15))));
+        }
+
+        final news = snapshot.data as List;
+        return ListView.separated(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 28),
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: news.length,
+          separatorBuilder: (_, __) => const SizedBox(height: 14),
+          itemBuilder: (context, index) {
+            final item = news[index];
+            return _NewsCard(
+              item: item,
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => NewsForm(
+                          url: url,
+                          code: item['code'],
+                          model: item,
+                          urlComment: urlComment,
+                          urlGallery: urlGallery))),
+            );
+          },
+        );
       },
     );
   }
+}
 
-  Future<dynamic> downloadData() async {
-    var body = json.encode({
-      "permission": "all",
-      "skip": 0,
-      "limit": 10 // integer value type
-    });
-    var response = await http.post(Uri.parse(''), body: body, headers: {
-      "Accept": "application/json",
-      "Content-Type": "application/json"
-    });
+class _NewsCard extends StatelessWidget {
+  const _NewsCard({required this.item, required this.onTap});
 
-    var data = json.decode(response.body);
+  final dynamic item;
+  final VoidCallback onTap;
 
-    return Future.value(data['objectData']);
-  }
-
-  Future<dynamic> postData() async {
-    var body = json.encode({
-      "permission": "all",
-      "skip": 0,
-      "limit": 2 // integer value type
-    });
-
-    var client = new http.Client();
-    client.post(
-        Uri.parse("http://hwpolice.we-builds.com/hwpolice-api/privilege/read"),
-        body: body,
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json"
-        }).then((response) {
-      client.close();
-      var data = json.decode(response.body);
-
-      if (data.length > 0) {
-        sleep(const Duration(seconds: 10));
-        setState(() {
-          Future.value(data['objectData']);
-        });
-      } else {}
-    }).catchError((onError) {
-      client.close();
-    });
+  @override
+  Widget build(BuildContext context) {
+    final imageUrl = item['imageUrl']?.toString() ?? '';
+    final date = item['createDate']?.toString();
+    return Material(
+      color: AppColors.surface,
+      borderRadius: BorderRadius.circular(18),
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: onTap,
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          SizedBox(
+            height: 178,
+            width: double.infinity,
+            child: BlurredNetworkImage(
+              imageUrl: imageUrl,
+              height: 178,
+              width: double.infinity,
+              placeholder: BlankLoading(height: 178),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(14, 12, 14, 14),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(item['title']?.toString() ?? 'ข่าวประชาสัมพันธ์',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                      color: AppColors.textPrimary,
+                      fontFamily: 'Kanit',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      height: 1.25)),
+              const SizedBox(height: 9),
+              Row(children: [
+                const Icon(Icons.calendar_today_outlined,
+                    color: AppColors.primary, size: 14),
+                const SizedBox(width: 5),
+                Expanded(
+                    child: Text(
+                        date == null || date.isEmpty
+                            ? 'ข่าวประชาสัมพันธ์จากจังหวัดนครราชสีมา'
+                            : dateStringToDate(date),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                            color: AppColors.textSecondary,
+                            fontFamily: 'Sarabun',
+                            fontSize: 11))),
+                const Icon(Icons.chevron_right_rounded,
+                    color: AppColors.primary, size: 22),
+              ]),
+            ]),
+          ),
+        ]),
+      ),
+    );
   }
 }

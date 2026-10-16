@@ -7,6 +7,7 @@ import '../shared/api_provider.dart';
 import '../shared/extension.dart';
 import 'gallery_view.dart';
 import 'link_url_out.dart';
+import 'link_url_in.dart';
 
 // ignore: must_be_immutable
 class Content extends StatefulWidget {
@@ -288,11 +289,8 @@ class ContentState extends State<Content> {
         Container(
           height: 10,
         ),
-        model['linkUrl'] != '' ? linkButton(model) : Container(),
-        Container(
-          height: 10,
-        ),
-        model['fileUrl'] != '' ? fileUrl(model) : Container(),
+        if (_hasUrl(model['fileUrl']) || _hasUrl(model['linkUrl']))
+          actionButton(model),
       ],
     );
   }
@@ -317,7 +315,7 @@ class ContentState extends State<Content> {
           child: MaterialButton(
             minWidth: MediaQuery.of(context).size.width,
             onPressed: () {
-              launchURL('${model['linkUrl']}');
+              launchInWebViewWithJavaScript('${model['linkUrl']}');
             },
             child: Text(
               '${model['textButton']}',
@@ -355,5 +353,14 @@ class ContentState extends State<Content> {
         ),
       ),
     );
+  }
+
+  bool _hasUrl(dynamic value) => value != null && value.toString().trim().isNotEmpty;
+
+  Widget actionButton(dynamic model) {
+    if (_hasUrl(model['fileUrl'])) {
+      return fileUrl(model);
+    }
+    return linkButton(model);
   }
 }

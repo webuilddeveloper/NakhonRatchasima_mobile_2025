@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+import '../../component/blurred_network_image.dart';
 import 'contact_list.dart';
 
 class ContactListCategoryVertical extends StatefulWidget {
@@ -106,21 +107,15 @@ class _ContactListCategoryVertical extends State<ContactListCategoryVertical> {
                                   children: [
                                     Row(
                                       children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            image: DecorationImage(
-                                              image: NetworkImage(
-                                                  '${snapshot.data[index]['imageUrl']}'),
-                                              fit: BoxFit.cover,
-                                            ),
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          child: BlurredNetworkImage(
+                                            imageUrl:
+                                                '${snapshot.data[index]['imageUrl'] ?? ''}',
+                                            width: 60.0,
+                                            height: 60.0,
                                           ),
-                                          // color: Color(0xFF000070),
-                                          alignment: Alignment.centerLeft,
-                                          width: 60.0,
-                                          height: 60.0,
-                                          padding: EdgeInsets.all(5),
                                         ),
                                         Container(
                                           width: MediaQuery.of(context)

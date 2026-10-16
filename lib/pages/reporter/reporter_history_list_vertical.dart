@@ -163,7 +163,7 @@ class _ReporterHistoryListVertical extends State<ReporterHistoryListVertical> {
                                 fontSize: 10.0,
                                 fontWeight: FontWeight.normal,
                                 color: snapshot.data[index]['status2'] == "N"
-                                    ? Color(0xFF005C9E)
+                                    ? Color(0xFFC9166D)
                                     : snapshot.data[index]['status2'] == "A"
                                         ? Color(0xFFFF8900)
                                         : snapshot.data[index]['status2'] == "C"

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../../component/blurred_network_image.dart';
+
 class ComplainFollowDetail extends StatefulWidget {
   final item;
   const ComplainFollowDetail({super.key, required this.item});
@@ -18,7 +20,7 @@ class _ComplainFollowDetailState extends State<ComplainFollowDetail> {
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFf6f8fc),
+      backgroundColor: const Color(0xFFFFFBF7),
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(
@@ -45,14 +47,14 @@ class _ComplainFollowDetailState extends State<ComplainFollowDetail> {
                       controller: _pageController,
                       itemCount: images.length,
                       itemBuilder: (context, index) {
-                        final imageUrl = images[index]['imgaeUrl'];
-                        return Image.network(
-                          imageUrl,
-                          fit: BoxFit.cover,
+                        final imageUrl = images[index]['imageUrl'] ??
+                            images[index]['imgaeUrl'] ??
+                            '';
+                        return BlurredNetworkImage(
+                          imageUrl: '$imageUrl',
                           width: double.infinity,
                           height: double.infinity,
-                          errorBuilder: (context, error, stackTrace) =>
-                              Container(
+                          placeholder: Container(
                             color: Colors.grey[200],
                             child: const Center(
                               child: Icon(
@@ -62,17 +64,6 @@ class _ComplainFollowDetailState extends State<ComplainFollowDetail> {
                               ),
                             ),
                           ),
-                          loadingBuilder: (context, child, loadingProgress) {
-                            if (loadingProgress == null) return child;
-                            return Container(
-                              color: Colors.grey[100],
-                              child: const Center(
-                                child: CircularProgressIndicator(
-                                  color: Color(0XFFe9ca61),
-                                ),
-                              ),
-                            );
-                          },
                         );
                       },
                     ),

@@ -5,16 +5,17 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     
     <application
-        android:label="marine_2025_mobile"
+        android:label="Korat Connect"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         
        
         <meta-data 
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyD-pkE26l2sWEU_CrbDz6b2myMe5Ab7jJo"/>
+            android:value="AIzaSyAZOIFK9_xBu4-ojMIDOb2SvUdAzGwTaMw"/>
             
         <activity
             android:name=".MainActivity"

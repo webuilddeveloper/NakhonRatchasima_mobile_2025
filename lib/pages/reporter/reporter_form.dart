@@ -7,6 +7,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../component/blurred_network_image.dart';
 import '../../shared/api_provider.dart';
 import '../../widget/header.dart';
 import '../../widget/text_form_field.dart';
@@ -150,7 +151,9 @@ class _ReporterFormPageState extends State<ReporterFormPage> {
 
   Future<dynamic> submitReporter() async {
     var value = await storage.read(key: 'dataUserLoginDDPM');
-    var user = json.decode(value!);
+    var user = value == null || value.isEmpty
+        ? <String, dynamic>{}
+        : json.decode(value);
 
     var data = {
       "title": txtTitle.text,
@@ -160,23 +163,23 @@ class _ReporterFormPageState extends State<ReporterFormPage> {
       "category": widget.code,
       "latitude": latitude.toString(),
       "longitude": longitude.toString(),
-      "createBy": user['username'],
-      "firstName": user['firstName'],
-      "lastName": user['lastName'],
-      "imageUrlCreateBy": user['imageUrl'],
+      "createBy": user['username'] ?? '',
+      "firstName": user['firstName'] ?? '',
+      "lastName": user['lastName'] ?? '',
+      "imageUrlCreateBy": user['imageUrl'] ?? '',
       "imageUrl": widget.imageUrl,
       "gallery": _itemImage,
-      "province": currentLocation,
-      "lv0": user['lv0'],
-      "lv1": user['lv1'],
-      "lv2": user['lv2'],
-      "lv3": user['lv3'],
-      "lv4": user['lv4'],
+      "province": currentLocation ?? '',
+      "lv0": user['lv0'] ?? '',
+      "lv1": user['lv1'] ?? '',
+      "lv2": user['lv2'] ?? '',
+      "lv3": user['lv3'] ?? '',
+      "lv4": user['lv4'] ?? '',
       "language": 'th',
       "platform": Platform.operatingSystem.toString(),
     };
 
-    final result = await postObjectData('m/Reporter/create', data);
+    final result = await postObjectData('/m/Reporter/create', data);
 
     if (result['status'] == 'S') {
       return showDialog(
@@ -206,7 +209,7 @@ class _ReporterFormPageState extends State<ReporterFormPage> {
                     style: const TextStyle(
                       fontSize: 13,
                       fontFamily: 'Sarabun',
-                      color: Color(0xFF005C9E),
+                      color: Color(0xFFC9166D),
                       fontWeight: FontWeight.normal,
                     ),
                   ),
@@ -239,7 +242,8 @@ class _ReporterFormPageState extends State<ReporterFormPage> {
                 ),
               ),
               content: new Text(
-                result['message'],
+                result['message']?.toString() ??
+                    'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้',
                 style: const TextStyle(
                   fontSize: 13,
                   fontFamily: 'Sarabun',
@@ -255,7 +259,7 @@ class _ReporterFormPageState extends State<ReporterFormPage> {
                     style: const TextStyle(
                       fontSize: 13,
                       fontFamily: 'Sarabun',
-                      color: Color(0xFF005C9E),
+                      color: Color(0xFFC9166D),
                       fontWeight: FontWeight.normal,
                     ),
                   ),
@@ -315,14 +319,14 @@ class _ReporterFormPageState extends State<ReporterFormPage> {
             ),
             TextFormField(
               style: const TextStyle(
-                color: Color(0xFF000070),
+                color: Color(0xFFC9166D),
                 fontWeight: FontWeight.normal,
                 fontFamily: 'Sarabun',
                 fontSize: 15.00,
               ),
               decoration: InputDecoration(
                 filled: true,
-                fillColor: const Color(0xFFfffadd),
+                fillColor: const Color(0xFFFFE3F0),
                 contentPadding: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
                 hintText: 'รายละเอียด',
                 border: OutlineInputBorder(
@@ -384,7 +388,7 @@ class _ReporterFormPageState extends State<ReporterFormPage> {
                         width: 35.0,
                         height: 35.0,
                         decoration: BoxDecoration(
-                          color: const Color(0xFFFF7514),
+                          color: const Color(0xFFF670C3),
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: MaterialButton(
@@ -423,10 +427,9 @@ class _ReporterFormPageState extends State<ReporterFormPage> {
                         onPressed: () {
                           dialogDeleteImage(_itemImage[index]['id'].toString());
                         },
-                        child: Image.network(
-                          _itemImage[index]['imageUrl'],
+                        child: BlurredNetworkImage(
+                          imageUrl: '${_itemImage[index]['imageUrl'] ?? ''}',
                           width: 1000,
-                          fit: BoxFit.cover,
                         ),
                         // ),
                       ),
@@ -470,7 +473,7 @@ class _ReporterFormPageState extends State<ReporterFormPage> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5.0),
                     border: Border.all(
-                      color: const Color(0xFFFF7514),
+                      color: const Color(0xFFF670C3),
                     ),
                   ),
                   child: MaterialButton(
@@ -531,7 +534,7 @@ class _ReporterFormPageState extends State<ReporterFormPage> {
                                         },
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor:
-                                              const Color(0xFFFF7514),
+                                              const Color(0xFFF670C3),
                                         ),
                                         child: const Text(
                                           'ตกลง',
@@ -555,7 +558,7 @@ class _ReporterFormPageState extends State<ReporterFormPage> {
                     child: const Text(
                       'ตำแหน่ง Google Map',
                       style: TextStyle(
-                        color: Color(0xFFFF7514),
+                        color: Color(0xFFF670C3),
                         fontFamily: 'Sarabun',
                         fontSize: 15.0,
                       ),
@@ -571,7 +574,7 @@ class _ReporterFormPageState extends State<ReporterFormPage> {
                 child: Material(
                   elevation: 5.0,
                   borderRadius: BorderRadius.circular(5.0),
-                  color: const Color(0xFFFF7514),
+                  color: const Color(0xFFF670C3),
                   child: MaterialButton(
                     height: 40,
                     onPressed: () {
@@ -622,7 +625,7 @@ class _ReporterFormPageState extends State<ReporterFormPage> {
               style: const TextStyle(
                 fontSize: 13,
                 fontFamily: 'Sarabun',
-                color: Color(0xFF005C9E),
+                color: Color(0xFFC9166D),
                 fontWeight: FontWeight.normal,
               ),
             ),
@@ -637,7 +640,7 @@ class _ReporterFormPageState extends State<ReporterFormPage> {
               style: const TextStyle(
                 fontSize: 13,
                 fontFamily: 'Sarabun',
-                color: Color(0xFFFF7514),
+                color: Color(0xFFF670C3),
                 fontWeight: FontWeight.normal,
               ),
             ),

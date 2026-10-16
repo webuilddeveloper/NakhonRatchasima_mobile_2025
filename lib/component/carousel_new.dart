@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:ratchasima/pages/news/news_form.dart';
 import 'package:ratchasima/shared/api_provider.dart';
 
+import 'blurred_network_image.dart';
+
 class CarouselNew extends StatefulWidget {
   CarouselNew({super.key, this.model, this.nav});
 
@@ -87,43 +89,10 @@ class _CarouselNew extends State<CarouselNew> {
                         borderRadius: BorderRadius.all(Radius.circular(15)),
                         child: Stack(
                           children: [
-                            Image.network(
-                              document['imageUrl'] ?? '',
-                              fit: BoxFit.cover,
+                            BlurredNetworkImage(
+                              imageUrl: '${document['imageUrl'] ?? ''}',
                               height: 161,
                               width: double.infinity,
-                              errorBuilder: (context, error, stackTrace) {
-                                return Container(
-                                  height: 161,
-                                  width: double.infinity,
-                                  color: Colors.grey[300],
-                                  child: Icon(
-                                    Icons.image_not_supported,
-                                    color: Colors.grey[600],
-                                    size: 50,
-                                  ),
-                                );
-                              },
-                              loadingBuilder:
-                                  (context, child, loadingProgress) {
-                                if (loadingProgress == null) return child;
-                                return Container(
-                                  height: 161,
-                                  width: double.infinity,
-                                  child: Center(
-                                    child: CircularProgressIndicator(
-                                      value:
-                                          loadingProgress.expectedTotalBytes !=
-                                                  null
-                                              ? loadingProgress
-                                                      .cumulativeBytesLoaded /
-                                                  loadingProgress
-                                                      .expectedTotalBytes!
-                                              : null,
-                                    ),
-                                  ),
-                                );
-                              },
                             ),
                             // Optional: เพิ่ม gradient overlay สำหรับ title ถ้ามี
                             if (document['title'] != null)
@@ -166,7 +135,7 @@ class _CarouselNew extends State<CarouselNew> {
 
               // Dot indicators
               Container(
-                color: Color(0xFFF5F8FB),
+                color: Color(0xFFFFFBF7),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: snapshot.data.map<Widget>((url) {
@@ -186,8 +155,8 @@ class _CarouselNew extends State<CarouselNew> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
                         color: _current == index
-                            ? Color(0xFFfad84c)
-                            : Color(0xFF9e6e19),
+                            ? Color(0xFFC9166D)
+                            : Color(0xFFFFE3F0),
                         // : Color.fromRGBO(0, 0, 0, 0.4),
                       ),
                     );

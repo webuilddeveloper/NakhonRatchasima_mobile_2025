@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../component/blurred_network_image.dart';
+
 class ContactListVertical extends StatefulWidget {
   ContactListVertical({
     super.key,
@@ -103,19 +105,14 @@ class _ContactListVertical extends State<ContactListVertical> {
                                 children: [
                                   Row(
                                     children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                          image: DecorationImage(
-                                            image: NetworkImage(
-                                                '${snapshot.data[index]['imageUrl']}'),
-                                            fit: BoxFit.cover,
-                                          ),
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(5),
+                                        child: BlurredNetworkImage(
+                                          imageUrl:
+                                              '${snapshot.data[index]['imageUrl'] ?? ''}',
+                                          width: 55.0,
+                                          height: 55.0,
                                         ),
-                                        alignment: Alignment.centerLeft,
-                                        width: 55.0,
-                                        height: 55.0,
                                       ),
                                       Column(
                                         mainAxisAlignment:

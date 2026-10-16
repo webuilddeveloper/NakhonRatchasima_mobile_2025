@@ -15,8 +15,8 @@ blankMenu(BuildContext context) {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Color(0xFF000070),
-                Color(0xFF000070),
+                Color(0xFFC9166D),
+                Color(0xFFC9166D),
               ],
               begin: Alignment.topCenter,
               end: new Alignment(0.6, 0.0),

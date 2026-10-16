@@ -3,6 +3,7 @@ import UIKit
 import GoogleMaps
 import Firebase
 import FirebaseCore
+import UserNotifications
 
 @main
 @objc class AppDelegate: FlutterAppDelegate {
@@ -12,7 +13,8 @@ import FirebaseCore
   ) -> Bool {
     FirebaseApp.configure() 
 
-    GMSServices.provideAPIKey("AIzaSyBUIGI-rbZxSBy7WaQhztUgkvhzpI8STpA")
+    GMSServices.provideAPIKey("AIzaSyAZOIFK9_xBu4-ojMIDOb2SvUdAzGwTaMw")
+    UNUserNotificationCenter.current().delegate = self
     
     GeneratedPluginRegistrant.register(with: self)
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)

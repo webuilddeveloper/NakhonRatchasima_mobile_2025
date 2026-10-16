@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:ratchasima/component/header.dart';
 import 'package:ratchasima/component/material/check_avatar.dart';
 import 'package:ratchasima/widget/text_form_field.dart';
 
+import '../../component/blurred_network_image.dart';
 import '../../shared/api_provider.dart';
 
 class QuestionListDetail extends StatefulWidget {
@@ -76,58 +78,7 @@ class _QuestionListDetail extends State<QuestionListDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        // forceMaterialTransparency: true,
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        titleSpacing: 5,
-        automaticallyImplyLeading: false,
-        flexibleSpace: Container(
-          width: double.infinity,
-          padding: EdgeInsets.only(
-            top: MediaQuery.of(context).padding.top + 20,
-            left: 15,
-            right: 15,
-          ),
-          child: Row(
-            children: [
-              InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  // alignment: Alignment.center,
-                  width: 35,
-                  decoration: BoxDecoration(
-                    color: Color(0XFF213F91),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Center(
-                    child: Icon(
-                      Icons.arrow_back_ios_new,
-                      size: 20,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Text(
-                  'ถาม - ตอบ',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: 'Kanit',
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              SizedBox(width: 30),
-            ],
-          ),
-        ),
-      ),
+      appBar: header(context, goBack, title: 'ถาม - ตอบ'),
       body: NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (OverscrollIndicatorNotification overScroll) {
           overScroll.disallowIndicator();
@@ -481,7 +432,7 @@ class _QuestionListDetail extends State<QuestionListDetail> {
               style: TextStyle(
                 fontSize: 13,
                 fontFamily: 'Kanit',
-                color: Color(0xFF005C9E),
+                color: Color(0xFFC9166D),
                 fontWeight: FontWeight.normal,
               ),
             ),
@@ -531,18 +482,16 @@ class _QuestionListDetail extends State<QuestionListDetail> {
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10.0),
-                child: Image.network(
-                  _itemsImage[index]['imageUrl'],
-                  fit: BoxFit.cover,
+                child: BlurredNetworkImage(
+                  imageUrl: '${_itemsImage[index]['imageUrl'] ?? ''}',
                   width: 100.0,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Container(
-                      width: 100.0,
-                      color: Colors.grey[300],
-                      child: const Icon(Icons.broken_image,
-                          size: 50, color: Colors.grey),
-                    );
-                  },
+                  height: double.infinity,
+                  placeholder: Container(
+                    width: 100.0,
+                    color: Colors.grey[300],
+                    child: const Icon(Icons.broken_image,
+                        size: 50, color: Colors.grey),
+                  ),
                 ),
               ),
             ),

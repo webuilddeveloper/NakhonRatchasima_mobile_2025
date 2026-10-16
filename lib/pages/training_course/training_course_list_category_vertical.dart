@@ -121,7 +121,7 @@ class TrainingCourseListCategoryVerticalState
                                               fontWeight: FontWeight.normal,
                                               fontSize: 16,
                                               fontFamily: 'Kanit',
-                                              color: Color(0xFF0C387D),
+                                              color: Color(0xFFC9166D),
                                             ),
                                             maxLines: 2,
                                             overflow: TextOverflow.ellipsis,

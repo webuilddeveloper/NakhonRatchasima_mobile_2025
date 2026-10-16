@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ratchasima/apptheme.dart';
+import 'package:ratchasima/component/korat_ui.dart';
 import 'package:ratchasima/pages/complain/complain_detail.dart';
 import 'package:ratchasima/pages/complain/complain_follow.dart';
 
@@ -19,112 +21,115 @@ class _ComplainListCategoryState extends State<ComplainListCategory> {
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
-      backgroundColor: Color(0xFFf6f8fc),
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.06),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // Header Section - ลดขนาดลง
-              SizedBox(height: screenHeight * 0.04),
-
-              // Logo - ปรับขนาดให้เหมาะสม
-              SizedBox(
-                height: screenHeight * 0.15,
-                child: Image.network(
-                  'https://nakhonphanom.treasury.go.th/web-upload/49x7302a2369b742d9bd9ab21aeb3dcfbfa/tinymce/pic.png',
-                  fit: BoxFit.contain,
+      backgroundColor: AppColors.background,
+      appBar: KoratAppBar(
+        title: widget.title ?? 'แจ้งเหตุ / แจ้งปัญหา',
+        showBack: true,
+        onBack: goBack,
+      ),
+      body: ListView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        padding: EdgeInsets.zero,
+        children: [
+          // const KoratPageHeader(
+          //   title: 'Korat Connect',
+          //   subtitle: 'ศูนย์กลางรับเรื่องและติดตามการให้บริการของจังหวัด',
+          // ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 24, 16, 110),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                KoratSurfaceCard(
+                  color: AppColors.primarySoft,
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 54,
+                        height: 54,
+                        decoration: const BoxDecoration(
+                          color: AppColors.primary,
+                          borderRadius: KoratRadius.md,
+                        ),
+                        child: const Icon(
+                          Icons.forum_outlined,
+                          color: Colors.white,
+                          size: 28,
+                        ),
+                      ),
+                      const SizedBox(width: 14),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'เราพร้อมรับฟังทุกเรื่องของคุณ',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(color: AppColors.primary),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              'เลือกบริการด้านล่างเพื่อเริ่มแจ้งเรื่องใหม่ หรือตรวจสอบความคืบหน้า',
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-
-              SizedBox(height: screenHeight * 0.01),
-
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: const [
-                  Text(
-                    'Smart',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: 'Charmonman',
-                      fontWeight: FontWeight.w600,
-                      fontSize: 42,
-                      height: 1.0, // ลดระยะห่างบรรทัด
-                      color: Color(0xFFe7b014),
-                    ),
+                const SizedBox(height: 28),
+                const KoratSectionTitle(
+                  title: 'บริการรับเรื่อง',
+                  subtitle:
+                      'ข้อมูลและขั้นตอนเดิมครบถ้วนในรูปแบบที่ใช้งานง่ายขึ้น',
+                ),
+                const SizedBox(height: 14),
+                buildCategoryButton(
+                  title: 'แจ้งเรื่องใหม่',
+                  subtitle:
+                      'แจ้งเหตุ ร้องทุกข์ หรือส่งเรื่องให้หน่วยงานที่เกี่ยวข้อง',
+                  icon: Icons.add_comment_outlined,
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => ComplainDetail()),
                   ),
-                  Text(
-                    'นครพนม',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: 'Charmonman',
-                      fontWeight: FontWeight.w600,
-                      fontSize: 62,
-                      height: 1.0,
-                      color: Color(0xFFe7b014),
-                    ),
+                ),
+                const SizedBox(height: 12),
+                buildCategoryButton(
+                  title: 'ติดตามสถานะ',
+                  subtitle: 'ดูขั้นตอนปัจจุบันและความคืบหน้าของเรื่องที่เคยส่ง',
+                  icon: Icons.track_changes_rounded,
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => ComplainFollow()),
                   ),
-                ],
-              ),
-
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                ),
+                const SizedBox(height: 20),
+                Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'รับเรื่องร้องเรียน',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Kanit',
-                        fontWeight: FontWeight.w600,
-                        fontSize: 36,
-                        color: Color(0xFFe7b014),
+                    const Icon(
+                      Icons.privacy_tip_outlined,
+                      size: 18,
+                      color: AppColors.textSecondary,
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        'ข้อมูลของคุณจะถูกส่งผ่านระบบเดิมอย่างปลอดภัย และสามารถติดตามผลได้ภายหลัง',
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
-                    ),
-                    SizedBox(height: screenHeight * 0.02),
-                    buildCategoryButton(
-                      title: 'ร้องเรียน',
-                      subtitle:
-                          'แจ้งเรื่องร้องทุกข์  แจ้งเหตุต่างๆ แจ้งเรื่องร้องเรียน',
-                      icon: Icons.feedback_outlined,
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ComplainDetail(),
-                          ),
-                        );
-                      },
-                    ),
-                    SizedBox(height: screenHeight * 0.025),
-                    buildCategoryButton(
-                      title: 'ติดตามผล',
-                      subtitle:
-                          'ติดตามผลเรื่องร้องทุกข์  ติดตามเหตุต่างๆ ติดตามผลเรื่องร้องเรียน',
-                      icon: Icons.playlist_add_check,
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ComplainFollow(),
-                          ),
-                        );
-                      },
                     ),
                   ],
                 ),
-              ),
-
-              SizedBox(height: screenHeight * 0.03),
-            ],
+              ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -135,75 +140,51 @@ class _ComplainListCategoryState extends State<ComplainListCategory> {
     required IconData icon,
     required VoidCallback onTap,
   }) {
-    final screenHeight = MediaQuery.of(context).size.height;
-
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: double.infinity,
-        height: screenHeight * 0.12, // ปรับความสูงตามหน้าจอ
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          gradient: const LinearGradient(
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-            colors: [Color(0xFFe7b014), Color(0xFFfbd749)],
-            stops: [0.0, 0.9],
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Color(0xFFe7b014).withOpacity(0.3),
-              blurRadius: 8,
-              offset: Offset(0, 4),
-            ),
-          ],
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 4,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: const TextStyle(
-                        fontFamily: 'Kanit',
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Flexible(
-                      child: Text(
+    return KoratSurfaceCard(
+      padding: EdgeInsets.zero,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: KoratRadius.md,
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Row(
+              children: [
+                Container(
+                  width: 52,
+                  height: 52,
+                  decoration: const BoxDecoration(
+                    color: AppColors.primarySoft,
+                    borderRadius: KoratRadius.md,
+                  ),
+                  child: Icon(icon, color: AppColors.primary, size: 26),
+                ),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(title,
+                          style: Theme.of(context).textTheme.titleMedium),
+                      const SizedBox(height: 4),
+                      Text(
                         subtitle,
-                        style: const TextStyle(
-                          fontFamily: 'Kanit',
-                          fontSize: 11,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white,
-                          height: 1.2,
-                        ),
+                        style: Theme.of(context).textTheme.bodySmall,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              Expanded(
-                flex: 1,
-                child: Icon(
-                  icon,
-                  color: Colors.white,
-                  size: 50,
+                const SizedBox(width: 8),
+                const Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  size: 18,
+                  color: AppColors.primary,
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

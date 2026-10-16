@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:ratchasima/component/header.dart';
 import 'package:ratchasima/pages/blank_page/blank_loading.dart';
 import 'package:ratchasima/pages/training_course/training_course_list_category.dart';
 
@@ -41,58 +42,7 @@ class _TrainingCrouseDetail extends State<TrainingCrouseDetail> {
       backgroundColor: Color(0xFFF3F5F5),
       resizeToAvoidBottomInset: true,
       // extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        // forceMaterialTransparency: true,
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        titleSpacing: 5,
-        automaticallyImplyLeading: false,
-        flexibleSpace: Container(
-          width: double.infinity,
-          padding: EdgeInsets.only(
-            top: MediaQuery.of(context).padding.top + 20,
-            left: 15,
-            right: 15,
-          ),
-          child: Row(
-            children: [
-              InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  // alignment: Alignment.center,
-                  width: 35,
-                  decoration: BoxDecoration(
-                    color: Color(0XFF213F91),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Center(
-                    child: Icon(
-                      Icons.arrow_back_ios_new,
-                      size: 20,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Text(
-                  'หลักสูตรอบรม',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: 'Kanit',
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              SizedBox(width: 30),
-            ],
-          ),
-        ),
-      ),
+      appBar: header(context, goBack, title: 'หลักสูตรอบรม'),
       body: NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (OverscrollIndicatorNotification overScroll) {
           overScroll.disallowIndicator();
@@ -182,7 +132,7 @@ class _TrainingCrouseDetail extends State<TrainingCrouseDetail> {
                                 '${widget.model['title']}',
                                 style: TextStyle(
                                   fontSize: 20.0,
-                                  color: Color(0xFF213F91),
+                                  color: Color(0xFFC9166D),
                                   fontFamily: 'Kanit',
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -191,7 +141,7 @@ class _TrainingCrouseDetail extends State<TrainingCrouseDetail> {
                                 '${widget.model['titleEN']}',
                                 style: TextStyle(
                                   fontSize: 20.0,
-                                  color: Color(0xFF213F91),
+                                  color: Color(0xFFC9166D),
                                   fontFamily: 'Kanit',
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -464,7 +414,7 @@ class _TrainingCrouseDetail extends State<TrainingCrouseDetail> {
             'ลงทะเบียน',
             style: TextStyle(
               fontSize: 22.0,
-              color: Color(0xFF213F91),
+              color: Color(0xFFC9166D),
               fontFamily: 'Kanit',
               fontWeight: FontWeight.w500,
             ),
@@ -521,7 +471,7 @@ class _TrainingCrouseDetail extends State<TrainingCrouseDetail> {
             'ลงทะเบียนสำเร็จ!',
             style: TextStyle(
               fontSize: 18.0,
-              color: Color(0xFF213F91),
+              color: Color(0xFFC9166D),
               fontFamily: 'Kanit',
               fontWeight: FontWeight.w400,
             ),

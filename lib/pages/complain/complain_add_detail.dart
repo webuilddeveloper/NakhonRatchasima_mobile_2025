@@ -1,11 +1,13 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:image_picker/image_picker.dart';
 import 'package:ratchasima/shared/api_provider.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:ratchasima/component/korat_ui.dart';
+import 'package:ratchasima/apptheme.dart';
+import 'package:ratchasima/pages/reporter/reporter_local_store.dart';
+
+import '../../component/blurred_network_image.dart';
 
 class ComplainAddDetail extends StatefulWidget {
   final String label;
@@ -22,13 +24,12 @@ class ComplainAddDetail extends StatefulWidget {
 }
 
 class _ComplainAddDetailState extends State<ComplainAddDetail> {
-  static const Color titleColor = Color(0XFFe9ca61);
-  static const Color borderColor = Colors.grey;
+  static const Color titleColor = AppColors.primary;
+  static const Color borderColor = AppColors.border;
 
   final txtTitle = TextEditingController();
   final txtDescription = TextEditingController();
 
-  final storage = new FlutterSecureStorage();
   final _formKey = GlobalKey<FormState>();
 
   List<Map<String, String>> _images = [];
@@ -106,19 +107,13 @@ class _ComplainAddDetailState extends State<ComplainAddDetail> {
   }
 
   Future<dynamic> submitReporter() async {
-    var value = await storage.read(key: 'dataUserLoginDDPM');
-    json.decode(value!);
+    ReporterLocalStore.add(
+      title: txtTitle.text.trim(),
+      category: widget.label,
+      description: txtDescription.text.trim(),
+    );
 
-    var data = {
-      "title": txtTitle.text.trim(),
-      "category": widget.code,
-      "description": txtDescription.text.trim(),
-      "gallery": _images,
-    };
-
-    final result = await postObjectData('m/Reporter/create', data);
-
-    if (result['status'] == 'S') {
+    if (mounted) {
       return showDialog(
         barrierDismissible: false,
         context: context,
@@ -146,61 +141,13 @@ class _ComplainAddDetailState extends State<ComplainAddDetail> {
                     style: const TextStyle(
                       fontSize: 13,
                       fontFamily: 'Sarabun',
-                      color: Color(0xFF005C9E),
+                      color: Color(0xFFC9166D),
                       fontWeight: FontWeight.normal,
                     ),
                   ),
                   onPressed: () {
                     Navigator.pop(context);
                     goBack();
-                  },
-                ),
-              ],
-            ),
-          );
-        },
-      );
-    } else {
-      return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return WillPopScope(
-            onWillPop: () {
-              return Future.value(false);
-            },
-            child: CupertinoAlertDialog(
-              title: new Text(
-                'บันทึกข้อมูลไม่สำเร็จ',
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontFamily: 'Sarabun',
-                  color: Colors.black,
-                  fontWeight: FontWeight.normal,
-                ),
-              ),
-              content: new Text(
-                result['message'],
-                style: const TextStyle(
-                  fontSize: 13,
-                  fontFamily: 'Sarabun',
-                  color: Colors.black,
-                  fontWeight: FontWeight.normal,
-                ),
-              ),
-              actions: [
-                CupertinoDialogAction(
-                  isDefaultAction: true,
-                  child: new Text(
-                    "ตกลง",
-                    style: const TextStyle(
-                      fontSize: 13,
-                      fontFamily: 'Sarabun',
-                      color: Color(0xFF005C9E),
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
                   },
                 ),
               ],
@@ -218,7 +165,12 @@ class _ComplainAddDetailState extends State<ComplainAddDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFf6f8fc),
+      backgroundColor: AppColors.background,
+      appBar: KoratAppBar(
+        title: 'แจ้งปัญหา',
+        showBack: true,
+        onBack: goBack,
+      ),
       body: Form(
         // เพิ่ม Form widget และเชื่อมกับ _formKey
         key: _formKey,
@@ -319,14 +271,13 @@ class _ComplainAddDetailState extends State<ComplainAddDetail> {
                             itemBuilder: (context, index) {
                               return Stack(
                                 children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
-                                      image: DecorationImage(
-                                        image: NetworkImage(
-                                            _images[index]["imageUrl"] ?? ''),
-                                        fit: BoxFit.cover,
-                                      ),
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: BlurredNetworkImage(
+                                      imageUrl:
+                                          '${_images[index]["imageUrl"] ?? ''}',
+                                      width: double.infinity,
+                                      height: double.infinity,
                                     ),
                                   ),
                                   Positioned(
@@ -522,7 +473,7 @@ class _ComplainAddDetailState extends State<ComplainAddDetail> {
                 style: const TextStyle(
                   fontSize: 13,
                   fontFamily: 'Sarabun',
-                  color: Color(0xFF005C9E),
+                  color: Color(0xFFC9166D),
                   fontWeight: FontWeight.normal,
                 ),
               ),

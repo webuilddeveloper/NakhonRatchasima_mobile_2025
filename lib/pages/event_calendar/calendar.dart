@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import '../../component/blurred_network_image.dart';
 import '../../shared/api_provider.dart';
 import '../../shared/extension.dart';
 import 'event_calendar_form.dart';
@@ -143,7 +144,7 @@ class _CalendarPageState extends State<CalendarPage>
               fontWeight: FontWeight.normal,
             ),
             holidayTextStyle: TextStyle().copyWith(
-              color: Color(0xFFC5DAFC),
+              color: Color(0xFFFFE3F0),
               fontFamily: 'Sarabun',
               fontWeight: FontWeight.normal,
             ),
@@ -163,7 +164,7 @@ class _CalendarPageState extends State<CalendarPage>
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color(0xFFC5DAFC),
+                    color: Color(0xFFFFE3F0),
                   ),
                   width: 100,
                   height: 100,
@@ -226,9 +227,10 @@ class _CalendarPageState extends State<CalendarPage>
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(5),
-                            child: Image.network(
-                              '${value[index]['imageUrl']}',
-                              fit: BoxFit.cover,
+                            child: BlurredNetworkImage(
+                              imageUrl: '${value[index]['imageUrl'] ?? ''}',
+                              width: double.infinity,
+                              height: double.infinity,
                             ),
                           ),
                           SizedBox(width: 10),

@@ -4,6 +4,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../component/blurred_network_image.dart';
 import '../../shared/api_provider.dart';
 import '../blank_page/dialog_fail.dart';
 import 'user_information.dart';
@@ -98,7 +99,7 @@ class _PolicyIdentityVerificationPageState
                     style: TextStyle(
                       fontSize: 13,
                       fontFamily: 'Sarabun',
-                      color: Color(0xFF000070),
+                      color: Color(0xFFC9166D),
                       fontWeight: FontWeight.normal,
                     ),
                   ),
@@ -151,7 +152,7 @@ class _PolicyIdentityVerificationPageState
                       style: TextStyle(
                         fontSize: 13,
                         fontFamily: 'Sarabun',
-                        color: Color(0xFF000070),
+                        color: Color(0xFFC9166D),
                         fontWeight: FontWeight.normal,
                       ),
                     ),
@@ -212,9 +213,10 @@ class _PolicyIdentityVerificationPageState
                   Container(
                     height: MediaQuery.of(context).size.width * 0.5,
                     width: MediaQuery.of(context).size.width,
-                    child: Image.network(
-                      item['imageUrl'],
-                      fit: BoxFit.cover,
+                    child: BlurredNetworkImage(
+                      imageUrl: '${item['imageUrl'] ?? ''}',
+                      width: double.infinity,
+                      height: double.infinity,
                     ),
                   ),
                   new Text(
@@ -343,10 +345,10 @@ class _PolicyIdentityVerificationPageState
                 borderRadius: BorderRadius.circular(18),
               ),
               side: BorderSide(
-                color: Color(0xFF000070),
+                color: Color(0xFFC9166D),
               ),
               textStyle: TextStyle(color: Colors.white),
-              overlayColor: Color(0xFF000070),
+              overlayColor: Color(0xFFC9166D),
             ),
             onPressed: () {
               sendPolicy();

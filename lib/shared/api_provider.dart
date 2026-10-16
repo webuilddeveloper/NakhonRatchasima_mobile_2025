@@ -64,6 +64,9 @@ const eventCalendarCommentApi = server + 'm/eventCalendar/comment/';
 const eventCalendarGalleryApi = server + 'm/eventCalendar/gallery/read';
 const pollGalleryApi = server + 'm/poll/gallery/read';
 const reporterApi = server + 'm/reporter/';
+const reporterNakhonApi = serverNpm + '/m/Reporter/';
+const reporterNakhonGalleryApi = serverNpm + '/m/Reporter/gallery/';
+const reporterNakhonReplyApi = serverNpm + '/m/Reporter/reply/';
 const reporterGalleryApi = server + 'm/Reporter/gallery/';
 const fundApi = server + 'm/fund/';
 const fundGalleryApi = server + 'm/fund/gallery/read';
@@ -309,7 +312,10 @@ Future<dynamic> postObjectData(String url, dynamic criteria) async {
   } else {
     print('HTTP Error: ${response.statusCode}');
     print('HTTP Body: ${response.body}');
-    return {"status": "F"};
+    return {
+      "status": "F",
+      "message": "เซิร์ฟเวอร์ตอบกลับด้วยรหัส ${response.statusCode}",
+    };
   }
 }
 

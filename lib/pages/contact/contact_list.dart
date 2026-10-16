@@ -112,6 +112,7 @@ class _ContactList extends State<ContactList> {
               SizedBox(height: 10),
               KeySearch(
                 show: hideSearch,
+                hintext: 'ค้นหาเบอร์โทรศัพท์',
                 onKeySearchChange: (String val) {
                   setState(
                     () {

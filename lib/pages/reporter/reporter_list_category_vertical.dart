@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+import '../../component/blurred_network_image.dart';
 import 'reporter_form.dart';
 
 // import 'reporter_list.dart';
@@ -37,7 +38,7 @@ class _ReporterListCategoryVertical
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<dynamic>(
-      future: widget.model, // function where you call your api
+      future: widget.model, // function where you call your apiR
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data.length == 0) {
@@ -102,21 +103,15 @@ class _ReporterListCategoryVertical
                                   children: [
                                     Row(
                                       children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            image: DecorationImage(
-                                              image: NetworkImage(
-                                                  '${snapshot.data[index]['imageUrl']}'),
-                                              fit: BoxFit.cover,
-                                            ),
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          child: BlurredNetworkImage(
+                                            imageUrl:
+                                                '${snapshot.data[index]['imageUrl'] ?? ''}',
+                                            width: 40.0,
+                                            height: 40.0,
                                           ),
-                                          // color: Color(0xFF000070),
-                                          alignment: Alignment.centerLeft,
-                                          width: 40.0,
-                                          height: 40.0,
-                                          padding: EdgeInsets.all(5),
                                         ),
                                         Container(
                                           width: MediaQuery.of(context)

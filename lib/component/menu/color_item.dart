@@ -10,8 +10,8 @@ colorItem(
   Function? callback,
   LinearGradient linearGradient = const LinearGradient(
     colors: [
-      Color(0xFFFF8E00),
-      Color(0xFFFFC200),
+      Color(0xFFF670C3),
+      Color(0xFFF670C3),
     ],
     begin: Alignment.centerRight,
     end: Alignment.centerLeft,

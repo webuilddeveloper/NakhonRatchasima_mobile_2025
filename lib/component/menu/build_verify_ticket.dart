@@ -65,8 +65,8 @@ class _VerifyTicket extends State<VerifyTicket> {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color(0xFFFFC200).withOpacity(0.5),
-              Color(0xFFFF8E00).withOpacity(0.3),
+              Color(0xFFF670C3).withOpacity(0.5),
+              Color(0xFFF670C3).withOpacity(0.3),
             ],
             begin: Alignment.centerRight,
             // end: new Alignment(1, 0.0),
@@ -86,8 +86,8 @@ class _VerifyTicket extends State<VerifyTicket> {
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
-                          Color(0xFFFF7B06).withOpacity(0.6),
-                          Color(0xFFFFC200),
+                          Color(0xFFF670C3).withOpacity(0.6),
+                          Color(0xFFF670C3),
                         ],
                         begin: Alignment.centerRight,
                         // end: new Alignment(1, 0.0),
@@ -153,8 +153,8 @@ class _VerifyTicket extends State<VerifyTicket> {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Color(0xFFD3913F).withOpacity(0.5),
-                Color(0xFFD3913F).withOpacity(0.3),
+                Color(0xFFC9166D).withOpacity(0.5),
+                Color(0xFFC9166D).withOpacity(0.3),
               ],
               begin: Alignment.centerRight,
               // end: new Alignment(1, 0.0),
@@ -174,14 +174,14 @@ class _VerifyTicket extends State<VerifyTicket> {
                       decoration: BoxDecoration(
                         // gradient: LinearGradient(
                         //   colors: [
-                        //     Color(0xFFD3913F).withOpacity(0.6),
-                        //     Color(0xFFD3913F),
+                        //     Color(0xFFC9166D).withOpacity(0.6),
+                        //     Color(0xFFC9166D),
                         //   ],
                         //   begin: Alignment.centerRight,
                         //   // end: new Alignment(1, 0.0),
                         //   end: Alignment.centerLeft,
                         // ),
-                        color: Color(0xFFD3913F),
+                        color: Color(0xFFC9166D),
                       ),
                       child: Column(
                         children: [
@@ -258,7 +258,7 @@ class _VerifyTicket extends State<VerifyTicket> {
                 ),
                 child: Image.asset(
                   'assets/icons/traffic_ticket_icon.png',
-                  // color: Color(0xFFFFC200),
+                  // color: Color(0xFFF670C3),
                 ),
               )
             ],

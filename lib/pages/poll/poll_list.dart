@@ -138,6 +138,7 @@ class _PollList extends State<PollList> {
               SizedBox(height: 5),
               KeySearch(
                 show: hideSearch,
+                hintext: 'ค้นหาคำถาม',
                 onKeySearchChange: (String val) {
                   // pollList(context, service.post('${service.pollApi}read', {'skip': 0, 'limit': 100,"keySearch": val}),'');
                   setState(

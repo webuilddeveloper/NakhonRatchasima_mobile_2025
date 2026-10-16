@@ -320,7 +320,7 @@
 //             //     vertical: 0,
 //             //   ),
 //             //   decoration: BoxDecoration(
-//             //     color: Color(0xFFC5DAFC),
+//             //     color: Color(0xFFFFE3F0),
 //             //     borderRadius: BorderRadius.circular(
 //             //       10,
 //             //     ),
@@ -363,7 +363,7 @@
 //             //             fontSize: 15.00,
 //             //             fontFamily: 'Sarabun',
 //             //             color: Color(
-//             //               0xFF000070,
+//             //               0xFFC9166D,
 //             //             ),
 //             //           ),
 //             //         ),
@@ -445,7 +445,7 @@
 //                 vertical: 0,
 //               ),
 //               decoration: BoxDecoration(
-//                 color: const Color(0xFFfffadd),
+//                 color: const Color(0xFFFFE3F0),
 //                 borderRadius: BorderRadius.circular(
 //                   10,
 //                 ),
@@ -487,7 +487,7 @@
 //                               fontSize: 15.00,
 //                               fontFamily: 'Sarabun',
 //                               color: Color(
-//                                 0xFF000070,
+//                                 0xFFC9166D,
 //                               ),
 //                             ),
 //                           ),
@@ -531,7 +531,7 @@
 //                               fontSize: 15.00,
 //                               fontFamily: 'Sarabun',
 //                               color: Color(
-//                                 0xFF000070,
+//                                 0xFFC9166D,
 //                               ),
 //                             ),
 //                           ),
@@ -576,7 +576,7 @@
 //                 vertical: 0,
 //               ),
 //               decoration: BoxDecoration(
-//                 color: const Color(0xFFfffadd),
+//                 color: const Color(0xFFFFE3F0),
 //                 borderRadius: BorderRadius.circular(
 //                   10,
 //                 ),
@@ -626,7 +626,7 @@
 //                               fontSize: 15.00,
 //                               fontFamily: 'Sarabun',
 //                               color: Color(
-//                                 0xFF000070,
+//                                 0xFFC9166D,
 //                               ),
 //                             ),
 //                           ),
@@ -677,7 +677,7 @@
 //                               fontSize: 15.00,
 //                               fontFamily: 'Sarabun',
 //                               color: Color(
-//                                 0xFF000070,
+//                                 0xFFC9166D,
 //                               ),
 //                             ),
 //                           ),
@@ -694,7 +694,7 @@
 //                 vertical: 0,
 //               ),
 //               decoration: BoxDecoration(
-//                 color: const Color(0xFFfffadd),
+//                 color: const Color(0xFFFFE3F0),
 //                 borderRadius: BorderRadius.circular(
 //                   10,
 //                 ),
@@ -742,7 +742,7 @@
 //                               fontSize: 15.00,
 //                               fontFamily: 'Sarabun',
 //                               color: Color(
-//                                 0xFF000070,
+//                                 0xFFC9166D,
 //                               ),
 //                             ),
 //                           ),
@@ -791,7 +791,7 @@
 //                               fontSize: 15.00,
 //                               fontFamily: 'Sarabun',
 //                               color: Color(
-//                                 0xFF000070,
+//                                 0xFFC9166D,
 //                               ),
 //                             ),
 //                           ),
@@ -808,7 +808,7 @@
 //                 vertical: 0,
 //               ),
 //               decoration: BoxDecoration(
-//                 color: const Color(0xFFfffadd),
+//                 color: const Color(0xFFFFE3F0),
 //                 borderRadius: BorderRadius.circular(
 //                   10,
 //                 ),
@@ -854,7 +854,7 @@
 //                               fontSize: 15.00,
 //                               fontFamily: 'Sarabun',
 //                               color: Color(
-//                                 0xFF000070,
+//                                 0xFFC9166D,
 //                               ),
 //                             ),
 //                           ),
@@ -901,7 +901,7 @@
 //                               fontSize: 15.00,
 //                               fontFamily: 'Sarabun',
 //                               color: Color(
-//                                 0xFF000070,
+//                                 0xFFC9166D,
 //                               ),
 //                             ),
 //                           ),
@@ -918,7 +918,7 @@
 //                 vertical: 0,
 //               ),
 //               decoration: BoxDecoration(
-//                 color: const Color(0xFFfffadd),
+//                 color: const Color(0xFFFFE3F0),
 //                 borderRadius: BorderRadius.circular(
 //                   10,
 //                 ),
@@ -961,7 +961,7 @@
 //                               fontSize: 15.00,
 //                               fontFamily: 'Sarabun',
 //                               color: Color(
-//                                 0xFF000070,
+//                                 0xFFC9166D,
 //                               ),
 //                             ),
 //                           ),
@@ -1005,7 +1005,7 @@
 //                               fontSize: 15.00,
 //                               fontFamily: 'Sarabun',
 //                               color: Color(
-//                                 0xFF000070,
+//                                 0xFFC9166D,
 //                               ),
 //                             ),
 //                           ),
@@ -1024,7 +1024,7 @@
 //                 child: Material(
 //                   elevation: 5.0,
 //                   borderRadius: BorderRadius.circular(10.0),
-//                   color: const Color(0xFFFF7514),
+//                   color: const Color(0xFFF670C3),
 //                   child: MaterialButton(
 //                     minWidth: MediaQuery.of(context).size.width,
 //                     height: 40,
@@ -1066,7 +1066,7 @@
 //               boxShadow: const [
 //                 BoxShadow(
 //                   color: Color(
-//                     0xFF000070,
+//                     0xFFC9166D,
 //                   ),
 //                   spreadRadius: 1,
 //                 ),
@@ -1088,7 +1088,7 @@
 //                           fontSize: 13.00,
 //                           fontFamily: 'Sarabun',
 //                           color: Color(
-//                             0xFF000070,
+//                             0xFFC9166D,
 //                           ),
 //                         ),
 //                         maxLines: 2,
@@ -1099,7 +1099,7 @@
 //                           fontSize: 13.00,
 //                           fontFamily: 'Sarabun',
 //                           color: Color(
-//                             0xFF000070,
+//                             0xFFC9166D,
 //                           ),
 //                         ),
 //                         maxLines: 2,
@@ -1112,7 +1112,7 @@
 //                                 fontSize: 13.00,
 //                                 fontFamily: 'Sarabun',
 //                                 color: Color(
-//                                   0xFF000070,
+//                                   0xFFC9166D,
 //                                 ),
 //                               ),
 //                               maxLines: 2,
@@ -1126,7 +1126,7 @@
 //                                 fontSize: 13.00,
 //                                 fontFamily: 'Sarabun',
 //                                 color: Color(
-//                                   0xFF000070,
+//                                   0xFFC9166D,
 //                                 ),
 //                               ),
 //                               maxLines: 2,
@@ -1140,7 +1140,7 @@
 //                                 fontSize: 13.00,
 //                                 fontFamily: 'Sarabun',
 //                                 color: Color(
-//                                   0xFF000070,
+//                                   0xFFC9166D,
 //                                 ),
 //                               ),
 //                               maxLines: 2,
@@ -1154,7 +1154,7 @@
 //                                 fontSize: 13.00,
 //                                 fontFamily: 'Sarabun',
 //                                 color: Color(
-//                                   0xFF000070,
+//                                   0xFFC9166D,
 //                                 ),
 //                               ),
 //                               maxLines: 2,
@@ -1246,7 +1246,7 @@
 //                   vertical: 0,
 //                 ),
 //                 decoration: BoxDecoration(
-//                   color: const Color(0xFFfffadd),
+//                   color: const Color(0xFFFFE3F0),
 //                   borderRadius: BorderRadius.circular(
 //                     10,
 //                   ),
@@ -1312,7 +1312,7 @@
 //                                 fontSize: 15.00,
 //                                 fontFamily: 'Sarabun',
 //                                 color: Color(
-//                                   0xFF000070,
+//                                   0xFFC9166D,
 //                                 ),
 //                               ),
 //                             ),
@@ -1372,7 +1372,7 @@
 //                                 fontSize: 15.00,
 //                                 fontFamily: 'Sarabun',
 //                                 color: Color(
-//                                   0xFF000070,
+//                                   0xFFC9166D,
 //                                 ),
 //                               ),
 //                             ),
@@ -1393,7 +1393,7 @@
 //                     vertical: 0,
 //                   ),
 //                   decoration: BoxDecoration(
-//                     color: const Color(0xFFfffadd),
+//                     color: const Color(0xFFFFE3F0),
 //                     borderRadius: BorderRadius.circular(
 //                       10,
 //                     ),
@@ -1450,7 +1450,7 @@
 //                                   fontSize: 15.00,
 //                                   fontFamily: 'Sarabun',
 //                                   color: Color(
-//                                     0xFF000070,
+//                                     0xFFC9166D,
 //                                   ),
 //                                 ),
 //                               ),
@@ -1508,7 +1508,7 @@
 //                                   fontSize: 15.00,
 //                                   fontFamily: 'Sarabun',
 //                                   color: Color(
-//                                     0xFF000070,
+//                                     0xFFC9166D,
 //                                   ),
 //                                 ),
 //                               ),
@@ -1529,7 +1529,7 @@
 //                     vertical: 0,
 //                   ),
 //                   decoration: BoxDecoration(
-//                     color: const Color(0xFFfffadd),
+//                     color: const Color(0xFFFFE3F0),
 //                     borderRadius: BorderRadius.circular(
 //                       10,
 //                     ),
@@ -1584,7 +1584,7 @@
 //                                   fontSize: 15.00,
 //                                   fontFamily: 'Sarabun',
 //                                   color: Color(
-//                                     0xFF000070,
+//                                     0xFFC9166D,
 //                                   ),
 //                                 ),
 //                               ),
@@ -1640,7 +1640,7 @@
 //                                   fontSize: 15.00,
 //                                   fontFamily: 'Sarabun',
 //                                   color: Color(
-//                                     0xFF000070,
+//                                     0xFFC9166D,
 //                                   ),
 //                                 ),
 //                               ),
@@ -1661,7 +1661,7 @@
 //                     vertical: 0,
 //                   ),
 //                   decoration: BoxDecoration(
-//                     color: const Color(0xFFfffadd),
+//                     color: const Color(0xFFFFE3F0),
 //                     borderRadius: BorderRadius.circular(
 //                       10,
 //                     ),
@@ -1714,7 +1714,7 @@
 //                                   fontSize: 15.00,
 //                                   fontFamily: 'Sarabun',
 //                                   color: Color(
-//                                     0xFF000070,
+//                                     0xFFC9166D,
 //                                   ),
 //                                 ),
 //                               ),
@@ -1768,7 +1768,7 @@
 //                                   fontSize: 15.00,
 //                                   fontFamily: 'Sarabun',
 //                                   color: Color(
-//                                     0xFF000070,
+//                                     0xFFC9166D,
 //                                   ),
 //                                 ),
 //                               ),
@@ -1789,7 +1789,7 @@
 //                     vertical: 0,
 //                   ),
 //                   decoration: BoxDecoration(
-//                     color: const Color(0xFFfffadd),
+//                     color: const Color(0xFFFFE3F0),
 //                     borderRadius: BorderRadius.circular(
 //                       10,
 //                     ),
@@ -1840,7 +1840,7 @@
 //                                   fontSize: 15.00,
 //                                   fontFamily: 'Sarabun',
 //                                   color: Color(
-//                                     0xFF000070,
+//                                     0xFFC9166D,
 //                                   ),
 //                                 ),
 //                               ),
@@ -1892,7 +1892,7 @@
 //                                   fontSize: 15.00,
 //                                   fontFamily: 'Sarabun',
 //                                   color: Color(
-//                                     0xFF000070,
+//                                     0xFFC9166D,
 //                                   ),
 //                                 ),
 //                               ),
@@ -1913,7 +1913,7 @@
 //                     vertical: 0,
 //                   ),
 //                   decoration: BoxDecoration(
-//                     color: const Color(0xFFfffadd),
+//                     color: const Color(0xFFFFE3F0),
 //                     borderRadius: BorderRadius.circular(
 //                       10,
 //                     ),
@@ -1960,7 +1960,7 @@
 //                                   fontSize: 15.00,
 //                                   fontFamily: 'Sarabun',
 //                                   color: Color(
-//                                     0xFF000070,
+//                                     0xFFC9166D,
 //                                   ),
 //                                 ),
 //                               ),
@@ -2008,7 +2008,7 @@
 //                                   fontSize: 15.00,
 //                                   fontFamily: 'Sarabun',
 //                                   color: Color(
-//                                     0xFF000070,
+//                                     0xFFC9166D,
 //                                   ),
 //                                 ),
 //                               ),
@@ -2024,7 +2024,7 @@
 //                   child: Material(
 //                     elevation: 5.0,
 //                     borderRadius: BorderRadius.circular(10.0),
-//                     color: const Color(0xFF000070),
+//                     color: const Color(0xFFC9166D),
 //                     child: MaterialButton(
 //                       minWidth: MediaQuery.of(context).size.width,
 //                       height: 40,
@@ -2055,7 +2055,7 @@
 //                   child: Material(
 //                     elevation: 5.0,
 //                     borderRadius: BorderRadius.circular(10.0),
-//                     color: const Color(0xFF000070),
+//                     color: const Color(0xFFC9166D),
 //                     child: MaterialButton(
 //                       minWidth: MediaQuery.of(context).size.width,
 //                       height: 40,
@@ -2099,7 +2099,7 @@
 //         boxShadow: const [
 //           BoxShadow(
 //               color: Color(
-//                 0xFF000070,
+//                 0xFFC9166D,
 //               ),
 //               spreadRadius: 1),
 //         ],
@@ -2333,7 +2333,7 @@
 //                   style: const TextStyle(
 //                     fontSize: 13,
 //                     fontFamily: 'Sarabun',
-//                     color: Color(0xFF000070),
+//                     color: Color(0xFFC9166D),
 //                     fontWeight: FontWeight.normal,
 //                   ),
 //                 ),
@@ -2405,7 +2405,7 @@
 //                 style: const TextStyle(
 //                   fontSize: 13,
 //                   fontFamily: 'Sarabun',
-//                   color: Color(0xFF000070),
+//                   color: Color(0xFFC9166D),
 //                   fontWeight: FontWeight.normal,
 //                 ),
 //               ),
@@ -2560,7 +2560,7 @@
 //                         style: const TextStyle(
 //                           fontSize: 13,
 //                           fontFamily: 'Sarabun',
-//                           color: Color(0xFF000070),
+//                           color: Color(0xFFC9166D),
 //                           fontWeight: FontWeight.normal,
 //                         ),
 //                       ),
@@ -2605,7 +2605,7 @@
 //                   style: const TextStyle(
 //                     fontSize: 13,
 //                     fontFamily: 'Sarabun',
-//                     color: Color(0xFF000070),
+//                     color: Color(0xFFC9166D),
 //                     fontWeight: FontWeight.normal,
 //                   ),
 //                 ),
@@ -2706,7 +2706,7 @@
 //               fontSize: 15.00,
 //               fontFamily: 'Sarabun',
 //               color: Color(
-//                 0xFF000070,
+//                 0xFFC9166D,
 //               ),
 //             ),
 //           ),
@@ -2757,7 +2757,7 @@
 //               fontSize: 15.00,
 //               fontFamily: 'Sarabun',
 //               color: Color(
-//                 0xFF000070,
+//                 0xFFC9166D,
 //               ),
 //             ),
 //           ),
@@ -2783,7 +2783,7 @@
 //             ),
 //             decoration: BoxDecoration(
 //               borderRadius: BorderRadius.circular(5.0),
-//               color: const Color(0xFF0B5C9E),
+//               color: const Color(0xFFC9166D),
 //             ),
 //             width: 30.0,
 //             height: 30.0,
@@ -2795,7 +2795,7 @@
 //               title,
 //               style: new TextStyle(
 //                 fontSize: 12.0,
-//                 color: const Color(0xFF000070),
+//                 color: const Color(0xFFC9166D),
 //                 fontWeight: FontWeight.normal,
 //                 fontFamily: 'Sarabun',
 //               ),

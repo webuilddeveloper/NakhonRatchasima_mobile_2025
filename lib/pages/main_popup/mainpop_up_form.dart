@@ -3,6 +3,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../component/blurred_network_image.dart';
+
 class MainPopup extends StatefulWidget {
   MainPopup({super.key, this.model, this.nav});
 
@@ -71,9 +73,8 @@ class _MainPopup extends State<MainPopup> {
                         child: Center(
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(8.0),
-                            child: Image.network(
-                              '${document['imageUrl']}',
-                              fit: BoxFit.fill,
+                            child: BlurredNetworkImage(
+                              imageUrl: '${document['imageUrl'] ?? ''}',
                               height: 480,
                               width: 360,
                             ),
@@ -99,7 +100,7 @@ class _MainPopup extends State<MainPopup> {
               //           borderRadius: BorderRadius.circular(5),
               //           // shape: BoxShape.circle,
               //           color: _current == index
-              //               ? Color(0xFFFF7514)
+              //               ? Color(0xFFF670C3)
               //               : Color.fromRGBO(0, 0, 0, 0.4),
               //         ));
               //   }).toList(),

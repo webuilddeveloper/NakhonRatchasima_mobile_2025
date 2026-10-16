@@ -3,9 +3,10 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
 
-import '../../component/button_close_back.dart';
 import '../../component/gallery_view.dart';
 import '../../component/link_url_out.dart';
+import '../../component/header.dart';
+import '../../apptheme.dart';
 import '../../shared/api_provider.dart';
 import '../../shared/extension.dart';
 import '../blank_page/blank_loading.dart';
@@ -65,15 +66,15 @@ class _PrivilegeDetailPageState extends State<PrivilegeForm> {
     // ));
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.background,
+      appBar: header(context, () => Navigator.pop(context),
+          title: 'รายละเอียดสิทธิประโยชน์'),
       body: FutureBuilder<dynamic>(
         future: _futureModel, // function where you call your api
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           // AsyncSnapshot<Your object type>
 
           if (snapshot.hasData) {
-            print(
-                '------------------${snapshot.data.toString()}----------------');
             return myContent(snapshot.data[0]);
           } else {
             if (widget.model != null) {
@@ -88,184 +89,134 @@ class _PrivilegeDetailPageState extends State<PrivilegeForm> {
   }
 
   myContent(dynamic model) {
-    double statusBarHeight = MediaQuery.of(context).padding.top;
     List image = ['${model['imageUrl']}'];
+    final description = '${model['description'] ?? ''}'.trim();
     List<ImageProvider> imagePro = [
       model['imageUrl'] != null
           ? NetworkImage(model['imageUrl'])
           : NetworkImage("")
     ];
-    // return Container();
-    return MediaQuery.removePadding(
-      context: context,
-      removeTop: true,
-      child: ListView(
-        shrinkWrap: true,
-        children: [
-          Stack(
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 28),
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(18),
+          child: GalleryView(
+            imageUrl: [...image, ...urlImage],
+            imageProvider: [...imagePro, ...urlImageProvider],
+          ),
+        ),
+        const SizedBox(height: 16),
+        Container(
+          padding: const EdgeInsets.all(18),
+          decoration: BoxDecoration(
+            color: AppColors.surface,
+            borderRadius: BorderRadius.circular(18),
+            border: Border.all(color: AppColors.border),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                child: ListView(
-                  shrinkWrap: true, // 1st add
-                  physics: ClampingScrollPhysics(), // 2nd
-                  children: [
-                    Container(
-                      // width: 500.0,
-                      color: Color(0xFFFFFFF),
-                      child: GalleryView(
-                        imageUrl: [...image, ...urlImage],
-                        imageProvider: [...imagePro, ...urlImageProvider],
-                      ),
-                    ),
-                    Container(
-                      // color: Colors.green,
-                      padding: EdgeInsets.only(
-                        right: 10.0,
-                        left: 10.0,
-                      ),
-                      margin: EdgeInsets.only(right: 50.0, top: 10.0),
-                      child: Text(
-                        '${model['title']}',
-                        style: TextStyle(
-                          fontSize: 18.0,
-                          fontFamily: 'Sarabun',
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Text(
+                '${model['title']}',
+                style: const TextStyle(
+                  color: AppColors.textPrimary,
+                  fontFamily: 'Kanit',
+                  fontSize: 22,
+                  height: 1.25,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 14),
+              Row(
+                children: [
+                  CircleAvatar(
+                    radius: 21,
+                    backgroundColor: AppColors.primarySoft,
+                    backgroundImage: model['imageUrlCreateBy'] != null
+                        ? NetworkImage(model['imageUrlCreateBy'])
+                        : null,
+                    child: model['imageUrlCreateBy'] == null
+                        ? const Icon(Icons.person_outline,
+                            color: AppColors.primary)
+                        : null,
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            right: 10,
-                            left: 10,
+                        Text(
+                          '${model['createBy']}',
+                          style: const TextStyle(
+                            color: AppColors.textPrimary,
+                            fontFamily: 'Kanit',
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
                           ),
-                          child: Row(
-                            children: [
-                              CircleAvatar(
-                                backgroundImage: model['imageUrlCreateBy'] !=
-                                        null
-                                    ? NetworkImage(model['imageUrlCreateBy'])
-                                    : null,
-                              ),
-                              Container(
-                                padding: EdgeInsets.all(10),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      model['createBy'],
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        fontFamily: 'Sarabun',
-                                        fontWeight: FontWeight.w300,
-                                      ),
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          dateStringToDate(
-                                                  model['createDate']) +
-                                              ' | ',
-                                          style: TextStyle(
-                                            fontSize: 10,
-                                            fontFamily: 'Sarabun',
-                                            fontWeight: FontWeight.w300,
-                                          ),
-                                        ),
-                                        Text(
-                                          'เข้าชม ' +
-                                              '${model['view']}' +
-                                              ' ครั้ง',
-                                          style: TextStyle(
-                                            fontSize: 10,
-                                            fontFamily: 'Sarabun',
-                                            fontWeight: FontWeight.w300,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                        ),
+                        Text(
+                          '${dateStringToDate(model['createDate'])}  •  เข้าชม ${model['view']} ครั้ง',
+                          style: const TextStyle(
+                            color: AppColors.textSecondary,
+                            fontFamily: 'Sarabun',
+                            fontSize: 11,
                           ),
                         ),
                       ],
                     ),
-                    Container(
-                      height: 10,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only(
-                        right: 10,
-                        left: 10,
-                      ),
-                      child: new Html(
-                          data: model['description'],
-                          onLinkTap: (url, context, attributes) {
-                            // ignore: deprecated_member_use
-                            launch(url!);
-                          }),
-
-                      // HtmlView(
-                      //   data: model['description'],
-                      //   scrollable:
-                      //       false, //false to use MarksownBody and true to use Marksown
-                      // ),
-                    ),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    Container(
-                      alignment: Alignment.center,
-                      width: double.infinity,
-                      padding: EdgeInsets.symmetric(horizontal: 80.0),
-                      child: Material(
-                        elevation: 5.0,
-                        borderRadius: BorderRadius.circular(10.0),
-                        child: Container(
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5.0),
-                              border: Border.all(
-                                color: Theme.of(context).primaryColor,
-                              )),
-                          child: MaterialButton(
-                            minWidth: MediaQuery.of(context).size.width,
-                            onPressed: () {
-                              launchURL(model['linkUrl']);
-                            },
-                            child: Text(
-                              'ดูรายละเอียดเพิ่มเติม',
-                              style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontFamily: 'Sarabun',
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              Positioned(
-                right: 0,
-                top: statusBarHeight + 5,
-                child: Container(
-                  child: buttonCloseBack(context),
+              if (description.isNotEmpty) ...[
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                  child: Divider(height: 1, color: AppColors.border),
+                ),
+                Html(
+                  data: description,
+                  style: {
+                    'body': Style(
+                      margin: Margins.zero,
+                      padding: HtmlPaddings.zero,
+                      color: AppColors.textSecondary,
+                      fontFamily: 'Sarabun',
+                      fontSize: FontSize(15),
+                      lineHeight: const LineHeight(1.55),
+                    ),
+                  },
+                  onLinkTap: (url, context, attributes) {
+                    if (url != null) launch(url);
+                  },
+                ),
+                const SizedBox(height: 18),
+              ],
+              SizedBox(
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton.icon(
+                  onPressed: () => launchURL(model['linkUrl']),
+                  icon: const Icon(Icons.open_in_new_rounded, size: 19),
+                  label: const Text('ดูรายละเอียดเพิ่มเติม'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: AppColors.surface,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                    textStyle: const TextStyle(
+                      fontFamily: 'Kanit',
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
                 ),
               ),
             ],
-            // overflow: Overflow.clip,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

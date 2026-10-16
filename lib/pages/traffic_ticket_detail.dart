@@ -49,7 +49,7 @@ class _TrafficTicketDetailPageState extends State<TrafficTicketDetail> {
       appBar: header(context, () {
         Navigator.pop(context);
       }, title: 'รายละเอียดใบสั่ง'),
-      backgroundColor: const Color(0xFFF5F8FB),
+      backgroundColor: const Color(0xFFFFFBF7),
       body: _futureBuilder(),
     );
   }
@@ -82,7 +82,7 @@ class _TrafficTicketDetailPageState extends State<TrafficTicketDetail> {
             width: double.infinity,
             alignment: Alignment.centerLeft,
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            color: const Color(0xFFEDF0F3),
+            color: const Color(0xFFFFF3F8),
             child: const Text(
               'รายละเอียดใบสั่ง',
               style: TextStyle(
@@ -233,7 +233,7 @@ class _TrafficTicketDetailPageState extends State<TrafficTicketDetail> {
                   alignment: Alignment.center,
                   // margin: EdgeInsets.symmetric(horizontal: 10),
                   decoration: BoxDecoration(
-                      color: const Color(0xFFEBC22B),
+                      color: const Color(0xFFF670C3),
                       borderRadius: BorderRadius.circular(5),
                       boxShadow: [
                         BoxShadow(
@@ -249,7 +249,7 @@ class _TrafficTicketDetailPageState extends State<TrafficTicketDetail> {
                     style: TextStyle(
                       fontFamily: 'Sarabun',
                       fontSize: 13,
-                      color: Color(0xFF4E2B68),
+                      color: Color(0xFFC9166D),
                     ),
                   ),
                 ),
@@ -271,7 +271,7 @@ class _TrafficTicketDetailPageState extends State<TrafficTicketDetail> {
               style: TextStyle(
                 fontFamily: 'Sarabun',
                 fontSize: 13,
-                color: Color(0xFF9C0000),
+                color: Color(0xFFC9166D),
                 decoration: TextDecoration.underline,
               ),
             ),
@@ -350,7 +350,7 @@ class _TrafficTicketDetailPageState extends State<TrafficTicketDetail> {
                   fontFamily: 'Sarabun',
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF6F267B),
+                  color: Color(0xFFC9166D),
                 ),
               ),
               const Text(
@@ -384,7 +384,7 @@ class _TrafficTicketDetailPageState extends State<TrafficTicketDetail> {
                         width: 150,
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                          color: const Color(0xFF6F267B),
+                          color: const Color(0xFFC9166D),
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: Column(

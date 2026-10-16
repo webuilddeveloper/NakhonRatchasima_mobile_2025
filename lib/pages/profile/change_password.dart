@@ -7,7 +7,6 @@ import 'package:ratchasima/component/header.dart';
 import '../../login.dart';
 import '../../shared/api_provider.dart';
 import '../../widget/text_form_field.dart';
-import 'user_information.dart';
 
 class ChangePasswordPage extends StatefulWidget {
   @override
@@ -99,7 +98,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 style: TextStyle(
                   fontSize: 13,
                   fontFamily: 'Sarabun',
-                  color: Color(0xFF000070),
+                  color: Color(0xFFC9166D),
                   fontWeight: FontWeight.normal,
                 ),
               ),
@@ -140,7 +139,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 style: TextStyle(
                   fontSize: 13,
                   fontFamily: 'Sarabun',
-                  color: Color(0xFF000070),
+                  color: Color(0xFFC9166D),
                   fontWeight: FontWeight.normal,
                 ),
               ),
@@ -188,7 +187,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           TextFormField(
             obscureText: showTxtPasswordOld,
             style: TextStyle(
-              color: Color(0xFF000070),
+              color: Color(0xFFC9166D),
               fontWeight: FontWeight.normal,
               fontFamily: 'Sarabun',
               fontSize: 15.0,
@@ -205,7 +204,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 },
               ),
               filled: true,
-              fillColor: const Color(0xFFfffadd),
+              fillColor: const Color(0xFFFFE3F0),
               contentPadding: EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
               hintText: 'รหัสผ่านปัจจุบัน',
               border: OutlineInputBorder(
@@ -231,7 +230,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           TextFormField(
             obscureText: showTxtPasswordNew,
             style: TextStyle(
-              color: Color(0xFF000070),
+              color: Color(0xFFC9166D),
               fontWeight: FontWeight.normal,
               fontFamily: 'Sarabun',
               fontSize: 15.0,
@@ -248,7 +247,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 },
               ),
               filled: true,
-              fillColor: const Color(0xFFfffadd),
+              fillColor: const Color(0xFFFFE3F0),
               contentPadding: EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
               hintText: 'รหัสผ่านใหม่',
               border: OutlineInputBorder(
@@ -280,7 +279,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           TextFormField(
             obscureText: showTxtConPasswordNew,
             style: TextStyle(
-              color: Color(0xFF000070),
+              color: Color(0xFFC9166D),
               fontWeight: FontWeight.normal,
               fontFamily: 'Sarabun',
               fontSize: 15.0,
@@ -299,7 +298,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 },
               ),
               filled: true,
-              fillColor: const Color(0xFFfffadd),
+              fillColor: const Color(0xFFFFE3F0),
               contentPadding: EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
               hintText: 'ยืนยันรหัสผ่านใหม่',
               border: OutlineInputBorder(
@@ -386,7 +385,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
             ),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5.0),
-              color: Color(0xFF0B5C9E),
+              color: Color(0xFFC9166D),
             ),
             width: 30.0,
             height: 30.0,
@@ -417,13 +416,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     );
   }
 
-  void goBack() async {
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(
-        builder: (context) => UserInformationPage(),
-      ),
-      (Route<dynamic> route) => false,
-    );
+  void goBack() {
+    Navigator.of(context).pop(true);
     // Navigator.pop(context, false);
     //  Navigator.of(context).push(
     //   MaterialPageRoute(

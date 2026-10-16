@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:ratchasima/component/korat_ui.dart';
 
 import '../shared/api_provider.dart';
 import 'blank_page/blank_loading.dart';
@@ -46,58 +47,10 @@ class _MyLicense extends State<MyLicense> {
       backgroundColor: Color(0xFFF3F5F5),
       resizeToAvoidBottomInset: true,
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        // forceMaterialTransparency: true,
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        titleSpacing: 5,
-        automaticallyImplyLeading: false,
-        flexibleSpace: Container(
-          width: double.infinity,
-          padding: EdgeInsets.only(
-            top: MediaQuery.of(context).padding.top + 20,
-            left: 15,
-            right: 15,
-          ),
-          child: Row(
-            children: [
-              InkWell(
-                onTap: () {
-                  widget.changePage!(0);
-                  // Navigator.pop(context);
-                },
-                child: Container(
-                  // alignment: Alignment.center,
-                  width: 35,
-                  decoration: BoxDecoration(
-                    color: Color(0XFF213F91),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Center(
-                    child: Icon(
-                      Icons.arrow_back_ios_new,
-                      size: 20,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(width: 10),
-              Expanded(
-                child: Text(
-                  'ใบอนุญาตของฉัน',
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: 'Kanit',
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+      appBar: KoratAppBar(
+        title: 'ใบอนุญาตของฉัน',
+        showBack: true,
+        onBack: () => widget.changePage?.call(0),
       ),
       body: NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (OverscrollIndicatorNotification overScroll) {
@@ -151,7 +104,7 @@ class _MyLicense extends State<MyLicense> {
                                       style: selectedButtonIndex == 1
                                           ? ElevatedButton.styleFrom(
                                               backgroundColor:
-                                                  Color(0xFF0C387D),
+                                                  Color(0xFFC9166D),
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(20),
@@ -159,7 +112,7 @@ class _MyLicense extends State<MyLicense> {
                                             )
                                           : OutlinedButton.styleFrom(
                                               side: BorderSide(
-                                                  color: Color(0xFF0C387D),
+                                                  color: Color(0xFFC9166D),
                                                   width: 1),
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:
@@ -171,7 +124,7 @@ class _MyLicense extends State<MyLicense> {
                                         style: TextStyle(
                                             color: selectedButtonIndex == 1
                                                 ? Colors.white
-                                                : Color(0xFF0C387D),
+                                                : Color(0xFFC9166D),
                                             fontFamily: 'Kanit',
                                             fontSize: 14,
                                             fontWeight: FontWeight.w400),
@@ -190,7 +143,7 @@ class _MyLicense extends State<MyLicense> {
                                       style: selectedButtonIndex == 2
                                           ? ElevatedButton.styleFrom(
                                               backgroundColor:
-                                                  Color(0xFF0C387D),
+                                                  Color(0xFFC9166D),
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(20),
@@ -198,7 +151,7 @@ class _MyLicense extends State<MyLicense> {
                                             )
                                           : OutlinedButton.styleFrom(
                                               side: BorderSide(
-                                                  color: Color(0xFF0C387D),
+                                                  color: Color(0xFFC9166D),
                                                   width: 1),
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:
@@ -210,7 +163,7 @@ class _MyLicense extends State<MyLicense> {
                                         style: TextStyle(
                                             color: selectedButtonIndex == 2
                                                 ? Colors.white
-                                                : Color(0xFF0C387D),
+                                                : Color(0xFFC9166D),
                                             fontFamily: 'Kanit',
                                             fontSize: 14,
                                             fontWeight: FontWeight.w400),
@@ -279,7 +232,7 @@ class _MyLicense extends State<MyLicense> {
                                     'ประกาศนียบัตร',
                                     style: TextStyle(
                                       fontSize: 20.0,
-                                      color: Color(0xFF213F91),
+                                      color: Color(0xFFC9166D),
                                       fontFamily: 'Kanit',
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -288,7 +241,7 @@ class _MyLicense extends State<MyLicense> {
                                     'นายท้ายเรือกลเดินทะเลชั้นสอง',
                                     style: TextStyle(
                                       fontSize: 20.0,
-                                      color: Color(0xFF213F91),
+                                      color: Color(0xFFC9166D),
                                       fontFamily: 'Kanit',
                                       fontWeight: FontWeight.bold,
                                     ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ratchasima/pages/complain/complain_add_detail.dart';
-import 'package:ratchasima/shared/api_provider.dart';
+import 'package:ratchasima/apptheme.dart';
+import 'package:ratchasima/component/korat_ui.dart';
+
+import 'complain_add_detail.dart';
 
 class ComplainDetail extends StatefulWidget {
   const ComplainDetail({super.key});
@@ -10,124 +12,121 @@ class ComplainDetail extends StatefulWidget {
 }
 
 class _ComplainDetailState extends State<ComplainDetail> {
-  late Future<dynamic> _futureCategoryReporter;
+  final _searchController = TextEditingController();
+
+  final _categories = const [
+    {'title': 'ควันพิษและมลพิษ', 'subtitle': 'กลิ่น ควัน หรือมลพิษที่กระทบชุมชน', 'icon': Icons.cloud_rounded, 'color': AppColors.primary},
+    {'title': 'ขยะมูลฝอย', 'subtitle': 'ขยะตกค้าง จุดทิ้งขยะ หรือการจัดเก็บ', 'icon': Icons.delete_outline_rounded, 'color': AppColors.success},
+    {'title': 'มลพิษทางเสียง', 'subtitle': 'เสียงดังรบกวนในชุมชน', 'icon': Icons.volume_up_rounded, 'color': AppColors.warning},
+    {'title': 'สัตว์จรจัด', 'subtitle': 'สัตว์จรจัดในพื้นที่สาธารณะ', 'icon': Icons.pets_rounded, 'color': AppColors.info},
+    {'title': 'ต้นไม้และพื้นที่สีเขียว', 'subtitle': 'ต้นไม้กีดขวางหรือชำรุด', 'icon': Icons.forest_rounded, 'color': AppColors.success},
+    {'title': 'ประปาและน้ำเสีย', 'subtitle': 'น้ำไม่ไหล ท่อแตก หรือน้ำเสีย', 'icon': Icons.water_drop_outlined, 'color': AppColors.info},
+    {'title': 'ถนนและทางเท้า', 'subtitle': 'ถนนชำรุด หลุมบ่อ หรือทางเท้า', 'icon': Icons.directions_car_filled_outlined, 'color': AppColors.primaryBright},
+    {'title': 'ไฟฟ้าสาธารณะ', 'subtitle': 'ไฟถนนดับหรืออุปกรณ์ชำรุด', 'icon': Icons.bolt_rounded, 'color': AppColors.warning},
+  ];
 
   @override
-  void initState() {
-    super.initState();
-    _futureCategoryReporter = post('${reporterCategoryApi}read', {
-      'skip': 0,
-      'limit': 50,
-    });
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final query = _searchController.text.trim().toLowerCase();
+    final items = _categories.where((item) => '${item['title']} ${item['subtitle']}'.toLowerCase().contains(query)).toList();
+
     return Scaffold(
-        backgroundColor: Color(0xFFf6f8fc),
-        body: SingleChildScrollView(
-          child: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                children: [
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'เลือกหัวข้อ\nที่ต้องการร้องเรียน',
-                      style: TextStyle(
-                        fontFamily: 'Kanit',
-                        fontWeight: FontWeight.w600,
-                        fontSize: 42,
-                        color: Color(0XFFe9ca61),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  FutureBuilder<dynamic>(
-                    future: _futureCategoryReporter,
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(child: CircularProgressIndicator());
-                      } else if (snapshot.hasError) {
-                        return Center(
-                            // child: Text('เกิดข้อผิดพลาด: ${snapshot.error}'));
-                            child: Text('ไม่มีข้อมูลหมวดหมู่'));
-                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                        return Center(child: Text('ไม่มีข้อมูลหมวดหมู่'));
-                      }
-                      final gridItems = snapshot.data!;
-                      return GridView.builder(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 16,
-                          mainAxisSpacing: 16,
-                          childAspectRatio: MediaQuery.of(context).size.width /
-                              (MediaQuery.of(context).size.height / 3),
-                        ),
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: gridItems.length,
-                        itemBuilder: (context, index) {
-                          final item = gridItems[index];
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ComplainAddDetail(
-                                    label: item['title'],
-                                    code: item['code'],
-                                  ),
-                                ),
-                              );
-                            },
-                            child: Container(
-                                height: 100,
-                                decoration: BoxDecoration(
-                                  gradient: const LinearGradient(
-                                    begin: Alignment.centerLeft,
-                                    end: Alignment.centerRight,
-                                    colors: [
-                                      Color(0xFFe7b014),
-                                      Color(0XFFfbd749)
-                                    ],
-                                    stops: [0.0, 0.9],
-                                  ),
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SizedBox(
-                                      width: 80,
-                                      height: 80,
-                                      child: Image.network(
-                                        item['imageUrl'],
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    Text(
-                                      item['title'] ?? '',
-                                      style: const TextStyle(
-                                        fontFamily: 'Kanit',
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                )),
-                          );
-                        },
-                      );
-                    },
-                  ),
-                ],
-              ),
+      backgroundColor: AppColors.background,
+      appBar: KoratAppBar(title: 'แจ้งปัญหา', showBack: true, onBack: () => Navigator.pop(context)),
+      body: ListView(
+        padding: const EdgeInsets.fromLTRB(16, 18, 16, 28),
+        children: [
+          Container(
+            padding: const EdgeInsets.fromLTRB(18, 18, 18, 16),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(colors: [AppColors.primary, AppColors.primaryBright], begin: Alignment.topLeft, end: Alignment.bottomRight),
+              borderRadius: KoratRadius.lg,
+            ),
+            child: const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(children: [Icon(Icons.campaign_rounded, color: AppColors.surface, size: 30), SizedBox(width: 10), Text('แจ้งปัญหาในพื้นที่', style: TextStyle(color: AppColors.surface, fontFamily: 'Kanit', fontSize: 20, fontWeight: FontWeight.w600))]),
+                SizedBox(height: 8),
+                Text('เลือกหัวข้อที่ตรงกับปัญหา เพื่อให้ส่งเรื่องได้รวดเร็วและตรงหน่วยงาน', style: TextStyle(color: AppColors.surface, fontFamily: 'Sarabun', fontSize: 12, height: 1.35)),
+              ],
             ),
           ),
-        ));
+       
+          const SizedBox(height: 14),
+          TextField(
+            controller: _searchController,
+            onChanged: (_) => setState(() {}),
+            decoration: InputDecoration(
+              hintText: 'ค้นหาหัวข้อแจ้งปัญหา',
+              prefixIcon: const Icon(Icons.search_rounded, color: AppColors.primary),
+              filled: true,
+              fillColor: AppColors.surface,
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(14), borderSide: const BorderSide(color: AppColors.border)),
+              enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(14), borderSide: const BorderSide(color: AppColors.border)),
+              focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(14), borderSide: const BorderSide(color: AppColors.primary, width: 1.4)),
+            ),
+          ),
+          const SizedBox(height: 20),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [const Text('เลือกหัวข้อ', style: TextStyle(color: AppColors.textPrimary, fontFamily: 'Kanit', fontSize: 20, fontWeight: FontWeight.w600)), Text('${items.length} หัวข้อ', style: const TextStyle(color: AppColors.primary, fontFamily: 'Sarabun', fontSize: 12))]),
+          const SizedBox(height: 10),
+          if (items.isEmpty)
+            const Padding(padding: EdgeInsets.symmetric(vertical: 48), child: Center(child: Text('ไม่พบหัวข้อที่ค้นหา', style: TextStyle(color: AppColors.textSecondary, fontFamily: 'Sarabun'))))
+          else
+            GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: items.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, crossAxisSpacing: 10, mainAxisSpacing: 10, childAspectRatio: 0.98),
+              itemBuilder: (context, index) {
+                final item = items[index];
+                return _CategoryCard(
+                  item: item,
+                  onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ComplainAddDetail(label: item['title'] as String, code: item['title'] as String))),
+                );
+              },
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+class _CategoryCard extends StatelessWidget {
+  const _CategoryCard({required this.item, required this.onTap});
+
+  final Map<String, Object> item;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = item['color'] as Color;
+    return Material(
+      color: AppColors.surface,
+      borderRadius: KoratRadius.md,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: KoratRadius.md,
+        child: Padding(
+          padding: const EdgeInsets.all(13),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(width: 48, height: 48, decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(15)), child: Icon(item['icon'] as IconData, color: color, size: 27)),
+              const SizedBox(height: 10),
+              Text(item['title'] as String, maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(color: AppColors.textPrimary, fontFamily: 'Kanit', fontSize: 15, fontWeight: FontWeight.w600, height: 1.15)),
+              const SizedBox(height: 4),
+              Expanded(child: Text(item['subtitle'] as String, maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(color: AppColors.textSecondary, fontFamily: 'Sarabun', fontSize: 11, height: 1.2))),
+              Align(alignment: Alignment.bottomRight, child: Icon(Icons.arrow_forward_rounded, color: color, size: 19)),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

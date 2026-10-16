@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 
+import 'blurred_network_image.dart';
+
 const kTranslucentBlackColor = const Color(0x66000000);
 const _kMaxDragSpeed = 400.0;
 
@@ -62,11 +64,10 @@ class _GalleryViewState extends State<GalleryView> {
               child: Container(
                 child: ClipRRect(
                   child: widget.imageUrl[0] != null
-                      ? Image.network(
-                          '${widget.imageUrl[0]}',
+                      ? BlurredNetworkImage(
+                          imageUrl: '${widget.imageUrl[0] ?? ''}',
                           width: MediaQuery.of(context).size.width,
                           height: 360.0,
-                          fit: BoxFit.cover,
                         )
                       : null,
                 ),
@@ -95,13 +96,12 @@ class _GalleryViewState extends State<GalleryView> {
                       child: Container(
                         child: ClipRRect(
                           child: widget.imageUrl[1] != null
-                              ? Image.network(
-                                  '${widget.imageUrl[1]}',
+                              ? BlurredNetworkImage(
+                                  imageUrl: '${widget.imageUrl[1] ?? ''}',
                                   width:
                                       MediaQuery.of(context).size.width / 3.035,
                                   height:
                                       MediaQuery.of(context).size.width / 3.035,
-                                  fit: BoxFit.cover,
                                 )
                               : null,
                         ),
@@ -123,13 +123,12 @@ class _GalleryViewState extends State<GalleryView> {
                         padding: EdgeInsets.only(left: 2.0, right: 2.0),
                         child: ClipRRect(
                           child: widget.imageUrl[2] != null
-                              ? Image.network(
-                                  '${widget.imageUrl[2]}',
+                              ? BlurredNetworkImage(
+                                  imageUrl: '${widget.imageUrl[2] ?? ''}',
                                   width:
                                       MediaQuery.of(context).size.width / 3.035,
                                   height:
                                       MediaQuery.of(context).size.width / 3.035,
-                                  fit: BoxFit.cover,
                                 )
                               : null,
                         ),
@@ -153,14 +152,13 @@ class _GalleryViewState extends State<GalleryView> {
                           Container(
                             child: ClipRRect(
                               child: widget.imageUrl[3] != null
-                                  ? Image.network(
-                                      '${widget.imageUrl[3]}',
+                                  ? BlurredNetworkImage(
+                                      imageUrl: '${widget.imageUrl[3] ?? ''}',
                                       width: MediaQuery.of(context).size.width /
                                           3.035,
                                       height:
                                           MediaQuery.of(context).size.width /
                                               3.035,
-                                      fit: BoxFit.cover,
                                     )
                                   : null,
                             ),

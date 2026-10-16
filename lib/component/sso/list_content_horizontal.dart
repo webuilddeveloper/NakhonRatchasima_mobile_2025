@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../blurred_network_image.dart';
+
 import '../../shared/extension.dart';
 import 'list_content_horizontal_loading.dart';
 
@@ -56,8 +58,8 @@ class _ListContentHorizontal extends State<ListContentHorizontal> {
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        Color(0xFFC5DAFC),
-                        Color(0xFF000070),
+                        Color(0xFFFFE3F0),
+                        Color(0xFFC9166D),
                       ],
                       begin: Alignment.topLeft,
                       end: new Alignment(1, 0.0),
@@ -78,7 +80,7 @@ class _ListContentHorizontal extends State<ListContentHorizontal> {
                   child: Text(
                     widget.title!,
                     style: TextStyle(
-                      color: Color(0xFF000070),
+                      color: Color(0xFFC9166D),
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
                       fontFamily: 'Sarabun',
@@ -98,7 +100,7 @@ class _ListContentHorizontal extends State<ListContentHorizontal> {
                 child: Text(
                   'ดูทั้งหมด',
                   style: TextStyle(
-                    color: Color(0xFFFFC324),
+                    color: Color(0xFFF670C3),
                     decoration: TextDecoration.underline,
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
@@ -195,24 +197,21 @@ myCard(
               : EdgeInsets.all(5),
       decoration: BoxDecoration(
           borderRadius: new BorderRadius.circular(5),
-          // color: Color(0xFF000070),
+          // color: Color(0xFFC9166D),
           color: Colors.transparent),
       width: 150,
       child: Stack(
         alignment: Alignment.topCenter,
         children: [
-          Container(
-            height: 100,
-            decoration: BoxDecoration(
-              borderRadius: new BorderRadius.only(
-                topLeft: const Radius.circular(5.0),
-                topRight: const Radius.circular(5.0),
-              ),
-              color: Colors.white.withAlpha(220),
-              image: DecorationImage(
-                fit: BoxFit.fill,
-                image: NetworkImage(model['imageUrl']),
-              ),
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(5.0),
+              topRight: Radius.circular(5.0),
+            ),
+            child: BlurredNetworkImage(
+              imageUrl: '${model['imageUrl'] ?? ''}',
+              width: double.infinity,
+              height: 100,
             ),
           ),
           Container(

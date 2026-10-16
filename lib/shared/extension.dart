@@ -103,19 +103,19 @@ dialogDatePicker(
         containerHeight: 210.0,
         itemStyle: TextStyle(
           fontSize: 16.0,
-          color: Color(0xFF9A1120),
+          color: Color(0xFFC9166D),
           fontWeight: FontWeight.normal,
           fontFamily: 'Sarabun',
         ),
         doneStyle: TextStyle(
           fontSize: 16.0,
-          color: Color(0xFF9A1120),
+          color: Color(0xFFC9166D),
           fontWeight: FontWeight.normal,
           fontFamily: 'Sarabun',
         ),
         cancelStyle: TextStyle(
           fontSize: 16.0,
-          color: Color(0xFF9A1120),
+          color: Color(0xFFC9166D),
           fontWeight: FontWeight.normal,
           fontFamily: 'Sarabun',
         ),

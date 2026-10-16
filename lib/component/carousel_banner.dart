@@ -1,12 +1,19 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'blurred_network_image.dart';
+
 class CarouselBanner extends StatefulWidget {
-  CarouselBanner({super.key, this.model, this.nav});
+  CarouselBanner({
+    super.key,
+    this.model,
+    this.nav,
+    this.blurOverflow = true,
+  });
 
   final Future<dynamic>? model;
   final Function(String, String, dynamic, String, String)? nav;
+  final bool blurOverflow;
 
   @override
   _CarouselBanner createState() => _CarouselBanner();
@@ -69,11 +76,11 @@ class _CarouselBanner extends State<CarouselBanner> {
                             child: ClipRRect(
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(15)),
-                              child: Image.network(
-                                document['imageUrl'],
-                                fit: BoxFit.fill,
+                              child: BlurredNetworkImage(
+                                imageUrl: '${document['imageUrl'] ?? ''}',
                                 height: 161,
                                 width: double.infinity,
+                                blurWhenNeeded: widget.blurOverflow,
                               ),
                             ),
                           ),
@@ -83,7 +90,7 @@ class _CarouselBanner extends State<CarouselBanner> {
                   ),
                 ),
                 Container(
-                  color: Color(0xFFF5F8FB),
+                  color: Color(0xFFFFFBF7),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: snapshot.data.map<Widget>((url) {
@@ -103,8 +110,8 @@ class _CarouselBanner extends State<CarouselBanner> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                           color: _current == index
-                              ? Color(0xFFfad84c)
-                              : Color(0xFF9e6e19),
+                              ? Color(0xFFC9166D)
+                              : Color(0xFFFFE3F0),
                           // : Color.fromRGBO(0, 0, 0, 0.4),
                         ),
                       );

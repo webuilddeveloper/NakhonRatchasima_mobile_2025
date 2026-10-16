@@ -46,7 +46,7 @@ class _TrafficTicketTMPPageState extends State<TrafficTicketTMP> {
         },
         title: 'ใบสั่งค้างชำระ (PTM)',
       ),
-      backgroundColor: const Color(0xFFF5F8FB),
+      backgroundColor: const Color(0xFFFFFBF7),
       body: InkWell(
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
@@ -78,7 +78,7 @@ class _TrafficTicketTMPPageState extends State<TrafficTicketTMP> {
     return Column(
       children: [
         Container(
-          color: const Color(0xFFEDF0F3),
+          color: const Color(0xFFFFF3F8),
           padding: const EdgeInsets.all(10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -217,7 +217,7 @@ class _TrafficTicketTMPPageState extends State<TrafficTicketTMP> {
               _textRowExpanded(
                 title: model['accuse1_CODE'],
                 value: model['fine1'],
-                valueColor: const Color(0xFFFF7B06),
+                valueColor: const Color(0xFFF670C3),
                 expandedRight: false,
                 spaceBetween: 60,
               ),
@@ -225,7 +225,7 @@ class _TrafficTicketTMPPageState extends State<TrafficTicketTMP> {
               _textRowExpanded(
                 title: model['accuse2_CODE'],
                 value: model['fine2'],
-                valueColor: const Color(0xFFFF7B06),
+                valueColor: const Color(0xFFF670C3),
                 expandedRight: false,
                 spaceBetween: 60,
               ),
@@ -233,7 +233,7 @@ class _TrafficTicketTMPPageState extends State<TrafficTicketTMP> {
               _textRowExpanded(
                 title: model['accuse3_CODE'],
                 value: model['fine3'],
-                valueColor: const Color(0xFFFF7B06),
+                valueColor: const Color(0xFFF670C3),
                 expandedRight: false,
                 spaceBetween: 60,
               ),
@@ -241,7 +241,7 @@ class _TrafficTicketTMPPageState extends State<TrafficTicketTMP> {
               _textRowExpanded(
                 title: model['accuse4_CODE'],
                 value: model['fine4'],
-                valueColor: const Color(0xFFFF7B06),
+                valueColor: const Color(0xFFF670C3),
                 expandedRight: false,
                 spaceBetween: 60,
               ),
@@ -249,7 +249,7 @@ class _TrafficTicketTMPPageState extends State<TrafficTicketTMP> {
               _textRowExpanded(
                 title: model['accuse5_CODE'],
                 value: model['fine5'],
-                valueColor: const Color(0xFFFF7B06),
+                valueColor: const Color(0xFFF670C3),
                 expandedRight: false,
                 spaceBetween: 60,
               ),
@@ -257,7 +257,7 @@ class _TrafficTicketTMPPageState extends State<TrafficTicketTMP> {
             _textRowExpanded(
               title: 'ค่าปรับทั้งหมด',
               value: model['fine_AMT'],
-              valueColor: const Color(0xFFFF7B06),
+              valueColor: const Color(0xFFF670C3),
               valueSize: 20,
             ),
           ],
@@ -270,7 +270,7 @@ class _TrafficTicketTMPPageState extends State<TrafficTicketTMP> {
     return Container(
       height: 2,
       margin: const EdgeInsets.symmetric(vertical: 10),
-      color: const Color(0xFFEDF0F3),
+      color: const Color(0xFFFFF3F8),
     );
   }
 

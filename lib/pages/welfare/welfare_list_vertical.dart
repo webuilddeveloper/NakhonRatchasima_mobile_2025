@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
+import '../../component/blurred_network_image.dart';
 import '../../shared/extension.dart';
 import 'welfare_form.dart';
 
@@ -130,9 +131,11 @@ class WelfareListVerticalState extends State<WelfareListVertical> {
                                               // margin: EdgeInsets.all(5),
                                               height: 90,
                                               width: 90,
-                                              child: Image.network(
-                                                '${snapshot.data[index]['imageUrl']}',
-                                                fit: BoxFit.cover,
+                                              child: BlurredNetworkImage(
+                                                imageUrl:
+                                                    '${snapshot.data[index]['imageUrl'] ?? ''}',
+                                                width: double.infinity,
+                                                height: double.infinity,
                                                 // loadingBuilder: (BuildContext context,
                                                 //     Widget child,
                                                 //     ImageChunkEvent loadingProgress) {

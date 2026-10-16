@@ -47,7 +47,7 @@ class _DisputeAnAllegationPageState extends State<DisputeAnAllegation> {
         },
         title: 'ยื่นอุทธรณ์',
       ),
-      backgroundColor: Color(0xFFF5F8FB),
+      backgroundColor: Color(0xFFFFFBF7),
       body: InkWell(
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
@@ -136,7 +136,7 @@ class _DisputeAnAllegationPageState extends State<DisputeAnAllegation> {
                     fontFamily: 'Sarabun',
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF6F267B),
+                    color: Color(0xFFC9166D),
                   ),
                 ),
                 InkWell(
@@ -149,7 +149,7 @@ class _DisputeAnAllegationPageState extends State<DisputeAnAllegation> {
                       fontFamily: 'Sarabun',
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF6F267B),
+                      color: Color(0xFFC9166D),
                       decoration: TextDecoration.underline,
                     ),
                   ),
@@ -226,7 +226,7 @@ class _DisputeAnAllegationPageState extends State<DisputeAnAllegation> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
               color: model['disputeStatus'] == "NORMAL"
-                  ? Color(0xFFEBC22B)
+                  ? Color(0xFFF670C3)
                   : Color(0xFF7948AD),
             ),
             child: Column(
@@ -309,7 +309,7 @@ class _DisputeAnAllegationPageState extends State<DisputeAnAllegation> {
     return Container(
       height: 2,
       margin: EdgeInsets.symmetric(vertical: 10),
-      color: Color(0xFFEDF0F3),
+      color: Color(0xFFFFF3F8),
     );
   }
 

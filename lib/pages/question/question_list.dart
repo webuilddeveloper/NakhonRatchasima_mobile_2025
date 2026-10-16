@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ratchasima/component/header.dart';
 import 'package:ratchasima/pages/question/question_list_form.dart';
 
 import '../../shared/api_provider.dart';
@@ -50,58 +51,7 @@ class _QuestionList extends State<QuestionList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        // forceMaterialTransparency: true,
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        titleSpacing: 5,
-        automaticallyImplyLeading: false,
-        flexibleSpace: Container(
-          width: double.infinity,
-          padding: EdgeInsets.only(
-            top: MediaQuery.of(context).padding.top + 20,
-            left: 15,
-            right: 15,
-          ),
-          child: Row(
-            children: [
-              InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  // alignment: Alignment.center,
-                  width: 35,
-                  decoration: BoxDecoration(
-                    color: Color(0XFF213F91),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Center(
-                    child: Icon(
-                      Icons.arrow_back_ios_new,
-                      size: 20,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Text(
-                  'ถาม - ตอบ',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: 'Kanit',
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              SizedBox(width: 30),
-            ],
-          ),
-        ),
-      ),
+      appBar: header(context, goBack, title: 'ถาม - ตอบ'),
       body: NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (OverscrollIndicatorNotification overScroll) {
           overScroll.disallowIndicator();
@@ -144,7 +94,7 @@ class _QuestionList extends State<QuestionList> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25.0),
                           side: BorderSide(
-                            color: Color(0xFF0C387D),
+                            color: Color(0xFFC9166D),
                             width: 2.0,
                           ),
                         ),
@@ -163,14 +113,14 @@ class _QuestionList extends State<QuestionList> {
                             children: [
                               Icon(
                                 Icons.add_circle_outline,
-                                color: Color(0xFF0C387D),
+                                color: Color(0xFFC9166D),
                               ),
                               SizedBox(width: 5),
                               new Text(
                                 'เพิ่มคำถามใหม่',
                                 style: new TextStyle(
                                   fontSize: 16.0,
-                                  color: Color(0xFF0C387D),
+                                  color: Color(0xFFC9166D),
                                   fontWeight: FontWeight.normal,
                                   fontFamily: 'Kanit',
                                 ),

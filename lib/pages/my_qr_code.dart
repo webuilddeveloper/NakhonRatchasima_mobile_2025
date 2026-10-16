@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:ratchasima/apptheme.dart';
+import 'package:ratchasima/component/korat_ui.dart';
 
 // import '../component/material/check_avatar.dart';
 // import '../shared/api_provider.dart';
@@ -9,8 +11,8 @@ import 'package:qr_flutter/qr_flutter.dart';
 class MyQrCode extends StatefulWidget {
   MyQrCode({super.key, this.model, this.changePage});
 
-  dynamic model;
-  Function? changePage;
+  final dynamic model;
+  final Function? changePage;
 
   @override
   _MyQrCode createState() => _MyQrCode();
@@ -61,60 +63,14 @@ class _MyQrCode extends State<MyQrCode> {
     );
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.background,
       resizeToAvoidBottomInset: true,
-      extendBodyBehindAppBar: true,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight),
-        child: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          titleSpacing: 5,
-          automaticallyImplyLeading: false,
-          flexibleSpace: SafeArea(
-            child: Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: Row(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      width: 35,
-                      height: 35,
-                      decoration: BoxDecoration(
-                        color: const Color(0XFF213F91),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const Center(
-                        child: Icon(
-                          Icons.arrow_back_ios_new,
-                          size: 20,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  const Expanded(
-                    child: Text(
-                      'คิวอาโค้ดของฉัน',
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'Kanit',
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
+      extendBodyBehindAppBar: false,
+      appBar: KoratAppBar(
+        title: 'คิวอาร์โค้ดของฉัน',
+        subtitle: 'แสดงให้อุปกรณ์อื่นสแกนเพื่อดูข้อมูลสมาชิก',
+        showBack: true,
+        onBack: goBack,
       ),
       body: NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (OverscrollIndicatorNotification overScroll) {
@@ -138,7 +94,9 @@ class _MyQrCode extends State<MyQrCode> {
                     data: qrUri.toString(),
                     size: 250,
                     backgroundColor: Colors.white,
-                    foregroundColor: Color(0xFF0C387D),
+                    eyeStyle: const QrEyeStyle(color: AppColors.primary),
+                    dataModuleStyle:
+                        const QrDataModuleStyle(color: AppColors.primary),
                   ),
                 ),
               ),
@@ -149,7 +107,7 @@ class _MyQrCode extends State<MyQrCode> {
                 "assets/images/bg_buttom_qr_code.png",
                 height: MediaQuery.of(context).size.height * 0.47,
                 width: MediaQuery.of(context).size.width,
-                color: const Color(0xFF0C387D),
+                color: const Color(0xFFC9166D),
                 fit: BoxFit.fill,
               ),
             ),

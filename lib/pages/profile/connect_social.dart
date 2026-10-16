@@ -10,7 +10,6 @@ import 'package:ratchasima/component/header.dart';
 import '../../shared/api_provider.dart';
 import '../../widget/text_form_field.dart';
 import '../blank_page/dialog_fail.dart';
-import 'user_information.dart';
 
 class ConnectSocialPage extends StatefulWidget {
   @override
@@ -659,7 +658,7 @@ class _ConnectSocialPageState extends State<ConnectSocialPage> {
                   ),
                   filled: true,
                   fillColor: showIsEdit
-                      ? const Color(0xFFfffadd)
+                      ? const Color(0xFFFFE3F0)
                       : const Color(0xFF707070),
                   contentPadding: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
                   hintText: 'รหัสผ่านใหม่',
@@ -726,7 +725,7 @@ class _ConnectSocialPageState extends State<ConnectSocialPage> {
                     ),
                     filled: true,
                     fillColor: showIsEdit
-                        ? const Color(0xFFfffadd)
+                        ? const Color(0xFFFFE3F0)
                         : const Color(0xFF707070),
                     contentPadding:
                         const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
@@ -853,13 +852,8 @@ class _ConnectSocialPageState extends State<ConnectSocialPage> {
     );
   }
 
-  void goBack() async {
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(
-        builder: (context) => UserInformationPage(),
-      ),
-      (Route<dynamic> route) => false,
-    );
+  void goBack() {
+    Navigator.of(context).pop(true);
     // Navigator.pop(context, false);
     // Navigator.of(context).push(
     //   MaterialPageRoute(

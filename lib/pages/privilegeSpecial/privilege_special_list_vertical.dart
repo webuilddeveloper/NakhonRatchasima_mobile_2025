@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../component/blurred_network_image.dart';
 import '../../shared/extension.dart';
 import 'privilege_special_form.dart';
 
@@ -63,7 +64,7 @@ class _PrivilegeSpecialListVertical
                       child: Text(
                         widget.title!,
                         style: TextStyle(
-                          color: Color(0xFF1B6CA8),
+                          color: Color(0xFFF670C3),
                           fontWeight: FontWeight.bold,
                           fontSize: 18.0,
                           fontFamily: 'Kanit',
@@ -104,9 +105,11 @@ class _PrivilegeSpecialListVertical
                                 width: 165,
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(5),
-                                  child: Image.network(
-                                    '${snapshot.data[index]['imageUrl']}',
-                                    fit: BoxFit.fill,
+                                  child: BlurredNetworkImage(
+                                    imageUrl:
+                                        '${snapshot.data[index]['imageUrl'] ?? ''}',
+                                    width: double.infinity,
+                                    height: double.infinity,
                                   ),
                                 ),
                               ),

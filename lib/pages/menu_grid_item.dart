@@ -40,7 +40,7 @@ class _MenuGridItem extends State<MenuGridItem> {
         },
         child: Container(
           // margin: EdgeInsets.symmetric(horizontal: widget.isCenter ? 1.0 : 0.0),
-          // color: widget.isPrimaryColor ? Color(0xFFFF7900) : Color(0xFF000070),
+          // color: widget.isPrimaryColor ? Color(0xFFF670C3) : Color(0xFFC9166D),
           color: Colors.transparent,
           height: (width / 3),
           child: Column(
@@ -53,11 +53,11 @@ class _MenuGridItem extends State<MenuGridItem> {
                   gradient: LinearGradient(
                     colors: [
                       !widget.isPrimaryColor!
-                          ? Color(0xFFFF7900)
-                          : Color(0xFF000070),
+                          ? Color(0xFFF670C3)
+                          : Color(0xFFC9166D),
                       !widget.isPrimaryColor!
-                          ? Color(0xFFFF7900)
-                          : Color(0xFF000070),
+                          ? Color(0xFFF670C3)
+                          : Color(0xFFC9166D),
                     ],
                     begin: Alignment.topLeft,
                     end: new Alignment(1, 0.0),

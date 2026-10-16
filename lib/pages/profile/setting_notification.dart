@@ -6,7 +6,6 @@ import 'package:ratchasima/component/header.dart';
 import '../../shared/api_provider.dart';
 
 import '../blank_page/dialog_fail.dart';
-import 'user_information.dart';
 
 class SettingNotificationPage extends StatefulWidget {
   @override
@@ -49,8 +48,11 @@ class _SettingNotificationPageState extends State<SettingNotificationPage> {
 
   Future<dynamic> readNotification() async {
     var value = await storage.read(key: 'dataUserLoginDDPM');
-    var user = json.decode(value!);
+    if (value == null || value.isEmpty) return;
+
+    var user = json.decode(value);
     if (user['code'] != '') {
+      if (!mounted) return;
       setState(() {
         _username = user['username'] ?? '';
       });
@@ -59,33 +61,37 @@ class _SettingNotificationPageState extends State<SettingNotificationPage> {
       'username': _username,
     });
 
-    if (result['status'] == 'S') {
+    if (result['status'] == 'S' && result['objectData'] is Map) {
+      final objectData = result['objectData'] as Map;
       await storage.write(
         key: 'dataNotificationDDPM',
-        value: jsonEncode(result['objectData']),
+        value: jsonEncode(objectData),
       );
 
+      if (!mounted) return;
       setState(() {
-        isSwitchedEventPage = result['objectData']['eventPage'];
-        isSwitchedContactPage = result['objectData']['contactPage'];
-        isSwitchedKnowledgePage = result['objectData']['knowledgePage'];
-        isSwitchedMainPage = result['objectData']['mainPage'];
-        isSwitchedNewsPage = result['objectData']['newsPage'];
-        isSwitchedPoiPage = result['objectData']['poiPage'];
-        isSwitchedPollPage = result['objectData']['pollPage'];
-        isSwitchedPrivilegePage = result['objectData']['privilegePage'];
-        isSwitchedReporterPage = result['objectData']['reporterPage'];
-        isSwitchedWelfarePage = result['objectData']['welfarePage'];
+        isSwitchedEventPage = objectData['eventPage'] == true;
+        isSwitchedContactPage = objectData['contactPage'] == true;
+        isSwitchedKnowledgePage = objectData['knowledgePage'] == true;
+        isSwitchedMainPage = objectData['mainPage'] == true;
+        isSwitchedNewsPage = objectData['newsPage'] == true;
+        isSwitchedPoiPage = objectData['poiPage'] == true;
+        isSwitchedPollPage = objectData['pollPage'] == true;
+        isSwitchedPrivilegePage = objectData['privilegePage'] == true;
+        isSwitchedReporterPage = objectData['reporterPage'] == true;
+        isSwitchedWelfarePage = objectData['welfarePage'] == true;
         isSwitchedCooperativeFormPage =
-            result['objectData']['cooperativeFormPage'];
-        isSwitchedWarningPage = result['objectData']['warningPage'];
+            objectData['cooperativeFormPage'] == true;
+        isSwitchedWarningPage = objectData['warningPage'] == true;
       });
     }
   }
 
   Future<dynamic> updateNotication() async {
     var value = await storage.read(key: 'dataNotificationDDPM');
-    var data = json.decode(value!);
+    if (value == null || value.isEmpty) return;
+
+    var data = json.decode(value);
     data['eventPage'] = isSwitchedEventPage;
     data['contactPage'] = isSwitchedContactPage;
     data['knowledgePage'] = isSwitchedKnowledgePage;
@@ -99,44 +105,18 @@ class _SettingNotificationPageState extends State<SettingNotificationPage> {
     data['cooperativeFormPage'] = isSwitchedCooperativeFormPage;
     data['warningPage'] = isSwitchedWarningPage;
 
-    final result = await postObjectData('m/Register/notification/update', data);
+    final result = await postObjectData('m/register/notification/update', data);
 
-    if (result['status'] == 'S') {
+    if (result['status'] == 'S' && result['objectData'] is Map) {
       await storage.write(
         key: 'dataNotificationDDPM',
         value: jsonEncode(result['objectData']),
       );
-
-      setState(() {
-        isSwitchedEventPage = result['objectData']['eventPage:'] ?? '';
-        isSwitchedContactPage = result['objectData']['contactPage:'] ?? '';
-        isSwitchedKnowledgePage = result['objectData']['knowledgePage:'] ?? '';
-        isSwitchedMainPage = result['objectData']['mainPage'] ?? '';
-        isSwitchedNewsPage = result['objectData']['newsPage'] ?? '';
-        isSwitchedPoiPage = result['objectData']['poiPage'] ?? '';
-        isSwitchedPollPage = result['objectData']['pollPage'] ?? '';
-        isSwitchedPrivilegePage = result['objectData']['privilegePage'] ?? '';
-        isSwitchedReporterPage = result['objectData']['reporterPage'] ?? '';
-        isSwitchedWelfarePage = result['objectData']['welfarePage'] ?? '';
-        isSwitchedCooperativeFormPage =
-            result['objectData']['cooperativeFormPage'] ?? '';
-      });
     }
   }
 
-  void goBack() async {
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(
-        builder: (context) => UserInformationPage(),
-      ),
-      (Route<dynamic> route) => false,
-    );
-    // Navigator.pop(context, false);
-    // // Navigator.of(context).push(
-    // //   MaterialPageRoute(
-    // //     builder: (context) => UserInformationPage(),
-    // //   ),
-    // // );
+  void goBack() {
+    Navigator.of(context).pop(true);
   }
 
   card() {
@@ -193,7 +173,7 @@ class _SettingNotificationPageState extends State<SettingNotificationPage> {
                     updateNotication();
                   },
                   activeTrackColor: Color(0xFFFEE9E8),
-                  activeColor: Theme.of(context).primaryColor,
+                  activeThumbColor: Theme.of(context).primaryColor,
                 ),
               ),
             ],
@@ -237,7 +217,7 @@ class _SettingNotificationPageState extends State<SettingNotificationPage> {
                     updateNotication();
                   },
                   activeTrackColor: Color(0xFFFEE9E8),
-                  activeColor: Theme.of(context).primaryColor,
+                  activeThumbColor: Theme.of(context).primaryColor,
                 ),
               ),
             ],
@@ -281,7 +261,7 @@ class _SettingNotificationPageState extends State<SettingNotificationPage> {
                     updateNotication();
                   },
                   activeTrackColor: Color(0xFFFEE9E8),
-                  activeColor: Theme.of(context).primaryColor,
+                  activeThumbColor: Theme.of(context).primaryColor,
                 ),
               ),
             ],
@@ -325,7 +305,7 @@ class _SettingNotificationPageState extends State<SettingNotificationPage> {
                     updateNotication();
                   },
                   activeTrackColor: Color(0xFFFEE9E8),
-                  activeColor: Theme.of(context).primaryColor,
+                  activeThumbColor: Theme.of(context).primaryColor,
                 ),
               ),
             ],
@@ -369,7 +349,7 @@ class _SettingNotificationPageState extends State<SettingNotificationPage> {
                     updateNotication();
                   },
                   activeTrackColor: Color(0xFFFEE9E8),
-                  activeColor: Theme.of(context).primaryColor,
+                  activeThumbColor: Theme.of(context).primaryColor,
                 ),
               ),
             ],
@@ -413,7 +393,7 @@ class _SettingNotificationPageState extends State<SettingNotificationPage> {
                     updateNotication();
                   },
                   activeTrackColor: Color(0xFFFEE9E8),
-                  activeColor: Theme.of(context).primaryColor,
+                  activeThumbColor: Theme.of(context).primaryColor,
                 ),
               ),
             ],
@@ -457,7 +437,7 @@ class _SettingNotificationPageState extends State<SettingNotificationPage> {
                     updateNotication();
                   },
                   activeTrackColor: Color(0xFFFEE9E8),
-                  activeColor: Theme.of(context).primaryColor,
+                  activeThumbColor: Theme.of(context).primaryColor,
                 ),
               ),
             ],
@@ -501,7 +481,7 @@ class _SettingNotificationPageState extends State<SettingNotificationPage> {
                     updateNotication();
                   },
                   activeTrackColor: Color(0xFFFEE9E8),
-                  activeColor: Theme.of(context).primaryColor,
+                  activeThumbColor: Theme.of(context).primaryColor,
                 ),
               ),
             ],
@@ -545,7 +525,7 @@ class _SettingNotificationPageState extends State<SettingNotificationPage> {
                     updateNotication();
                   },
                   activeTrackColor: Color(0xFFFEE9E8),
-                  activeColor: Theme.of(context).primaryColor,
+                  activeThumbColor: Theme.of(context).primaryColor,
                 ),
               ),
             ],
@@ -589,7 +569,7 @@ class _SettingNotificationPageState extends State<SettingNotificationPage> {
                     updateNotication();
                   },
                   activeTrackColor: Color(0xFFFEE9E8),
-                  activeColor: Theme.of(context).primaryColor,
+                  activeThumbColor: Theme.of(context).primaryColor,
                 ),
               ),
             ],

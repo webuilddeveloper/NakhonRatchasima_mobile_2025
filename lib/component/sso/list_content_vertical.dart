@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../blurred_network_image.dart';
+
 import '../../shared/api_provider.dart';
 import '../../shared/extension.dart';
 
@@ -56,24 +58,21 @@ myCard(String title, String url, dynamic model, BuildContext context) {
       margin: EdgeInsets.all(5),
       decoration: BoxDecoration(
           borderRadius: new BorderRadius.circular(5),
-          // color: Color(0xFF000070),
+          // color: Color(0xFFC9166D),
           color: Colors.transparent),
       width: 150,
       child: Stack(
         alignment: Alignment.topCenter,
         children: [
-          Container(
-            height: 250,
-            decoration: BoxDecoration(
-              borderRadius: new BorderRadius.only(
-                topLeft: const Radius.circular(5.0),
-                topRight: const Radius.circular(5.0),
-              ),
-              color: Colors.white.withAlpha(220),
-              image: DecorationImage(
-                fit: BoxFit.fill,
-                image: NetworkImage(model['imageUrl']),
-              ),
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(5.0),
+              topRight: Radius.circular(5.0),
+            ),
+            child: BlurredNetworkImage(
+              imageUrl: '${model['imageUrl'] ?? ''}',
+              width: double.infinity,
+              height: 250,
             ),
           ),
           Container(

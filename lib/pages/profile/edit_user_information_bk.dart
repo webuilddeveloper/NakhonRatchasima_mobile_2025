@@ -593,7 +593,7 @@ class _EditUserInformationPageState extends State<EditUserInformationPage> {
                     style: const TextStyle(
                       fontSize: 13,
                       fontFamily: 'Sarabun',
-                      color: Color(0xFF000070),
+                      color: Color(0xFFC9166D),
                       fontWeight: FontWeight.normal,
                     ),
                   ),
@@ -647,7 +647,7 @@ class _EditUserInformationPageState extends State<EditUserInformationPage> {
                     style: const TextStyle(
                       fontSize: 13,
                       fontFamily: 'Sarabun',
-                      color: Color(0xFF000070),
+                      color: Color(0xFFC9166D),
                       fontWeight: FontWeight.normal,
                     ),
                   ),
@@ -732,19 +732,19 @@ class _EditUserInformationPageState extends State<EditUserInformationPage> {
           containerHeight: 210.0,
           itemStyle: TextStyle(
             fontSize: 16.0,
-            color: Color(0xFF000070),
+            color: Color(0xFFC9166D),
             fontWeight: FontWeight.normal,
             fontFamily: 'Sarabun',
           ),
           doneStyle: TextStyle(
             fontSize: 16.0,
-            color: Color(0xFF000070),
+            color: Color(0xFFC9166D),
             fontWeight: FontWeight.normal,
             fontFamily: 'Sarabun',
           ),
           cancelStyle: TextStyle(
             fontSize: 16.0,
-            color: Color(0xFF000070),
+            color: Color(0xFFC9166D),
             fontWeight: FontWeight.normal,
             fontFamily: 'Sarabun',
           ),
@@ -833,7 +833,7 @@ class _EditUserInformationPageState extends State<EditUserInformationPage> {
             //     vertical: 0,
             //   ),
             //   decoration: BoxDecoration(
-            //     color: Color(0xFFC5DAFC),
+            //     color: Color(0xFFFFE3F0),
             //     borderRadius: BorderRadius.circular(
             //       10,
             //     ),
@@ -876,7 +876,7 @@ class _EditUserInformationPageState extends State<EditUserInformationPage> {
             //             fontSize: 15.00,
             //             fontFamily: 'Sarabun',
             //             color: Color(
-            //               0xFF000070,
+            //               0xFFC9166D,
             //             ),
             //           ),
             //         ),
@@ -913,14 +913,14 @@ class _EditUserInformationPageState extends State<EditUserInformationPage> {
                 child: TextFormField(
                   controller: txtDate,
                   style: const TextStyle(
-                    color: Color(0xFF000070),
+                    color: Color(0xFFC9166D),
                     fontWeight: FontWeight.normal,
                     fontFamily: 'Sarabun',
                     fontSize: 15.0,
                   ),
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: const Color(0xFFfffadd),
+                    fillColor: const Color(0xFFFFE3F0),
                     contentPadding:
                         const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
                     hintText: "วันเดือนปีเกิด",
@@ -990,7 +990,7 @@ class _EditUserInformationPageState extends State<EditUserInformationPage> {
                 vertical: 0,
               ),
               decoration: BoxDecoration(
-                color: const Color(0xFFfffadd),
+                color: const Color(0xFFFFE3F0),
                 borderRadius: BorderRadius.circular(
                   10,
                 ),
@@ -1032,7 +1032,7 @@ class _EditUserInformationPageState extends State<EditUserInformationPage> {
                         fontSize: 15.00,
                         fontFamily: 'Sarabun',
                         color: Color(
-                          0xFF000070,
+                          0xFFC9166D,
                         ),
                       ),
                     ),
@@ -1077,7 +1077,7 @@ class _EditUserInformationPageState extends State<EditUserInformationPage> {
                 vertical: 0,
               ),
               decoration: BoxDecoration(
-                color: const Color(0xFFfffadd),
+                color: const Color(0xFFFFE3F0),
                 borderRadius: BorderRadius.circular(
                   10,
                 ),
@@ -1127,7 +1127,7 @@ class _EditUserInformationPageState extends State<EditUserInformationPage> {
                               fontSize: 15.00,
                               fontFamily: 'Sarabun',
                               color: Color(
-                                0xFF000070,
+                                0xFFC9166D,
                               ),
                             ),
                           ),
@@ -1178,7 +1178,7 @@ class _EditUserInformationPageState extends State<EditUserInformationPage> {
                               fontSize: 15.00,
                               fontFamily: 'Sarabun',
                               color: Color(
-                                0xFF000070,
+                                0xFFC9166D,
                               ),
                             ),
                           ),
@@ -1197,7 +1197,7 @@ class _EditUserInformationPageState extends State<EditUserInformationPage> {
                 vertical: 0,
               ),
               decoration: BoxDecoration(
-                color: const Color(0xFFfffadd),
+                color: const Color(0xFFFFE3F0),
                 borderRadius: BorderRadius.circular(
                   10,
                 ),
@@ -1245,7 +1245,7 @@ class _EditUserInformationPageState extends State<EditUserInformationPage> {
                               fontSize: 15.00,
                               fontFamily: 'Sarabun',
                               color: Color(
-                                0xFF000070,
+                                0xFFC9166D,
                               ),
                             ),
                           ),
@@ -1294,7 +1294,7 @@ class _EditUserInformationPageState extends State<EditUserInformationPage> {
                               fontSize: 15.00,
                               fontFamily: 'Sarabun',
                               color: Color(
-                                0xFF000070,
+                                0xFFC9166D,
                               ),
                             ),
                           ),
@@ -1312,7 +1312,7 @@ class _EditUserInformationPageState extends State<EditUserInformationPage> {
                 vertical: 0,
               ),
               decoration: BoxDecoration(
-                color: const Color(0xFFfffadd),
+                color: const Color(0xFFFFE3F0),
                 borderRadius: BorderRadius.circular(
                   10,
                 ),
@@ -1358,7 +1358,7 @@ class _EditUserInformationPageState extends State<EditUserInformationPage> {
                               fontSize: 15.00,
                               fontFamily: 'Sarabun',
                               color: Color(
-                                0xFF000070,
+                                0xFFC9166D,
                               ),
                             ),
                           ),
@@ -1405,7 +1405,7 @@ class _EditUserInformationPageState extends State<EditUserInformationPage> {
                               fontSize: 15.00,
                               fontFamily: 'Sarabun',
                               color: Color(
-                                0xFF000070,
+                                0xFFC9166D,
                               ),
                             ),
                           ),
@@ -1423,7 +1423,7 @@ class _EditUserInformationPageState extends State<EditUserInformationPage> {
                 vertical: 0,
               ),
               decoration: BoxDecoration(
-                color: const Color(0xFFfffadd),
+                color: const Color(0xFFFFE3F0),
                 borderRadius: BorderRadius.circular(
                   10,
                 ),
@@ -1466,7 +1466,7 @@ class _EditUserInformationPageState extends State<EditUserInformationPage> {
                               fontSize: 15.00,
                               fontFamily: 'Sarabun',
                               color: Color(
-                                0xFF000070,
+                                0xFFC9166D,
                               ),
                             ),
                           ),
@@ -1510,7 +1510,7 @@ class _EditUserInformationPageState extends State<EditUserInformationPage> {
                               fontSize: 15.00,
                               fontFamily: 'Sarabun',
                               color: Color(
-                                0xFF000070,
+                                0xFFC9166D,
                               ),
                             ),
                           ),
@@ -1529,7 +1529,7 @@ class _EditUserInformationPageState extends State<EditUserInformationPage> {
                 child: Material(
                   elevation: 5.0,
                   borderRadius: BorderRadius.circular(10.0),
-                  color: const Color(0xFFFF7514),
+                  color: const Color(0xFFF670C3),
                   child: MaterialButton(
                     minWidth: MediaQuery.of(context).size.width,
                     height: 40,
@@ -1575,7 +1575,7 @@ class _EditUserInformationPageState extends State<EditUserInformationPage> {
             ),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5.0),
-              color: const Color(0xFF0B5C9E),
+              color: const Color(0xFFC9166D),
             ),
             width: 30.0,
             height: 30.0,
@@ -1587,7 +1587,7 @@ class _EditUserInformationPageState extends State<EditUserInformationPage> {
               title,
               style: new TextStyle(
                 fontSize: 12.0,
-                color: const Color(0xFF000070),
+                color: const Color(0xFFC9166D),
                 fontWeight: FontWeight.normal,
                 fontFamily: 'Sarabun',
               ),

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import '../../component/button_close_back.dart';
 import '../../component/comment.dart';
 import '../../component/content.dart';
+import '../../component/korat_ui.dart';
+import '../../apptheme.dart';
 import '../../shared/api_provider.dart';
 
 // ignore: must_be_immutable
@@ -71,9 +72,13 @@ class _NewsForm extends State<NewsForm> {
 
   @override
   Widget build(BuildContext context) {
-    double statusBarHeight = MediaQuery.of(context).padding.top;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.background,
+      appBar: KoratAppBar(
+        title: 'รายละเอียดข่าว',
+        showBack: true,
+        onBack: () => Navigator.pop(context),
+      ),
       body: NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (OverscrollIndicatorNotification overScroll) {
           overScroll.disallowIndicator();
@@ -93,27 +98,15 @@ class _NewsForm extends State<NewsForm> {
           child: ListView(
             shrinkWrap: true,
             children: [
-              Stack(
-                children: [
-                  Content(
-                    pathShare: 'content/news/',
-                    code: widget.code,
-                    url: widget.url!,
-                    model: widget.model,
-                    urlGallery: widget.urlGallery,
-                  ),
-                  Positioned(
-                    right: 0,
-                    top: statusBarHeight + 5,
-                    child: Container(
-                      child: buttonCloseBack(context),
-                    ),
-                  ),
-                ],
-                // overflow: Overflow.clip,
+              Content(
+                pathShare: 'content/news/',
+                code: widget.code,
+                url: widget.url ?? newsApi,
+                model: widget.model,
+                urlGallery: widget.urlGallery ?? newsGalleryApi,
               ),
-              // ),
-              widget.urlComment != '' ? comment! : Container(),
+              if ((widget.urlComment ?? newsCommentApi).isNotEmpty)
+                comment!,
             ],
           ),
         ),

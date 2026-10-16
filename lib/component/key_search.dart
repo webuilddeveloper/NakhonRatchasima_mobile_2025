@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:ratchasima/apptheme.dart';
 
 class KeySearch extends StatefulWidget {
-  KeySearch({super.key, this.show, this.onKeySearchChange});
+  KeySearch(
+      {super.key, this.show, this.onKeySearchChange, required this.hintext});
 
 //  final VoidCallback onTabCategory;
   final bool? show;
   final Function(String)? onKeySearchChange;
+  final String hintext;
 
   @override
   _SearchBox createState() =>
@@ -32,35 +35,25 @@ class _SearchBox extends State<KeySearch> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-
     return Container(
-        margin: EdgeInsets.symmetric(horizontal: 10.0),
-        padding: EdgeInsets.symmetric(horizontal: 10.0),
-        decoration: new BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 0,
-              blurRadius: 7,
-              offset: Offset(0, 3),
-            ),
-          ],
-          borderRadius: new BorderRadius.circular(6.0),
+        margin: const EdgeInsets.symmetric(horizontal: 16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 14.0),
+        decoration: BoxDecoration(
+          color: AppColors.surface,
+          border: Border.all(color: AppColors.border),
+          borderRadius: BorderRadius.circular(14.0),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              height: 45.0,
-              width: width - 90.0,
+            Expanded(
               child: TextField(
                 autofocus: false,
                 cursorColor: Theme.of(context).primaryColor,
                 controller: txtDescription,
                 onChanged: (text) {
                   onKeySearchChange!(txtDescription.text);
+                  setState(() {});
                 },
                 keyboardType: TextInputType.multiline,
                 maxLines: 1,
@@ -69,11 +62,22 @@ class _SearchBox extends State<KeySearch> {
                   fontFamily: 'Kanit',
                 ),
                 textAlign: TextAlign.left,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.transparent,
-                  hintText: 'ใส่คำที่ต้องการค้นหา',
-                  contentPadding: const EdgeInsets.only(left: 5.0, right: 5.0),
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.transparent,
+                    hintText: widget.hintext,
+                    suffixIcon: txtDescription.text.isEmpty
+                        ? null
+                        : IconButton(
+                            icon: const Icon(Icons.close_rounded, size: 18),
+                            color: AppColors.textSecondary,
+                            onPressed: () {
+                              txtDescription.clear();
+                              onKeySearchChange!('');
+                              setState(() {});
+                            },
+                          ),
+                    contentPadding: const EdgeInsets.only(left: 5.0, right: 5.0),
                   enabledBorder: const OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.white)),
                   focusedBorder: const OutlineInputBorder(

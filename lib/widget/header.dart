@@ -1,26 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:ratchasima/component/korat_ui.dart';
 
-header(BuildContext? context, void Function() goBack, {String? title}) {
-  return AppBar(
-    backgroundColor: const Color(0xFFFF7900),
-    title: Row(
-      children: [
-        Image.asset(
-          'assets/logo/logo.png',
-          height: 50,
-        ),
-        const Padding(
-          padding: EdgeInsets.only(
-            left: 10,
-          ),
-          child: Text(
-            'Khub Dee',
-            style: TextStyle(
-              fontFamily: 'Sarabun',
-            ),
-          ),
-        )
-      ],
-    ),
+PreferredSizeWidget header(
+  BuildContext? context,
+  void Function() goBack, {
+  String? title,
+}) {
+  return KoratAppBar(
+    title: title?.isNotEmpty == true ? title! : 'Korat Connect',
+    showBack: true,
+    onBack: goBack,
   );
 }
