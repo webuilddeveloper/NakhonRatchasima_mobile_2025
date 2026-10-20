@@ -44,6 +44,8 @@ dependencies:
   badges: ^3.1.2
   flutter_local_notifications: ^20.1.0
   timezone: ^0.10.1
+  speech_to_text: ^7.0.0
+  shared_preferences: ^2.3.2
 
 dependency_overrides:
   html: 0.15.6
@@ -72,6 +74,7 @@ flutter:
     - assets/logo/icons/
     - assets/images/
     - assets/logo/socials/
+    - assets/docs/
 
   fonts:
     - family: Charmonman

@@ -7,6 +7,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:ratchasima/component/ai_chat_page.dart';
 import 'package:ratchasima/component/carousel_rotation.dart';
 import 'package:ratchasima/component/blurred_network_image.dart';
 import 'package:ratchasima/component/korat_ui.dart';
@@ -95,6 +96,87 @@ class HomePageState extends State<HomePage> {
       body: WillPopScope(
         child: _buildBackground(),
         onWillPop: confirmExit,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 80),
+        child: Tooltip(
+          message: 'ผู้ช่วยโคราช AI',
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(28),
+              gradient: const LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color(0xFFE22880),
+                  AppColors.primary,
+                  Color(0xFF9E0B52),
+                ],
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.primary.withValues(alpha: 0.40),
+                  blurRadius: 16,
+                  offset: const Offset(0, 6),
+                  spreadRadius: 1,
+                ),
+                BoxShadow(
+                  color: AppColors.primaryBright.withValues(alpha: 0.20),
+                  blurRadius: 6,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(28),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => const AiChatPage()),
+                  );
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 11),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        width: 32,
+                        height: 32,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.22),
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: Colors.white.withValues(alpha: 0.35),
+                            width: 0.8,
+                          ),
+                        ),
+                        child: const Icon(
+                          Icons.auto_awesome_rounded,
+                          color: Colors.white,
+                          size: 17,
+                        ),
+                      ),
+                      const SizedBox(width: 9),
+                      const Text(
+                        'ผู้ช่วยโคราช AI',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'Kanit',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 0.2,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
