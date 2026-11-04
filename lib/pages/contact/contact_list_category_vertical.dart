@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 import '../../component/blurred_network_image.dart';
 import 'contact_list.dart';

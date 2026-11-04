@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:table_calendar/table_calendar.dart';
+import '../../apptheme.dart';
 
 import '../../component/blurred_network_image.dart';
 import '../../shared/api_provider.dart';
@@ -144,7 +145,7 @@ class _CalendarPageState extends State<CalendarPage>
               fontWeight: FontWeight.normal,
             ),
             holidayTextStyle: TextStyle().copyWith(
-              color: Color(0xFFFFE3F0),
+              color: AppColors.error,
               fontFamily: 'Sarabun',
               fontWeight: FontWeight.normal,
             ),
@@ -164,7 +165,7 @@ class _CalendarPageState extends State<CalendarPage>
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color(0xFFFFE3F0),
+                    color: AppColors.primarySoft,
                   ),
                   width: 100,
                   height: 100,

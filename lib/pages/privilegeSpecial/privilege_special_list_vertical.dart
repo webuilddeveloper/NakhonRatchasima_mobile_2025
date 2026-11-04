@@ -64,7 +64,7 @@ class _PrivilegeSpecialListVertical
                       child: Text(
                         widget.title!,
                         style: TextStyle(
-                          color: Color(0xFFF670C3),
+                          color: Color(0xFFD84315),
                           fontWeight: FontWeight.bold,
                           fontSize: 18.0,
                           fontFamily: 'Kanit',

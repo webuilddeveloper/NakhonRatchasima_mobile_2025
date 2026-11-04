@@ -59,7 +59,7 @@ class _QuestionListDetail extends State<QuestionListDetail> {
 
   callRead() async {
     profileCode = (await storage.read(key: 'profileCode2'))!;
-    if (profileCode != '' && profileCode != null) {
+    if (profileCode != '') {
       setState(() {
         _futureProfile = postDio(profileReadApi, {"code": profileCode});
       });
@@ -432,7 +432,7 @@ class _QuestionListDetail extends State<QuestionListDetail> {
               style: TextStyle(
                 fontSize: 13,
                 fontFamily: 'Kanit',
-                color: Color(0xFFC9166D),
+                color: Color(0xFFBF360C),
                 fontWeight: FontWeight.normal,
               ),
             ),

@@ -287,7 +287,7 @@ class _MenuState extends State<Menu> {
   //                     ? Container(
   //                         padding: const EdgeInsets.all(10),
   //                         decoration: BoxDecoration(
-  //                           color: const Color(0xFFC9166D),
+  //                           color: const Color(0xFFBF360C),
   //                           borderRadius: BorderRadius.circular(15),
   //                         ),
   //                         child: Image.asset(
@@ -379,7 +379,7 @@ class _MenuState extends State<Menu> {
                       ? Container(
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
-                            color: const Color(0xFFC9166D),
+                            color: AppColors.primary,
                             borderRadius: BorderRadius.circular(15),
                           ),
                           child: Icon(

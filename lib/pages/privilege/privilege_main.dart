@@ -182,9 +182,9 @@ class _PrivilegeMain extends State<PrivilegeMain> {
       model: post('${privilegeApi}read', {
         'skip': 0,
         'limit': _limit,
-        'keySearch': keySearch != null ? keySearch : '',
-        'isHighlight': isHighlight != null ? isHighlight : false,
-        'category': categorySelected != null ? categorySelected : ''
+        'keySearch': keySearch,
+        'isHighlight': isHighlight,
+        'category': categorySelected
       }),
     );
   }
@@ -249,15 +249,15 @@ class _PrivilegeMain extends State<PrivilegeMain> {
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            color: categorySelected ==
-                                    snapshot.data[index]['code']
-                                ? AppColors.primary
-                                : AppColors.textSecondary,
+                            color:
+                                categorySelected == snapshot.data[index]['code']
+                                    ? AppColors.primary
+                                    : AppColors.textSecondary,
                             fontSize: 14,
-                            fontWeight: categorySelected ==
-                                    snapshot.data[index]['code']
-                                ? FontWeight.w600
-                                : FontWeight.w400,
+                            fontWeight:
+                                categorySelected == snapshot.data[index]['code']
+                                    ? FontWeight.w600
+                                    : FontWeight.w400,
                             fontFamily: 'Kanit',
                           ),
                         ),

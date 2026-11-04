@@ -38,11 +38,9 @@ class _ReporterHistoryListVertical extends State<ReporterHistoryListVertical> {
   checkImageAvatar(String img) {
     return CircleAvatar(
       backgroundColor: Colors.white,
-      backgroundImage: img != null
-          ? NetworkImage(
-              img,
-            )
-          : null,
+      backgroundImage: NetworkImage(
+        img,
+      ),
     );
   }
 
@@ -163,16 +161,16 @@ class _ReporterHistoryListVertical extends State<ReporterHistoryListVertical> {
                                 fontSize: 10.0,
                                 fontWeight: FontWeight.normal,
                                 color: snapshot.data[index]['status2'] == "N"
-                                    ? Color(0xFFC9166D)
+                                    ? Color(0xFFBF360C)
                                     : snapshot.data[index]['status2'] == "A"
                                         ? Color(0xFFFF8900)
                                         : snapshot.data[index]['status2'] == "C"
                                             ? Color(0xFF1AD14C)
                                             : Color(0xFFF23A36),
-                                            // snapshot.data[index]['status2'] ==
-                                            //         Color(0xFFF23A36)
-                                            //     ? 'ยกเลิกการดำเนินการ'
-                                            //     : "",
+                                // snapshot.data[index]['status2'] ==
+                                //         Color(0xFFF23A36)
+                                //     ? 'ยกเลิกการดำเนินการ'
+                                //     : "",
                               ),
                               textAlign: TextAlign.left,
                             ),

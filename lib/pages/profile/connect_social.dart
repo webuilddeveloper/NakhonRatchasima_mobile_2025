@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_line_sdk/flutter_line_sdk.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:ratchasima/apptheme.dart';
 import 'package:ratchasima/component/header.dart';
 
 import '../../shared/api_provider.dart';
@@ -658,13 +659,13 @@ class _ConnectSocialPageState extends State<ConnectSocialPage> {
                   ),
                   filled: true,
                   fillColor: showIsEdit
-                      ? const Color(0xFFFFE3F0)
+                      ? AppColors.surface
                       : const Color(0xFF707070),
-                  contentPadding: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
                   hintText: 'รหัสผ่านใหม่',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide.none,
+                    borderSide: const BorderSide(color: AppColors.border),
                   ),
                   errorStyle: const TextStyle(
                     fontWeight: FontWeight.normal,
@@ -725,14 +726,14 @@ class _ConnectSocialPageState extends State<ConnectSocialPage> {
                     ),
                     filled: true,
                     fillColor: showIsEdit
-                        ? const Color(0xFFFFE3F0)
+                        ? AppColors.surface
                         : const Color(0xFF707070),
                     contentPadding:
-                        const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
+                        const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
                     hintText: 'ยืนยันรหัสผ่านใหม่',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
-                      borderSide: BorderSide.none,
+                      borderSide: const BorderSide(color: AppColors.border),
                     ),
                     errorStyle: const TextStyle(
                       fontWeight: FontWeight.normal,

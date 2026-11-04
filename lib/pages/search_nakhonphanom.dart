@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import '../apptheme.dart';
 import '../component/korat_ui.dart';
 import 'about_us/about_us_form.dart';
+import 'air_quality/korat_air_quality_page.dart';
 import 'complain/complain.dart';
 import 'contact/contact_list.dart';
+import 'disaster/korat_disaster_alert_page.dart';
 import 'event_calendar/event_calendar_list.dart';
 import 'knowledge/knowledge_list.dart';
 import 'news/news_list.dart';
@@ -16,7 +18,10 @@ import 'privilege/privilege_main.dart';
 import 'question/question_list.dart';
 import 'reporter/reporter_history_list.dart';
 import 'training_course/training_course_list.dart';
+import 'transit/korat_transit_page.dart';
 import 'welfare_list.dart';
+
+typedef KoratServicesPage = SearchNakhonPhanomPage;
 
 class SearchNakhonPhanomPage extends StatefulWidget {
   const SearchNakhonPhanomPage({super.key});
@@ -40,6 +45,36 @@ class _SearchNakhonPhanomPageState extends State<SearchNakhonPhanomPage> {
       badge: 'ใช้งานบ่อย',
       pageBuilder: (_) =>
           const ComplainListCategory(title: 'แจ้งเหตุ / แจ้งปัญหา'),
+    ),
+    _ServiceItem(
+      title: 'เตือนภัยพิบัติฉุกเฉิน',
+      subtitle: 'เตือนภัยระดับน้ำลำตะคอง สภาพอากาศ และประกาศฉุกเฉินโคราช',
+      group: 'บริการประชาชน',
+      keywords: 'เตือนภัย ภัยพิบัติ น้ำท่วม ลำตะคอง พายุ อากาศ ฝุ่น ฉุกเฉิน ปภ disaster alert',
+      icon: Icons.crisis_alert_rounded,
+      color: const Color(0xFFEA580C),
+      badge: 'ฉุกเฉิน',
+      pageBuilder: (_) => const KoratDisasterAlertPage(),
+    ),
+    _ServiceItem(
+      title: 'คุณภาพอากาศและฝุ่น PM 2.5',
+      subtitle: 'รายงานดัชนีคุณภาพอากาศและคำแนะนำสุขภาพแบบเรียลไทม์',
+      group: 'บริการประชาชน',
+      keywords: 'คุณภาพอากาศ ฝุ่น pm2.5 aqi มลพิษ สุขภาพ อากาศ',
+      icon: Icons.air_rounded,
+      color: const Color(0xFF0284C7),
+      badge: 'เรียลไทม์',
+      pageBuilder: (_) => const KoratAirQualityPage(),
+    ),
+    _ServiceItem(
+      title: 'เส้นทางรถสองแถว & ขนส่ง',
+      subtitle: 'แผนที่สายรถสองแถว จุดจอด และเวลาให้บริการเมืองโคราช',
+      group: 'บริการประชาชน',
+      keywords: 'รถสองแถว ขนส่ง เดินทาง แผนที่ สายรถ รถเมล์ โคราช transit bus',
+      icon: Icons.directions_bus_rounded,
+      color: const Color(0xFF10B981),
+      badge: 'แผนที่',
+      pageBuilder: (_) => const KoratTransitPage(),
     ),
     _ServiceItem(
       title: 'ติดตามปัญหา',

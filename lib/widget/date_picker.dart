@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart'
     as datatTimePicker;
-// import 'package:flutter_datetime_picker/flutter_datetime_picker.dart' as datatTimePicker;
+import '../apptheme.dart';
 
 datePicker(
     {TextEditingController? controller,
@@ -20,8 +20,9 @@ datePicker(
           title!,
           style: const TextStyle(
             fontSize: 15.000,
-            fontFamily: 'Sarabun',
-            color: Color(0xFFF670C3),
+            fontFamily: 'Kanit',
+            fontWeight: FontWeight.w500,
+            color: AppColors.primary,
           ),
         ),
         SizedBox(
@@ -29,19 +30,23 @@ datePicker(
           child: TextField(
             controller: controller,
             style: const TextStyle(
-              color: Color(0xFFC9166D),
+              color: AppColors.textPrimary,
               fontWeight: FontWeight.normal,
               fontFamily: 'Sarabun',
               fontSize: 15.0,
             ),
             decoration: InputDecoration(
               filled: true,
-              fillColor: const Color(0xFFFFE3F0),
-              contentPadding: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
+              fillColor: AppColors.surface,
+              contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
               hintText: "วันเดือนปีเกิด",
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide.none,
+                borderSide: const BorderSide(color: AppColors.border),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+                borderSide: const BorderSide(color: AppColors.border),
               ),
               errorStyle: const TextStyle(
                 fontWeight: FontWeight.normal,
@@ -63,21 +68,21 @@ dialogOpenPickerDate(BuildContext context, TextEditingController controller) {
         containerHeight: 210.0,
         itemStyle: TextStyle(
           fontSize: 16.0,
-          color: Color(0xFFC9166D),
+          color: AppColors.textPrimary,
           fontWeight: FontWeight.normal,
           fontFamily: 'Sarabun',
         ),
         doneStyle: TextStyle(
           fontSize: 16.0,
-          color: Color(0xFFC9166D),
-          fontWeight: FontWeight.normal,
-          fontFamily: 'Sarabun',
+          color: AppColors.primary,
+          fontWeight: FontWeight.w600,
+          fontFamily: 'Kanit',
         ),
         cancelStyle: TextStyle(
           fontSize: 16.0,
-          color: Color(0xFFC9166D),
+          color: AppColors.textSecondary,
           fontWeight: FontWeight.normal,
-          fontFamily: 'Sarabun',
+          fontFamily: 'Kanit',
         ),
       ),
       showTitleActions: true,

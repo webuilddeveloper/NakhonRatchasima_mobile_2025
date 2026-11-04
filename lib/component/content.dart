@@ -1,15 +1,18 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../apptheme.dart';
 import '../shared/api_provider.dart';
 import '../shared/extension.dart';
+import '../shared/mock_repository.dart';
+import 'blurred_network_image.dart';
 import 'gallery_view.dart';
 import 'link_url_out.dart';
 import 'link_url_in.dart';
 
-// ignore: must_be_immutable
 class Content extends StatefulWidget {
   const Content({
     super.key,
@@ -32,7 +35,6 @@ class Content extends StatefulWidget {
 
 class ContentState extends State<Content> {
   Future<dynamic>? _futureModel;
-
   String _urlShared = '';
   List urlImage = [];
   List<ImageProvider> urlImageProvider = [];
@@ -41,321 +43,447 @@ class ContentState extends State<Content> {
   void initState() {
     super.initState();
     sharedApi();
-    _futureModel =
-        post(widget.url, {'skip': 0, 'limit': 1, 'code': widget.code});
-
+    final targetUrl = widget.url.isNotEmpty ? widget.url : newsApi;
+    _futureModel = post(targetUrl, {'skip': 0, 'limit': 1, 'code': widget.code});
     readGallery();
   }
 
+  ImageProvider _resolveImageProvider(dynamic path) {
+    if (path == null) return const AssetImage('assets/logo/logo.png');
+    final str = path.toString().trim();
+    if (str.isEmpty) return const AssetImage('assets/logo/logo.png');
+    if (str.startsWith('assets/')) return AssetImage(str);
+    if (str.startsWith('http://') || str.startsWith('https://')) return NetworkImage(str);
+    if (str.startsWith('/') || str.startsWith('file://')) {
+      return FileImage(File(str.replaceFirst('file://', '')));
+    }
+    return const AssetImage('assets/logo/logo.png');
+  }
+
   Future<dynamic> readGallery() async {
-    final result =
-        await postObjectData(widget.urlGallery!, {'code': widget.code});
+    try {
+      if (widget.urlGallery == null || widget.urlGallery!.isEmpty) return;
+      final result = await postObjectData(widget.urlGallery!, {'code': widget.code});
 
-    if (result['status'] == 'S') {
-      List data = [];
-      List<ImageProvider> dataPro = [];
+      if (result != null && result['status'] == 'S' && result['objectData'] != null) {
+        List data = [];
+        List<ImageProvider> dataPro = [];
 
-      for (var item in result['objectData']) {
-        data.add(item['imageUrl']);
-
-        dataPro.add(
-          item!['imageUrl'] != null
-              ? NetworkImage(item!['imageUrl']!)
-              : const NetworkImage(""),
-        );
+        for (var item in result['objectData']) {
+          if (item != null && item['imageUrl'] != null && item['imageUrl'].toString().isNotEmpty) {
+            data.add(item['imageUrl']);
+            dataPro.add(_resolveImageProvider(item['imageUrl']));
+          }
+        }
+        if (mounted && data.isNotEmpty) {
+          setState(() {
+            urlImage = data;
+            urlImageProvider = dataPro;
+          });
+        }
       }
-      setState(() {
-        urlImage = data;
-        urlImageProvider = dataPro;
-      });
+    } catch (e) {
+      // Graceful fallback without crashing
     }
   }
 
   Future<dynamic> sharedApi() async {
-    await postConfigShare().then(
-      (result) => {
-        if (result['status'] == 'S')
-          {
-            setState(() {
-              _urlShared = result['objectData']['description'];
-            }),
-          }
-      },
-    );
+    try {
+      final result = await postConfigShare();
+      if (result != null && result['status'] == 'S' && result['objectData'] != null) {
+        if (mounted) {
+          setState(() {
+            _urlShared = result['objectData']['description'] ?? '';
+          });
+        }
+      }
+    } catch (_) {}
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<dynamic>(
-      future: _futureModel, // function where you call your api
+      future: _futureModel,
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        // AsyncSnapshot<Your object type>
-        if (snapshot.hasData) {
-          // setState(() {
-          //   urlImage = [snapshot.data[0].imageUrl];
-          // });
-          return myContent(
-            snapshot.data[0],
-          ); //   return Center(child: Text('Error: ${snapshot.error}'));
-        } else {
-          return myContent(
-            widget.model,
-          );
-          // return myContent(widget.model);
+        dynamic model;
+
+        if (snapshot.hasData && snapshot.data != null) {
+          if (snapshot.data is List && (snapshot.data as List).isNotEmpty) {
+            final list = snapshot.data as List;
+            // 1. Look for matching code in API response
+            if (widget.code != null && widget.code!.isNotEmpty) {
+              model = list.firstWhere(
+                (item) => item is Map && item['code'] != null && item['code'].toString() == widget.code,
+                orElse: () => null,
+              );
+            }
+            // 2. If not matched in API, but widget.model matches code, prioritize widget.model
+            if (model == null && widget.model != null && widget.model is Map) {
+              if (widget.code == null || widget.code!.isEmpty || widget.model['code'] == widget.code) {
+                model = widget.model;
+              }
+            }
+            model ??= list[0];
+          } else if (snapshot.data is Map && (snapshot.data as Map).isNotEmpty) {
+            if (widget.code == null || widget.code!.isEmpty || snapshot.data['code'] == widget.code) {
+              model = snapshot.data;
+            }
+          }
         }
+
+        model ??= widget.model;
+
+        // Fallback to mock news item if model is still empty or null
+        if (model == null) {
+          final allNews = KoratMockRepository.getNewsList();
+          model = allNews.firstWhere(
+            (item) => item['code'] == widget.code,
+            orElse: () => allNews.first,
+          );
+        }
+
+        return myContent(model);
       },
     );
   }
 
-  myContent(dynamic model) {
-    List image = ['${model['imageUrl']}'];
-    List<ImageProvider> imagePro = [
-      model['imageUrl'] != null
-          ? NetworkImage(model['imageUrl'])
-          : const NetworkImage("")
-    ];
+  Widget myContent(dynamic model) {
+    final String imageUrl = (model['imageUrl'] ?? '').toString();
+    final List image = imageUrl.isNotEmpty ? [imageUrl] : [];
+    final List<ImageProvider> imagePro =
+        imageUrl.isNotEmpty ? [_resolveImageProvider(imageUrl)] : [];
 
-    return ListView(
-      shrinkWrap: true, // 1st add
-      physics: const ClampingScrollPhysics(), // 2nd
-      children: [
-        Container(
-          // width: 500.0,
-          // color: Color(0xFFFFFFF),
-          color: Colors.white,
-          child: GalleryView(
-            imageUrl: [...image, ...urlImage],
-            imageProvider: [...imagePro, ...urlImageProvider],
-          ),
-        ),
-        Container(
-          // color: Colors.green,
-          padding: const EdgeInsets.only(
-            right: 10.0,
-            left: 10.0,
-          ),
-          margin: const EdgeInsets.only(right: 50.0, top: 10.0),
-          child: Text(
-            '${model['title']}',
-            style: const TextStyle(
-              fontSize: 18.0,
-              fontFamily: 'Sarabun',
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                right: 10,
-                left: 10,
-              ),
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.1,
-                    child: model['userList'] != null &&
-                            model['userList'].length > 0
-                        ? CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                '${model['userList'][0]['imageUrl']}'),
-                          )
-                        : Container(),
+    final allImages = [...image, ...urlImage];
+    final allImageProviders = [...imagePro, ...urlImageProvider];
+
+    final String title = (model['title'] ?? '').toString();
+    final String description = (model['description'] ?? '').toString();
+    final String category = (model['category'] ?? 'ข่าวประชาสัมพันธ์').toString();
+    final String createBy = (model['createBy'] ?? 'สำนักงานจังหวัดนครราชสีมา').toString();
+    final String createDate = model['createDate'] != null
+        ? dateStringToDate(model['createDate'])
+        : (model['date'] ?? 'ล่าสุด');
+    final String views = '${model['view'] ?? 1250}';
+
+    return Container(
+      color: AppColors.background,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // 1. Featured Image / Gallery View
+          if (allImages.isNotEmpty)
+            Container(
+              margin: const EdgeInsets.fromLTRB(16, 12, 16, 16),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.08),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
                   ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.6,
-                    padding: const EdgeInsets.all(10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          model['userList'] != null &&
-                                  model['userList'].length > 0
-                              ? '${model['userList'][0]['firstName']} ${model['userList'][0]['lastName']}'
-                              : '${model['createBy']}',
-                          style: const TextStyle(
-                            fontSize: 15,
-                            fontFamily: 'Sarabun',
-                            fontWeight: FontWeight.w300,
-                          ),
-                          maxLines: 3,
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: allImages.length > 1
+                    ? GalleryView(
+                        imageUrl: allImages,
+                        imageProvider: allImageProviders,
+                      )
+                    : BlurredNetworkImage(
+                        imageUrl: allImages.first,
+                        width: double.infinity,
+                        height: 240,
+                      ),
+              ),
+            ),
+
+          // 2. Main Article Card
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: AppColors.surface,
+              borderRadius: BorderRadius.circular(18),
+              border: Border.all(color: AppColors.border),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.03),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Category Tag
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                      decoration: BoxDecoration(
+                        color: AppColors.primarySoft,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Text(
+                        category,
+                        style: const TextStyle(
+                          color: AppColors.primary,
+                          fontFamily: 'Kanit',
+                          fontSize: 12.5,
+                          fontWeight: FontWeight.w600,
                         ),
-                        Row(
+                      ),
+                    ),
+                    // Share Button
+                    InkWell(
+                      onTap: () {
+                        final RenderBox? box = context.findRenderObject() as RenderBox?;
+                        final shareText = '$_urlShared${widget.pathShare ?? 'content/news/'}${model['code'] ?? ''} $title';
+                        Share.share(
+                          shareText,
+                          subject: title,
+                          sharePositionOrigin: box != null
+                              ? box.localToGlobal(Offset.zero) & box.size
+                              : null,
+                        );
+                      },
+                      borderRadius: BorderRadius.circular(20),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                        decoration: BoxDecoration(
+                          color: AppColors.surfaceWarm,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: const Row(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
+                            Icon(Icons.share_rounded, size: 16, color: AppColors.primary),
+                            SizedBox(width: 4),
                             Text(
-                              model['createDate'] != null
-                                  ? dateStringToDate(model['createDate']) +
-                                      ' | '
-                                  : '',
-                              style: const TextStyle(
-                                fontSize: 10,
-                                fontFamily: 'Sarabun',
-                                fontWeight: FontWeight.w300,
-                              ),
-                            ),
-                            Text(
-                              'เข้าชม ${model['view']} ครั้ง',
-                              style: const TextStyle(
-                                fontSize: 10,
-                                fontFamily: 'Sarabun',
-                                fontWeight: FontWeight.w300,
+                              'แชร์',
+                              style: TextStyle(
+                                fontFamily: 'Kanit',
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.primary,
                               ),
                             ),
                           ],
                         ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.24,
-                    child: Container(
-                      width: 100.0,
-                      height: 35.0,
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                        // padding: EdgeInsets.all(0.0),
-                        onPressed: () {
-                          final RenderBox box =
-                              context.findRenderObject() as RenderBox;
-                          Share.share(
-                            '$_urlShared${widget.pathShare!}${model['code']} ${model['title']}',
-                            subject: '${model['title']}',
-                            sharePositionOrigin:
-                                box.localToGlobal(Offset.zero) & box.size,
-                          );
-                        },
-                        child: Image.asset('assets/images/share.png'),
                       ),
                     ),
+                  ],
+                ),
+                const SizedBox(height: 14),
+
+                // Title
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontFamily: 'Kanit',
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.textPrimary,
+                    height: 1.4,
                   ),
+                ),
+                const SizedBox(height: 14),
+
+                // Author & Metadata Row
+                Row(
+                  children: [
+                    Container(
+                      width: 36,
+                      height: 36,
+                      decoration: const BoxDecoration(
+                        color: AppColors.primarySoft,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.account_balance_rounded,
+                        color: AppColors.primary,
+                        size: 20,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            createBy,
+                            style: const TextStyle(
+                              fontSize: 13.5,
+                              fontFamily: 'Kanit',
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.textPrimary,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const SizedBox(height: 2),
+                          Row(
+                            children: [
+                              const Icon(Icons.access_time_rounded,
+                                  size: 13, color: AppColors.textSecondary),
+                              const SizedBox(width: 4),
+                              Text(
+                                createDate,
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  fontFamily: 'Kanit',
+                                  color: AppColors.textSecondary,
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              const Icon(Icons.visibility_outlined,
+                                  size: 14, color: AppColors.textSecondary),
+                              const SizedBox(width: 4),
+                              Text(
+                                '$views ครั้ง',
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  fontFamily: 'Kanit',
+                                  color: AppColors.textSecondary,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                  child: Divider(color: AppColors.border, height: 1, thickness: 1),
+                ),
+
+                // Body / Description Content
+                _isHtml(description)
+                    ? Html(
+                        data: description,
+                        style: {
+                          "body": Style(
+                            fontFamily: 'Kanit',
+                            fontSize: FontSize(15.5),
+                            color: AppColors.textPrimary,
+                            lineHeight: const LineHeight(1.65),
+                            margin: Margins.zero,
+                            padding: HtmlPaddings.zero,
+                          ),
+                          "p": Style(
+                            fontFamily: 'Kanit',
+                            fontSize: FontSize(15.5),
+                            color: AppColors.textPrimary,
+                            lineHeight: const LineHeight(1.65),
+                            margin: Margins.only(bottom: 12),
+                          ),
+                        },
+                        onLinkTap: (url, context, attributes) {
+                          if (url != null) {
+                            launchUrl(Uri.parse(url),
+                                mode: LaunchMode.externalApplication);
+                          }
+                        },
+                      )
+                    : Text(
+                        description,
+                        style: const TextStyle(
+                          fontSize: 15.5,
+                          fontFamily: 'Kanit',
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.textPrimary,
+                          height: 1.7,
+                        ),
+                      ),
+
+                if (_hasUrl(model['fileUrl']) || _hasUrl(model['linkUrl'])) ...[
+                  const SizedBox(height: 20),
+                  actionButton(model),
                 ],
-              ),
-            ),
-            // Container(
-            //   width: 74.0,
-            //   height: 31.0,
-            //   // decoration: BoxDecoration(
-            //   //     image: DecorationImage(
-            //   //       image: AssetImage('assets/images/share.png'),
-            //   //     )),
-            //   alignment: Alignment.centerRight,
-            //   child: FlatButton(
-            //     padding: EdgeInsets.all(0.0),
-            //     onPressed: () {
-            //       final RenderBox box = context.findRenderObject();
-            //       Share.share(
-            //         _urlShared +
-            //             widget.pathShare +
-            //             '${model['code']}' +
-            //             ' ${model['title']}',
-            //         subject: '${model['title']}',
-            //         sharePositionOrigin:
-            //             box.localToGlobal(Offset.zero) & box.size,
-            //       );
-            //     },
-            //     child: Image.asset('assets/images/share.png'),
-            //   ),
-            // )
-          ],
-        ),
-        Container(
-          height: 10,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(
-            right: 10,
-            left: 10,
-          ),
-          child: Html(
-              data: '${model['description']}',
-              onLinkTap: (url, context, attributes) {
-                // ignore: deprecated_member_use
-                launchUrl(Uri.parse(url.toString()));
-              }
-              // (String url, RenderContext context,
-              //     Map<String, String> attributes, element) {
-              //   launch();
-              // },
-              ),
-
-          // HtmlView(
-          //   data: model['description'],
-          //   scrollable:
-          //       false, //false to use MarksownBody and true to use Marksown
-          // ),
-        ),
-        Container(
-          height: 10,
-        ),
-        if (_hasUrl(model['fileUrl']) || _hasUrl(model['linkUrl']))
-          actionButton(model),
-      ],
-    );
-  }
-
-  linkButton(dynamic model) {
-    return Container(
-      alignment: Alignment.center,
-      width: double.infinity,
-      height: 45.0,
-      padding: const EdgeInsets.symmetric(horizontal: 80.0),
-      child: Material(
-        elevation: 5.0,
-        borderRadius: BorderRadius.circular(10.0),
-        child: Container(
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5.0),
-            border: Border.all(
-              color: Theme.of(context).colorScheme.secondary,
+              ],
             ),
           ),
-          child: MaterialButton(
-            minWidth: MediaQuery.of(context).size.width,
-            onPressed: () {
-              launchInWebViewWithJavaScript('${model['linkUrl']}');
-            },
-            child: Text(
-              '${model['textButton']}',
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.secondary,
-                fontFamily: 'Sarabun',
-              ),
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 2,
-            ),
-          ),
-        ),
+          const SizedBox(height: 20),
+        ],
       ),
     );
   }
 
-  fileUrl(dynamic model) {
-    double width = MediaQuery.of(context).size.width;
+  bool _isHtml(String str) {
+    return str.contains('<p>') ||
+        str.contains('<br>') ||
+        str.contains('<div>') ||
+        str.contains('</span>') ||
+        str.contains('</a>');
+  }
+
+  Widget linkButton(dynamic model) {
     return Container(
-      width: width,
-      alignment: Alignment.center,
-      child: InkWell(
-        onTap: () {
+      width: double.infinity,
+      height: 48,
+      margin: const EdgeInsets.only(top: 8),
+      child: ElevatedButton.icon(
+        icon: const Icon(Icons.open_in_new_rounded, size: 18),
+        label: Text(
+          '${model['textButton'] ?? 'ดูรายละเอียดเพิ่มเติม'}',
+          style: const TextStyle(
+            fontFamily: 'Kanit',
+            fontWeight: FontWeight.w600,
+            fontSize: 14.5,
+          ),
+        ),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.primary,
+          foregroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
+        onPressed: () {
+          launchInWebViewWithJavaScript('${model['linkUrl']}');
+        },
+      ),
+    );
+  }
+
+  Widget fileUrl(dynamic model) {
+    return Container(
+      width: double.infinity,
+      height: 48,
+      margin: const EdgeInsets.only(top: 8),
+      child: OutlinedButton.icon(
+        icon: const Icon(Icons.attach_file_rounded, size: 20),
+        label: const Text(
+          'เปิดเอกสารแนบ (PDF / ไฟล์แนบ)',
+          style: TextStyle(
+            fontFamily: 'Kanit',
+            fontSize: 14.5,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        style: OutlinedButton.styleFrom(
+          foregroundColor: AppColors.primary,
+          side: const BorderSide(color: AppColors.primary),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
+        onPressed: () {
           launchURL('${model['fileUrl']}');
         },
-        child: const Text(
-          'เปิดเอกสารแนบ',
-          style: TextStyle(
-            fontFamily: 'Sarabun',
-            fontSize: 14.0,
-            color: Colors.blue,
-            decoration: TextDecoration.underline,
-          ),
-        ),
       ),
     );
   }
 
-  bool _hasUrl(dynamic value) => value != null && value.toString().trim().isNotEmpty;
+  bool _hasUrl(dynamic value) =>
+      value != null && value.toString().trim().isNotEmpty;
 
   Widget actionButton(dynamic model) {
     if (_hasUrl(model['fileUrl'])) {

@@ -153,7 +153,7 @@
 //             child: Material(
 //               elevation: 5.0,
 //               borderRadius: BorderRadius.circular(10.0),
-//               color: Color(0xFFC9166D),
+//               color: Color(0xFFBF360C),
 //               child: MaterialButton(
 //                 minWidth: 200,
 //                 height: 40,
@@ -269,7 +269,7 @@
 //                             style: TextStyle(
 //                               fontFamily: 'Sarabun',
 //                               fontSize: 15,
-//                               color: Color(0xFFC9166D),
+//                               color: Color(0xFFBF360C),
 //                             ),
 //                           ),
 //                         ),
@@ -384,7 +384,7 @@
 //                               },
 //                               child: Container(
 //                                 decoration: BoxDecoration(
-//                                   color: Color(0xFFC9166D),
+//                                   color: Color(0xFFBF360C),
 //                                   borderRadius: BorderRadius.only(
 //                                     bottomLeft: Radius.circular(10),
 //                                     bottomRight: Radius.circular(10),
@@ -497,7 +497,7 @@
 //                                 style: TextStyle(
 //                                   fontFamily: 'Sarabun',
 //                                   fontSize: 15,
-//                                   color: Color(0xFFC9166D),
+//                                   color: Color(0xFFBF360C),
 //                                 ),
 //                               ),
 //                             ),
@@ -575,7 +575,7 @@
 //                         fontSize: 15.00,
 //                         fontFamily: 'Kanit',
 //                         color: Color(
-//                           0xFFC9166D,
+//                           0xFFBF360C,
 //                         ),
 //                       ),
 //                       overflow: TextOverflow.visible,

@@ -203,7 +203,7 @@ class AppealState extends State<Appeal> {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: Color(0xFFF670C3),
+                    color: Color(0xFFD84315),
                   ),
                   child: Text(
                     'ส่งเรื่องโต้แย้ง',
@@ -272,7 +272,7 @@ class AppealState extends State<Appeal> {
                     width: 40.0,
                     height: 20.0,
                     decoration: BoxDecoration(
-                      color: Color(0xFFC9166D),
+                      color: Color(0xFFBF360C),
                       borderRadius: BorderRadius.circular(5),
                     ),
                     child: MaterialButton(
@@ -451,7 +451,7 @@ class AppealState extends State<Appeal> {
               style: TextStyle(
                 fontSize: 13,
                 fontFamily: 'Sarabun',
-                color: Color(0xFFC9166D),
+                color: Color(0xFFBF360C),
                 fontWeight: FontWeight.normal,
               ),
             ),
@@ -546,7 +546,7 @@ class AppealState extends State<Appeal> {
                             },
                             child: Container(
                               decoration: BoxDecoration(
-                                color: Color(0xFFF670C3),
+                                color: Color(0xFFD84315),
                                 borderRadius: BorderRadius.only(
                                   bottomLeft: Radius.circular(10),
                                   bottomRight: Radius.circular(10),
@@ -659,7 +659,7 @@ class AppealState extends State<Appeal> {
                               style: TextStyle(
                                 fontFamily: 'Sarabun',
                                 fontSize: 15,
-                                color: Color(0xFFC9166D),
+                                color: Color(0xFFBF360C),
                               ),
                             ),
                           ),
@@ -728,7 +728,7 @@ class AppealState extends State<Appeal> {
   //                 },
   //                 child: Container(
   //                   decoration: BoxDecoration(
-  //                     color: Color(0xFFC9166D),
+  //                     color: Color(0xFFBF360C),
   //                     borderRadius: BorderRadius.only(
   //                       bottomLeft: Radius.circular(10),
   //                       bottomRight: Radius.circular(10),

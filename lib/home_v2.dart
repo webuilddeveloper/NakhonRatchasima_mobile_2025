@@ -10,23 +10,18 @@ import 'component/carousel_rotation.dart';
 import 'component/korat_ui.dart';
 import 'login.dart';
 import 'pages/about_us/about_us_form_bk.dart';
-import 'pages/blank_page/blank_loading.dart';
 import 'pages/blank_page/toast_fail.dart';
 import 'pages/contact/contact_list_category.dart';
 import 'pages/dispute_an_allegation.dart';
 import 'pages/event_calendar/event_calendar_main.dart';
 import 'pages/knowledge/knowledge_list.dart';
 import 'pages/main_popup/dialog_main_popup.dart';
-import 'pages/news/news_list.dart';
 import 'pages/notification/notification_list.dart';
-import 'pages/poi/poi_list.dart';
 import 'pages/privilegeSpecial/privilege_special_list.dart';
 import 'pages/profile/user_information.dart';
-import 'profile.dart';
 import 'shared/api_provider.dart';
 import 'component/carousel_banner.dart';
 import 'component/carousel_form.dart';
-import 'component/material/check_avatar.dart';
 import 'component/menu/build_verify_ticket.dart';
 import 'component/menu/color_item.dart';
 import 'component/menu/image_item.dart';
@@ -99,8 +94,8 @@ class _HomePageV2State extends State<HomePageV2> {
       // decoration: BoxDecoration(
       //   gradient: LinearGradient(
       //     colors: [
-      //       Color(0xFFF670C3),
-      //       Color(0xFFF670C3),
+      //       Color(0xFFD84315),
+      //       Color(0xFFD84315),
       //       Color(0xFFFFFFFF),
       //     ],
       //     begin: Alignment.topCenter,
@@ -345,7 +340,7 @@ class _HomePageV2State extends State<HomePageV2> {
                           TextSpan(
                             text: 'ยื่นอุทธรณ์',
                             style: TextStyle(
-                              color: Color(0xFFC9166D),
+                              color: Color(0xFFBF360C),
                               fontSize: 20.0,
                               fontFamily: 'Sarabun',
                               fontWeight: FontWeight.bold,
@@ -354,7 +349,7 @@ class _HomePageV2State extends State<HomePageV2> {
                               TextSpan(
                                 text: '(Dispute)',
                                 style: TextStyle(
-                                  color: Color(0xFFC9166D),
+                                  color: Color(0xFFBF360C),
                                   fontSize: 13.0,
                                   fontFamily: 'Sarabun',
                                 ),
@@ -366,7 +361,7 @@ class _HomePageV2State extends State<HomePageV2> {
                         Text(
                           'กรมการขนส่งทางบกอำนวยความสะดวกให้ท่าน',
                           style: TextStyle(
-                            color: Color(0xFFC9166D),
+                            color: Color(0xFFBF360C),
                             fontSize: 13.0,
                             fontFamily: 'Sarabun',
                           ),
@@ -426,7 +421,7 @@ class _HomePageV2State extends State<HomePageV2> {
               linearGradient: const LinearGradient(
                 colors: [
                   Color(0xFF7847AB),
-                  Color(0xFFC9166D),
+                  Color(0xFFBF360C),
                 ],
                 begin: Alignment.centerRight,
                 end: Alignment.centerLeft,
@@ -553,7 +548,7 @@ class _HomePageV2State extends State<HomePageV2> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
-          // color: Color(0xFFC9166D),
+          // color: Color(0xFFBF360C),
           // padding: EdgeInsets.symmetric(horizontal: 5),
           alignment: Alignment.center,
           padding: const EdgeInsets.only(left: 10),
@@ -572,7 +567,7 @@ class _HomePageV2State extends State<HomePageV2> {
           ),
         ),
         Container(
-          // color: Color(0xFFC9166D),
+          // color: Color(0xFFBF360C),
           // padding: EdgeInsets.symmetric(horizontal: 5),
           alignment: Alignment.center,
           padding: const EdgeInsets.only(right: 10),
@@ -581,13 +576,13 @@ class _HomePageV2State extends State<HomePageV2> {
             children: [
               Icon(
                 Icons.pin_drop,
-                color: Color(0xFFF670C3),
+                color: Color(0xFFD84315),
               ),
               Text(
                 // ' ' + currentLocation,
                 'กรุงเทพมหานคร',
                 style: TextStyle(
-                  fontFamily: 'Sarabun', color: Color(0xFFF670C3),
+                  fontFamily: 'Sarabun', color: Color(0xFFD84315),
                   // fontSize: 10,
                   // color: Colors.white,
                 ),
@@ -797,7 +792,7 @@ class _HomePageV2State extends State<HomePageV2> {
   //     decoration: BoxDecoration(
   //       gradient: LinearGradient(
   //         colors: [
-  //           Color(0xFFF670C3),
+  //           Color(0xFFD84315),
   //           Color(0xFFF7E834),
   //         ],
   //         begin: Alignment.topLeft,

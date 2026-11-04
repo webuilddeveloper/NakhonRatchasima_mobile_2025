@@ -120,7 +120,7 @@
 //                     child: Material(
 //                       elevation: 2.0,
 //                       borderRadius: BorderRadius.circular(5.0),
-//                       color: const Color(0xFFF670C3),
+//                       color: const Color(0xFFD84315),
 //                       child: MaterialButton(
 //                         // minWidth: MediaQuery.of(context).size.width,
 //                         onPressed: () {},
@@ -128,7 +128,7 @@
 //                           'ชำระเงินภาษี',
 //                           style: new TextStyle(
 //                             fontSize: 13.0,
-//                             color: const Color(0xFFC9166D),
+//                             color: const Color(0xFFBF360C),
 //                             fontWeight: FontWeight.normal,
 //                             fontFamily: 'Sarabun',
 //                           ),

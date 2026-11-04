@@ -175,7 +175,7 @@ class _DisputeListPageState extends State<DisputeList> {
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
-                color: Color(0xFFC9166D),
+                color: Color(0xFFBF360C),
               ),
               child: Column(
                 children: [
@@ -314,7 +314,7 @@ class _DisputeListPageState extends State<DisputeList> {
     profileCode = (await storage.read(key: 'profileCode2'))!;
     idcard = (await storage.read(key: 'idcard'))!;
 
-    if (profileCode != '' && profileCode != null)
+    if (profileCode != '')
       setState(() {
         _futureModel = postDio('${serverMW}tickerDispute/searchTickerDispute', {
           "code": profileCode,

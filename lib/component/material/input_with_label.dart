@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../apptheme.dart';
 
 inputWithLabel({
   BuildContext? context,
@@ -15,8 +16,8 @@ inputWithLabel({
   Function? validator,
   bool isShowPattern = false,
   bool hasBorder = false,
-  Color enabledBorderColor = const Color(0xFFC9166D),
-  Color focusedBorderColor = const Color(0xFFC9166D),
+  Color enabledBorderColor = AppColors.border,
+  Color focusedBorderColor = AppColors.primary,
   bool isShowIcon = false,
   TextInputType? keyboardType, //TextInputType.multiline
   int maxLines = 1,
@@ -31,7 +32,7 @@ inputWithLabel({
           title,
           style: TextStyle(
             color: fontColorTitle,
-            fontFamily: 'Sarabun',
+            fontFamily: 'Kanit',
             fontSize: fontSizeTitle,
             fontWeight: fontWeightTitle,
           ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:ratchasima/pages/question/question_list_detail.dart';
 
 class QuestionListVertical extends StatefulWidget {
@@ -125,7 +124,7 @@ class _QuestionListVertical extends State<QuestionListVertical> {
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 16,
                                                 fontFamily: 'Kanit',
-                                                color: Color(0xFFC9166D),
+                                                color: Color(0xFFBF360C),
                                               ),
                                               maxLines: 2,
                                               overflow: TextOverflow.ellipsis,

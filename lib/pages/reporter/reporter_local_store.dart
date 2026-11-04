@@ -30,13 +30,15 @@ class ReporterLocalStore {
     required String title,
     required String category,
     required String description,
+    String? imageUrl,
   }) {
     final now = DateTime.now();
     reports.insert(0, {
-      'code': 'LOCAL-${now.millisecondsSinceEpoch}',
+      'code': 'KRT-${now.millisecondsSinceEpoch}',
       'title': title,
       'category': category,
       'description': description,
+      'imageUrl': imageUrl ?? '',
       'date': '${now.day}/${now.month}/${now.year + 543}',
       'status': 'รอดำเนินการ',
       'statusCode': 'N',

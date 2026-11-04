@@ -42,11 +42,9 @@ class _WarningListVertical extends State<WarningListVertical> {
   checkImageAvatar(String img) {
     return CircleAvatar(
       backgroundColor: Colors.white,
-      backgroundImage: img != null
-          ? NetworkImage(
-              img,
-            )
-          : null,
+      backgroundImage: NetworkImage(
+        img,
+      ),
     );
   }
 
@@ -123,7 +121,7 @@ class _WarningListVertical extends State<WarningListVertical> {
                                   Container(
                                     height: 55,
                                     decoration: BoxDecoration(
-                                      color: Color(0xFFC9166D),
+                                      color: Color(0xFFBF360C),
                                       borderRadius: new BorderRadius.only(
                                         topLeft: const Radius.circular(5.0),
                                         topRight: const Radius.circular(5.0),

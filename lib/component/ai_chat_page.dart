@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
 import '../apptheme.dart';
 import '../shared/api_provider.dart';
+import '../shared/mock_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
@@ -310,13 +311,19 @@ class _AiChatPageState extends State<AiChatPage>
       if (!mounted) return;
       setState(() => _isThinking = false);
       _animateAssistant(answer, sources);
-    } on TimeoutException {
-      _showError('ระบบใช้เวลาตอบนานเกินไป กรุณาลองใหม่อีกครั้ง');
-    } on FormatException {
-      _showError('รูปแบบคำตอบจากเซิร์ฟเวอร์ไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง');
     } catch (error) {
-      final message = error.toString().replaceFirst('Exception: ', '');
-      _showError(message);
+      debugPrint('AI API unavailable -> Fallback to Smart Korat AI: $error');
+      final fallback = KoratMockRepository.getAiResponse(question);
+      final answer = fallback['answer'] as String;
+      final rawSources = fallback['sources'] as List? ?? [];
+      final sources = rawSources
+          .whereType<Map>()
+          .map((item) => _ChatSource.fromJson(Map<String, dynamic>.from(item)))
+          .toList();
+
+      if (!mounted) return;
+      setState(() => _isThinking = false);
+      _animateAssistant(answer, sources);
     }
   }
 
@@ -551,9 +558,9 @@ class _AiChatPageState extends State<AiChatPage>
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Color(0xFFB90F5F),
+            Color(0xFF8C1D04),
             AppColors.primary,
-            Color(0xFFD92B79),
+            Color(0xFFD84315),
           ],
           stops: [0.0, 0.55, 1.0],
         ),
@@ -937,7 +944,7 @@ class _AiChatPageState extends State<AiChatPage>
                       height: 44,
                       decoration: BoxDecoration(
                         gradient: const LinearGradient(
-                          colors: [Color(0xFFE22880), AppColors.primary],
+                          colors: [Color(0xFFD84315), AppColors.primary],
                         ),
                         borderRadius: BorderRadius.circular(_radiusCardSm),
                         boxShadow: [
@@ -1133,7 +1140,7 @@ class _AiChatPageState extends State<AiChatPage>
         decoration: BoxDecoration(
           gradient: user
               ? const LinearGradient(
-                  colors: [Color(0xFFE22880), AppColors.primary],
+                  colors: [Color(0xFFD84315), AppColors.primary],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 )
@@ -1825,9 +1832,9 @@ class _ReferencePageState extends State<_ReferencePage> {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    Color(0xFFB90F5F),
+                    Color(0xFF8C1D04),
                     AppColors.primary,
-                    Color(0xFFD92B79),
+                    Color(0xFFD84315),
                   ],
                   stops: [0.0, 0.55, 1.0],
                 ),

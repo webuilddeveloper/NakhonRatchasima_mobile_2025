@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../apptheme.dart';
 
 labelTextFormFieldPasswordOldNew(String lable, bool showSubtitle) {
   return new Padding(
@@ -45,19 +46,23 @@ textFormFieldPasswordOldNew(
   return TextFormField(
     obscureText: isPassword,
     style: TextStyle(
-      color: enabled ? Color(0xFFC9166D) : Color(0xFFFFFFFF),
+      color: enabled ? AppColors.textPrimary : const Color(0xFFFFFFFF),
       fontWeight: FontWeight.normal,
       fontFamily: 'Sarabun',
       fontSize: 15.00,
     ),
     decoration: InputDecoration(
       filled: true,
-      fillColor: enabled ? Color(0xFFFFE3F0) : Color(0xFF707070),
-      contentPadding: EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
+      fillColor: enabled ? AppColors.surface : const Color(0xFF707070),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       hintText: hintText,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10.0),
-        borderSide: BorderSide.none,
+        borderSide: const BorderSide(color: AppColors.border),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10.0),
+        borderSide: const BorderSide(color: AppColors.border),
       ),
       errorStyle: TextStyle(
         fontWeight: FontWeight.normal,
@@ -69,7 +74,7 @@ textFormFieldPasswordOldNew(
       if (model!.isEmpty) {
         return 'กรุณากรอก' + validator + '.';
       }
-      if (isPassword && model != modelMatch && modelMatch != null) {
+      if (isPassword && model != modelMatch) {
         return 'กรุณากรอกรหัสผ่านให้ตรงกัน.';
       }
 
@@ -80,6 +85,7 @@ textFormFieldPasswordOldNew(
           return 'กรุณากรอกรูปแบบรหัสผ่านให้ถูกต้อง.';
         }
       }
+      return null;
     },
     controller: model,
     enabled: enabled,
@@ -144,18 +150,18 @@ textFormField(
   return TextField(
     obscureText: isPassword!,
     style: TextStyle(
-      color: enabled! ? Color(0xFFC9166D) : const Color(0xFFFFFFFF),
+      color: enabled! ? AppColors.textPrimary : const Color(0xFFFFFFFF),
       fontWeight: FontWeight.normal,
       fontFamily: 'Kanit',
       fontSize: 15.00,
     ),
     decoration: InputDecoration(
       filled: true,
-      fillColor: enabled ? const Color(0xFFFFE3F0) : const Color(0xFFbfbfbf),
-      contentPadding: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
+      fillColor: enabled ? AppColors.surface : const Color(0xFFbfbfbf),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       hintText: hintText,
       // focusedBorder: UnderlineInputBorder(
-      //   borderSide: BorderSide(color: Color(0xFFC9166D), width: 0.5),
+      //   borderSide: BorderSide(color: AppColors.primary, width: 0.5),
       // ),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10.0),
@@ -212,12 +218,12 @@ textFormFieldNoValidator(
     ),
     decoration: InputDecoration(
       filled: true,
-      fillColor: enabled ? const Color(0xFFFFE3F0) : const Color(0xFFbfbfbf),
-      contentPadding: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
+      fillColor: enabled ? AppColors.surface : const Color(0xFFbfbfbf),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       hintText: hintText,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10.0),
-        borderSide: BorderSide.none,
+        borderSide: const BorderSide(color: AppColors.border),
       ),
       errorStyle: const TextStyle(
         fontWeight: FontWeight.normal,
@@ -234,6 +240,7 @@ textFormFieldNoValidator(
           return 'กรุณากรอกรูปแบบอีเมลให้ถูกต้อง.';
         }
       }
+      return null;
       // return true;
     },
     controller: model,
@@ -251,19 +258,19 @@ textFormPhoneField(
   return TextFormField(
     keyboardType: TextInputType.number,
     style: TextStyle(
-      color: enabled ? Color(0xFFC9166D) : const Color(0xFFFFFFFF),
+      color: enabled ? AppColors.textPrimary : const Color(0xFFFFFFFF),
       fontWeight: FontWeight.normal,
       fontFamily: 'Sarabun',
       fontSize: 15.00,
     ),
     decoration: InputDecoration(
       filled: true,
-      fillColor: enabled ? const Color(0xFFFFE3F0) : const Color(0xFF707070),
-      contentPadding: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
+      fillColor: enabled ? AppColors.surface : const Color(0xFF707070),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       hintText: hintText,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10.0),
-        borderSide: BorderSide.none,
+        borderSide: const BorderSide(color: AppColors.border),
       ),
       errorStyle: const TextStyle(
         fontWeight: FontWeight.normal,
@@ -282,6 +289,7 @@ textFormPhoneField(
           return 'กรุณากรอกรูปแบบเบอร์ติดต่อให้ถูกต้อง.';
         }
       }
+      return null;
     },
     controller: model,
     enabled: enabled,
@@ -297,19 +305,19 @@ textFormIdCardField(
   return TextFormField(
     keyboardType: TextInputType.number,
     style: TextStyle(
-      color: enabled! ? const Color(0xFFC9166D) : const Color(0xFFFFFFFF),
+      color: enabled! ? AppColors.textPrimary : const Color(0xFFFFFFFF),
       fontWeight: FontWeight.normal,
       fontFamily: 'Sarabun',
       fontSize: 15.00,
     ),
     decoration: InputDecoration(
       filled: true,
-      fillColor: enabled ? const Color(0xFFFFE3F0) : const Color(0xFF707070),
-      contentPadding: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
+      fillColor: enabled ? AppColors.surface : const Color(0xFF707070),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       hintText: hintText,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10.0),
-        borderSide: BorderSide.none,
+        borderSide: const BorderSide(color: AppColors.border),
       ),
       errorStyle: const TextStyle(
         fontWeight: FontWeight.normal,
@@ -362,7 +370,7 @@ textFormFieldEdit(
   return TextFormField(
     obscureText: isPassword!,
     style: TextStyle(
-      color: enabled! ? Color(0xFFF670C3) : Color(0xFFFFFFFF),
+      color: enabled! ? AppColors.textPrimary : const Color(0xFFFFFFFF),
       fontWeight: FontWeight.normal,
       fontFamily: 'Kanit',
       fontSize: 15.00,
@@ -408,6 +416,7 @@ textFormFieldEdit(
           return 'กรุณากรอกรูปแบบอีเมลให้ถูกต้อง.';
         }
       }
+      return null;
       // return true;
     },
     controller: model,
@@ -451,7 +460,7 @@ textFormPhoneFieldEdit(
   return TextFormField(
     keyboardType: TextInputType.number,
     style: TextStyle(
-      color: enabled! ? const Color(0xFFF670C3) : const Color(0xFFFFFFFF),
+      color: enabled! ? AppColors.textPrimary : const Color(0xFFFFFFFF),
       fontWeight: FontWeight.normal,
       fontFamily: 'Kanit',
       fontSize: 15.00,
@@ -476,6 +485,7 @@ textFormPhoneFieldEdit(
           return 'กรุณากรอกรูปแบบเบอร์ติดต่อให้ถูกต้อง.';
         }
       }
+      return null;
     },
     onChanged: (value) => onChanged,
     controller: model,
@@ -494,19 +504,19 @@ textFormLicenseField(
   return TextFormField(
     keyboardType: TextInputType.number,
     style: TextStyle(
-      color: enabled! ? const Color(0xFFC9166D) : const Color(0xFFFFFFFF),
+      color: enabled! ? AppColors.textPrimary : const Color(0xFFFFFFFF),
       fontWeight: FontWeight.normal,
       fontFamily: 'Kanit',
       fontSize: 15.00,
     ),
     decoration: InputDecoration(
       filled: true,
-      fillColor: enabled ? const Color(0xFFFFE3F0) : const Color(0xFF707070),
-      contentPadding: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
+      fillColor: enabled ? AppColors.surface : const Color(0xFF707070),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       hintText: hintText,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10.0),
-        borderSide: BorderSide.none,
+        borderSide: const BorderSide(color: AppColors.border),
       ),
       errorStyle: const TextStyle(
         fontWeight: FontWeight.normal,
@@ -525,6 +535,7 @@ textFormLicenseField(
           return 'กรุณากรอกรูปแบบเลขที่ใบอนุญาตฯ';
         }
       }
+      return null;
     },
     controller: model,
     onChanged: (value) => onChanged,
@@ -543,7 +554,7 @@ textFormLicenseFieldEdit(
   return TextFormField(
     // keyboardType: TextInputType.number,
     style: TextStyle(
-      color: enabled! ? const Color(0xFFF670C3) : const Color(0xFFFFFFFF),
+      color: enabled! ? AppColors.textPrimary : const Color(0xFFFFFFFF),
       fontWeight: FontWeight.normal,
       fontFamily: 'Kanit',
       fontSize: 15.00,
@@ -568,6 +579,7 @@ textFormLicenseFieldEdit(
           return 'กรุณากรอกรูปแบบเลขที่ใบอนุญาตฯ';
         }
       }
+      return null;
     },
     controller: model,
     onChanged: (value) => onChanged,
@@ -590,7 +602,7 @@ textFormFieldIsEmptyEdit(
   return TextFormField(
     obscureText: isPassword!,
     style: TextStyle(
-      color: enabled! ? const Color(0xFFF670C3) : const Color(0xFFFFFFFF),
+      color: enabled! ? AppColors.textPrimary : const Color(0xFFFFFFFF),
       fontWeight: FontWeight.normal,
       fontFamily: 'Kanit',
       fontSize: 15.00,
@@ -636,6 +648,7 @@ textFormFieldIsEmptyEdit(
           return 'กรุณากรอกรูปแบบอีเมลให้ถูกต้อง.';
         }
       }
+      return null;
       // return true;
     },
     controller: model,
@@ -654,7 +667,7 @@ textFormIdCardFieldEdit(
   return TextFormField(
     keyboardType: TextInputType.number,
     style: TextStyle(
-      color: enabled! ? const Color(0xFFF670C3) : const Color(0xFFFFFFFF),
+      color: enabled! ? AppColors.textPrimary : const Color(0xFFFFFFFF),
       fontWeight: FontWeight.normal,
       fontFamily: 'Kanit',
       fontSize: 15.00,
@@ -732,6 +745,8 @@ textFormFieldNoValidatorQuestion(
       ),
     ),
     validator: (model) {
+      return null;
+
       // return true;
     },
     controller: model,
@@ -773,6 +788,8 @@ textAreaFormFieldNoValidatorQuestion(
     maxLines: 5,
     minLines: 3,
     validator: (model) {
+      return null;
+
       // return true;
     },
     controller: model,

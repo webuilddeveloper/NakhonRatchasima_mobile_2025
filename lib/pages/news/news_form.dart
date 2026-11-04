@@ -54,6 +54,12 @@ class _NewsForm extends State<NewsForm> {
   }
 
   @override
+  void dispose() {
+    _refreshController.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     setState(() {
       _limit = 10;
@@ -72,6 +78,9 @@ class _NewsForm extends State<NewsForm> {
 
   @override
   Widget build(BuildContext context) {
+    final effectiveUrl = (widget.url != null && widget.url!.isNotEmpty) ? widget.url! : newsApi;
+    final effectiveGallery = (widget.urlGallery != null && widget.urlGallery!.isNotEmpty) ? widget.urlGallery! : newsGalleryApi;
+
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: KoratAppBar(
@@ -87,7 +96,7 @@ class _NewsForm extends State<NewsForm> {
         child: SmartRefresher(
           enablePullDown: false,
           enablePullUp: true,
-          footer: ClassicFooter(
+          footer: const ClassicFooter(
             loadingText: ' ',
             canLoadingText: ' ',
             idleText: ' ',
@@ -101,11 +110,11 @@ class _NewsForm extends State<NewsForm> {
               Content(
                 pathShare: 'content/news/',
                 code: widget.code,
-                url: widget.url ?? newsApi,
+                url: effectiveUrl,
                 model: widget.model,
-                urlGallery: widget.urlGallery ?? newsGalleryApi,
+                urlGallery: effectiveGallery,
               ),
-              if ((widget.urlComment ?? newsCommentApi).isNotEmpty)
+              if ((widget.urlComment ?? newsCommentApi).isNotEmpty && comment != null)
                 comment!,
             ],
           ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ratchasima/apptheme.dart';
 import 'package:ratchasima/component/korat_ui.dart';
+import 'package:ratchasima/pages/disaster/korat_disaster_alert_page.dart';
 
 class NotificationList extends StatefulWidget {
   const NotificationList({super.key, required this.title});
@@ -15,6 +16,16 @@ class _NotificationListState extends State<NotificationList> {
   String _selectedFilter = 'ทั้งหมด';
 
   final List<Map<String, dynamic>> _notifications = [
+    {
+      'title': 'เฝ้าระวังระดับน้ำลำตะคอง ชุมชนมิตรภาพ ซ.4',
+      'message': 'มวลน้ำไหลผ่านตัวเมืองโคราช ระดับน้ำเพิ่มขึ้น 35 ซม. ขอให้ประชาชนยกของขึ้นที่สูงและติดตามสถานการณ์',
+      'time': 'วันนี้ 15:40',
+      'type': 'เตือนภัย',
+      'isRead': false,
+      'icon': Icons.warning_amber_rounded,
+      'color': const Color(0xFFEA580C),
+      'isDisaster': true,
+    },
     {
       'title': 'เรื่องร้องเรียนของคุณถูกรับเรื่องแล้ว',
       'message': 'เจ้าหน้าที่ได้รับเรื่องถนนชำรุดและกำลังตรวจสอบพื้นที่',
@@ -445,13 +456,43 @@ class _NotificationSheet extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 18),
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('รับทราบ'),
+          if (item['isDisaster'] == true) ...[
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const KoratDisasterAlertPage(),
+                    ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFEA580C),
+                  foregroundColor: Colors.white,
+                ),
+                icon: const Icon(Icons.crisis_alert_rounded, size: 20),
+                label: const Text('ดูรายละเอียดศูนย์เตือนภัย'),
+              ),
             ),
-          ),
+            const SizedBox(height: 8),
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('ปิด'),
+              ),
+            ),
+          ] else
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('รับทราบ'),
+              ),
+            ),
         ],
       ),
     );

@@ -3,6 +3,7 @@ import 'package:ratchasima/apptheme.dart';
 
 import '../../component/blurred_network_image.dart';
 import '../../shared/extension.dart';
+import '../../shared/mock_repository.dart';
 import '../blank_page/blank_loading.dart';
 import 'news_form.dart';
 
@@ -33,7 +34,14 @@ class NewsListVertical extends StatelessWidget {
               padding: EdgeInsets.all(32),
               child: Center(child: CircularProgressIndicator()));
         }
-        if (snapshot.hasError || !snapshot.hasData || snapshot.data.isEmpty) {
+
+        final List<dynamic> news = (snapshot.hasData &&
+                snapshot.data is List &&
+                (snapshot.data as List).isNotEmpty)
+            ? snapshot.data as List
+            : KoratMockRepository.getNewsList();
+
+        if (news.isEmpty) {
           return const Padding(
               padding: EdgeInsets.symmetric(vertical: 48),
               child: Center(
@@ -44,7 +52,6 @@ class NewsListVertical extends StatelessWidget {
                           fontSize: 15))));
         }
 
-        final news = snapshot.data as List;
         return ListView.separated(
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 28),
           shrinkWrap: true,

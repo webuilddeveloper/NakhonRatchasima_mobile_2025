@@ -21,6 +21,15 @@ import 'package:ratchasima/pages/otop_product_list.dart';
 import 'package:ratchasima/pages/poi/poi_list.dart';
 import 'package:ratchasima/pages/privilege/privilege_main.dart';
 import 'package:ratchasima/pages/travel_list.dart';
+import 'package:ratchasima/component/korat_air_quality_card.dart';
+import 'package:ratchasima/pages/air_quality/korat_air_quality_page.dart';
+import 'package:ratchasima/pages/disaster/korat_disaster_alert_page.dart';
+import 'package:ratchasima/pages/notification/notification_list.dart';
+import 'package:ratchasima/pages/complain/complain.dart';
+import 'package:ratchasima/pages/poll/poll_list.dart';
+import 'package:ratchasima/pages/search_nakhonphanom.dart';
+import 'package:ratchasima/pages/training_course/training_course_list.dart';
+import 'package:ratchasima/pages/transit/korat_transit_page.dart';
 
 import 'package:ratchasima/pages/welfare_list.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -60,6 +69,7 @@ class HomePageState extends State<HomePage> {
   Future<dynamic>? _futureMainPopUp;
 
   String profileCode = '';
+  String _userName = 'สมเกียรติ';
   String currentLocation = '-';
   final seen = <String>{};
   List unique = [];
@@ -109,9 +119,9 @@ class HomePageState extends State<HomePage> {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  Color(0xFFE22880),
+                  AppColors.primaryBright,
                   AppColors.primary,
-                  Color(0xFF9E0B52),
+                  AppColors.primaryDark,
                 ],
               ),
               boxShadow: [
@@ -228,10 +238,14 @@ class HomePageState extends State<HomePage> {
         physics: const ClampingScrollPhysics(),
         child: Column(
           children: [
+            _buildPersonalizedGreeting(),
+            _buildDisasterAlertBanner(),
             _buildHeader(),
             _buildQuickAccess(),
             const SizedBox(height: KoratSpacing.sm),
             _buildCurrentEventCard(),
+            const SizedBox(height: KoratSpacing.md),
+            const KoratAirQualityCard(),
             const SizedBox(height: KoratSpacing.lg),
             _buildRotation(),
             const SizedBox(height: KoratSpacing.xl),
@@ -240,8 +254,319 @@ class HomePageState extends State<HomePage> {
             _buildNews(),
             const SizedBox(height: KoratSpacing.xl),
             _buildTravel(context),
-            const SizedBox(height: KoratSpacing.xxl),
+            SizedBox(height: 100 + MediaQuery.paddingOf(context).bottom),
           ],
+        ),
+      ),
+    );
+  }
+
+  String _getGreeting() {
+    final hour = DateTime.now().hour;
+    if (hour < 12) return 'สวัสดีตอนเช้า';
+    if (hour < 17) return 'สวัสดีตอนบ่าย';
+    return 'สวัสดีตอนเย็น';
+  }
+
+  Widget _buildPersonalizedGreeting() {
+    final topPadding = MediaQuery.of(context).padding.top;
+    final greeting = _getGreeting();
+
+    return Container(
+      color: AppColors.surface,
+      padding: EdgeInsets.fromLTRB(16, topPadding + 8, 16, 10),
+      child: Row(
+        children: [
+          // Avatar
+          GestureDetector(
+            onTap: () {
+              if (widget.changePage != null) {
+                widget.changePage!(4);
+              }
+            },
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Container(
+                  width: 44,
+                  height: 44,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(color: AppColors.primary, width: 2),
+                    image: const DecorationImage(
+                      image: AssetImage('assets/images/user_not_found.png'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  bottom: 0,
+                  right: 0,
+                  child: Container(
+                    width: 12,
+                    height: 12,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF10B981),
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.white, width: 2),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 12),
+
+          // Greeting & AQI
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                        '$greeting คุณ$_userName',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontFamily: 'Kanit',
+                          fontSize: 16.5,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.textPrimary,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 4),
+                    const Icon(
+                      Icons.waving_hand_rounded,
+                      size: 16,
+                      color: Color(0xFFEAB308),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 3),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const KoratAirQualityPage(),
+                      ),
+                    );
+                  },
+                  borderRadius: BorderRadius.circular(20),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF10B981).withValues(alpha: 0.12),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: const Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.eco_rounded, size: 12, color: Color(0xFF059669)),
+                            SizedBox(width: 3),
+                            Text(
+                              'AQI 42 ดีมาก',
+                              style: TextStyle(
+                                fontFamily: 'Kanit',
+                                fontSize: 11,
+                                fontWeight: FontWeight.w600,
+                                color: Color(0xFF059669),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 6),
+                      const Flexible(
+                        child: Text(
+                          'อากาศโคราชแจ่มใส',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontFamily: 'Sarabun',
+                            fontSize: 12,
+                            color: AppColors.textSecondary,
+                          ),
+                        ),
+                      ),
+                      const Icon(Icons.chevron_right_rounded, size: 14, color: AppColors.textSecondary),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: 8),
+
+          // Notification Bell
+          InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const NotificationList(title: 'การแจ้งเตือน'),
+                ),
+              );
+            },
+            borderRadius: BorderRadius.circular(12),
+            child: Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: AppColors.primarySoft,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  const Icon(
+                    Icons.notifications_none_rounded,
+                    color: AppColors.primary,
+                    size: 22,
+                  ),
+                  Positioned(
+                    top: 9,
+                    right: 9,
+                    child: Container(
+                      width: 8,
+                      height: 8,
+                      decoration: const BoxDecoration(
+                        color: AppColors.error,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDisasterAlertBanner() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const KoratDisasterAlertPage(),
+              ),
+            );
+          },
+          borderRadius: BorderRadius.circular(14),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [
+                  Color(0xFFFFF3EE),
+                  Color(0xFFFFF7ED),
+                ],
+              ),
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(
+                color: const Color(0xFFEA580C).withValues(alpha: 0.35),
+                width: 1.2,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xFFEA580C).withValues(alpha: 0.08),
+                  blurRadius: 8,
+                  offset: const Offset(0, 3),
+                ),
+              ],
+            ),
+            child: Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(7),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFEA580C),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: const Icon(
+                    Icons.warning_amber_rounded,
+                    color: Colors.white,
+                    size: 18,
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 6, vertical: 1.5),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFEA580C),
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            child: const Text(
+                              'เฝ้าระวังด่วน',
+                              style: TextStyle(
+                                fontFamily: 'Kanit',
+                                fontSize: 10,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 6),
+                          const Expanded(
+                            child: Text(
+                              'ระดับน้ำลำตะคอง & สภาพอากาศ',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontFamily: 'Kanit',
+                                fontSize: 13,
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xFF9A3412),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 2),
+                      const Text(
+                        'มวลน้ำผ่านเขตเทศบาลฯ ชุมชนมิตรภาพ ซ.4 • แตะดูคำแนะนำ',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontFamily: 'Sarabun',
+                          fontSize: 11.5,
+                          color: Color(0xFFC2410C),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 4),
+                const Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  size: 12,
+                  color: Color(0xFFEA580C),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -765,21 +1090,131 @@ class HomePageState extends State<HomePage> {
   }
 
   _buildService() {
-    final List<Map<String, dynamic>> serviceItems = [
+    final List<Map<String, dynamic>> primaryCityServices = [
       {
-        'path': 'assets/icons/icon_menu3.png',
+        'icon': Icons.report_problem_rounded,
+        'iconColor': const Color(0xFFDC2626),
+        'bgColor': const Color(0xFFFEE2E2),
+        'title': 'แจ้งปัญหา',
+        'callBack': () {
+          if (widget.changePage != null) {
+            widget.changePage!(2);
+          } else {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) =>
+                    const ComplainListCategory(title: 'แจ้งเหตุ / แจ้งปัญหา'),
+              ),
+            );
+          }
+        },
+      },
+      {
+        'icon': Icons.directions_bus_rounded,
+        'iconColor': const Color(0xFF059669),
+        'bgColor': const Color(0xFFD1FAE5),
+        'title': 'รถสองแถว',
+        'callBack': () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const KoratTransitPage(),
+            ),
+          );
+        },
+      },
+      {
+        'icon': Icons.air_rounded,
+        'iconColor': const Color(0xFF0284C7),
+        'bgColor': const Color(0xFFE0F2FE),
+        'title': 'คุณภาพอากาศ',
+        'callBack': () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const KoratAirQualityPage(),
+            ),
+          );
+        },
+      },
+      {
+        'icon': Icons.crisis_alert_rounded,
+        'iconColor': const Color(0xFFEA580C),
+        'bgColor': const Color(0xFFFFEDD5),
+        'title': 'เตือนภัยฉุกเฉิน',
+        'callBack': () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const KoratDisasterAlertPage(),
+            ),
+          );
+        },
+      },
+      {
+        'icon': Icons.how_to_vote_rounded,
+        'iconColor': const Color(0xFF7C3AED),
+        'bgColor': const Color(0xFFEDE9FE),
+        'title': 'โพลเสียงเมือง',
+        'callBack': () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => PollList(title: 'โพลสำรวจความคิดเห็น'),
+            ),
+          );
+        },
+      },
+      {
+        'icon': Icons.shopping_bag_rounded,
+        'iconColor': AppColors.primary,
+        'bgColor': AppColors.primarySoft,
+        'title': 'สินค้า OTOP',
+        'callBack': () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => OtopProductListPage(),
+            ),
+          );
+        },
+      },
+      {
+        'icon': Icons.card_giftcard_rounded,
+        'iconColor': const Color(0xFFD97706),
+        'bgColor': const Color(0xFFFEF3C7),
         'title': 'สิทธิประโยชน์',
         'callBack': () {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => PrivilegeMain(
-                title: 'สิทธิประโยชน์',
-              ),
+              builder: (_) => PrivilegeMain(title: 'สิทธิประโยชน์'),
             ),
           );
         },
       },
+      {
+        'icon': Icons.grid_view_rounded,
+        'iconColor': AppColors.primary,
+        'bgColor': AppColors.primarySoft,
+        'title': 'ดูทั้งหมด (18)',
+        'callBack': () {
+          if (widget.changePage != null) {
+            widget.changePage!(1);
+          } else {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const SearchNakhonPhanomPage(),
+              ),
+            );
+          }
+        },
+      },
+    ];
+
+    final List<Map<String, dynamic>> communityServices = [
       {
         'path': 'assets/icons/calendar_icon.png',
         'title': 'ปฏิทินกิจกรรม',
@@ -787,9 +1222,7 @@ class HomePageState extends State<HomePage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => EventCalendarList(
-                title: 'ปฏิทินกิจกรรม',
-              ),
+              builder: (context) => EventCalendarList(title: 'ปฏิทินกิจกรรม'),
             ),
           );
         },
@@ -801,9 +1234,21 @@ class HomePageState extends State<HomePage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => KnowledgeList(
-                title: 'คลังความรู้',
-              ),
+              builder: (context) => const KnowledgeList(title: 'คลังความรู้'),
+            ),
+          );
+        },
+      },
+      {
+        'icon': Icons.school_rounded,
+        'iconColor': const Color(0xFF2563EB),
+        'bgColor': const Color(0xFFDBEAFE),
+        'title': 'หลักสูตรอบรม',
+        'callBack': () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => TrainingCourseList(title: 'หลักสูตรอบรม'),
             ),
           );
         },
@@ -815,10 +1260,8 @@ class HomePageState extends State<HomePage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ContactList(
-                title: 'เบอร์ฉุกเฉิน',
-                code: 'emergency',
-              ),
+              builder: (context) =>
+                  ContactList(title: 'เบอร์ฉุกเฉิน', code: 'emergency'),
             ),
           );
         },
@@ -828,15 +1271,111 @@ class HomePageState extends State<HomePage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
+        // Primary City Services Header
+        Padding(
           padding: const EdgeInsets.symmetric(horizontal: KoratSpacing.md),
-          child: const Text(
-            'บริการสมาชิก',
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              const Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'บริการประชาชนและเมือง',
+                    style: TextStyle(
+                      color: AppColors.textPrimary,
+                      fontSize: 18,
+                      fontFamily: 'Kanit',
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  SizedBox(height: 2),
+                  Text(
+                    'เข้าถึงบริการดิจิทัลเมืองโคราชได้ทันที',
+                    style: TextStyle(
+                      color: AppColors.textSecondary,
+                      fontSize: 12,
+                      fontFamily: 'Sarabun',
+                    ),
+                  ),
+                ],
+              ),
+              InkWell(
+                onTap: () {
+                  if (widget.changePage != null) {
+                    widget.changePage!(1);
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const SearchNakhonPhanomPage(),
+                      ),
+                    );
+                  }
+                },
+                borderRadius: BorderRadius.circular(8),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  child: Row(
+                    children: [
+                      Text(
+                        'ดูทั้งหมด (18)',
+                        style: TextStyle(
+                          color: AppColors.primary,
+                          fontSize: 13,
+                          fontFamily: 'Kanit',
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Icon(Icons.chevron_right_rounded,
+                          size: 16, color: AppColors.primary),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: KoratSpacing.sm),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: KoratSpacing.md),
+          child: GridView.builder(
+            shrinkWrap: true,
+            padding: EdgeInsets.zero,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 4,
+              crossAxisSpacing: KoratSpacing.sm,
+              mainAxisSpacing: KoratSpacing.md,
+              childAspectRatio: 0.82,
+            ),
+            itemCount: primaryCityServices.length,
+            itemBuilder: (context, index) {
+              final item = primaryCityServices[index];
+              return _buildServiceIcon(
+                icon: item['icon'],
+                path: item['path'],
+                iconColor: item['iconColor'],
+                bgColor: item['bgColor'],
+                title: item['title'],
+                callBack: item['callBack'],
+              );
+            },
+          ),
+        ),
+        const SizedBox(height: KoratSpacing.lg),
+
+        // Community & Knowledge Section Header
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: KoratSpacing.md),
+          child: Text(
+            'กิจกรรมและสาระน่ารู้',
             style: TextStyle(
-              color: AppColors.primary,
-              fontSize: 20,
+              color: AppColors.textPrimary,
+              fontSize: 16,
               fontFamily: 'Kanit',
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w700,
             ),
           ),
         ),
@@ -851,14 +1390,18 @@ class HomePageState extends State<HomePage> {
               crossAxisCount: 4,
               crossAxisSpacing: KoratSpacing.sm,
               mainAxisSpacing: KoratSpacing.sm,
-              childAspectRatio: 0.88,
+              childAspectRatio: 0.82,
             ),
-            itemCount: serviceItems.length,
+            itemCount: communityServices.length,
             itemBuilder: (context, index) {
+              final item = communityServices[index];
               return _buildServiceIcon(
-                path: serviceItems[index]['path'],
-                title: serviceItems[index]['title'],
-                callBack: serviceItems[index]['callBack'],
+                icon: item['icon'],
+                path: item['path'],
+                iconColor: item['iconColor'],
+                bgColor: item['bgColor'],
+                title: item['title'],
+                callBack: item['callBack'],
               );
             },
           ),
@@ -868,7 +1411,10 @@ class HomePageState extends State<HomePage> {
   }
 
   Widget _buildServiceIcon({
-    required String path,
+    IconData? icon,
+    String? path,
+    Color? iconColor,
+    Color? bgColor,
     required String title,
     required VoidCallback callBack,
   }) {
@@ -879,22 +1425,30 @@ class HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            width: 56,
-            height: 56,
+            width: 54,
+            height: 54,
             decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.08),
+              color: bgColor ?? AppColors.primary.withValues(alpha: 0.08),
               borderRadius: BorderRadius.circular(16),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(KoratSpacing.sm),
-              child: Image.asset(
-                path,
-                color: AppColors.primary,
-                fit: BoxFit.contain,
+              border: Border.all(
+                color: (iconColor ?? AppColors.primary).withValues(alpha: 0.18),
+                width: 1,
               ),
             ),
+            child: Center(
+              child: icon != null
+                  ? Icon(icon, color: iconColor ?? AppColors.primary, size: 26)
+                  : Padding(
+                      padding: const EdgeInsets.all(KoratSpacing.sm),
+                      child: Image.asset(
+                        path!,
+                        color: AppColors.primary,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+            ),
           ),
-          const SizedBox(height: KoratSpacing.xs),
+          const SizedBox(height: 6),
           Text(
             title,
             textAlign: TextAlign.center,
@@ -903,9 +1457,9 @@ class HomePageState extends State<HomePage> {
             style: const TextStyle(
               fontSize: 12,
               fontFamily: 'Kanit',
-              fontWeight: FontWeight.w400,
-              color: Colors.black87,
-              height: 1.2,
+              fontWeight: FontWeight.w500,
+              color: AppColors.textPrimary,
+              height: 1.15,
             ),
           ),
         ],
@@ -1448,6 +2002,14 @@ class HomePageState extends State<HomePage> {
     _futureMainPopUp = postDio('${mainPopupHomeApi}read', {'limit': 10});
 
     profileCode = await storage.read(key: 'profileCode2') ?? '';
+    final storedFirstName = await storage.read(key: 'profileFirstName');
+    if (storedFirstName != null && storedFirstName.isNotEmpty) {
+      if (mounted) {
+        setState(() {
+          _userName = storedFirstName;
+        });
+      }
+    }
     if (profileCode != '') {
       setState(() {
         _futureProfile = postDio(profileReadApi, {"code": profileCode});

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../apptheme.dart';
 
 import '../../models/user.dart';
 import '../../shared/extension.dart';
@@ -24,9 +25,9 @@ class _SSOListCardHorizontal extends State<SSOListCardHorizontal> {
         alignment: Alignment.center,
         padding: EdgeInsets.only(top: 10, bottom: 10),
         // decoration: BoxDecoration(
-        //     color: Color(0xFFC9166D),
+        //     color: AppColors.primary,
         //     border: Border.all(color: Colors.white),
-        //     gradient: LinearGradient(colors: [Color(0xFFC9166D), Colors.yellow])),
+        //     gradient: LinearGradient(colors: [AppColors.primary, Colors.yellow])),
         height: 160,
         child: ListView(
           scrollDirection: Axis.horizontal,
@@ -42,15 +43,15 @@ class _SSOListCardHorizontal extends State<SSOListCardHorizontal> {
                     'บาท',
                     '',
                     LinearGradient(
-                        colors: [Color(0xFFC9166D), Color(0xFFF670C3)]))
+                        colors: [AppColors.primary, AppColors.primaryBright]))
                 : myCardUnActivate(
                     context,
                     'ยอดเงินสมทบชราภาพ',
                     'กรุณาเชื่อมต่อระบบผู้ประกันตน เพื่อแสดงข้อมูล',
                     LinearGradient(
-                        colors: [Color(0xFFC9166D), Color(0xFFF670C3)]),
+                        colors: [AppColors.primary, AppColors.primaryBright]),
                     LinearGradient(
-                        colors: [Color(0xFFF670C3), Color(0xFFF670C3)])),
+                        colors: [AppColors.primaryBright, AppColors.primaryBright])),
             widget.userData!.countUnit != ''
                 ? myCard(
                     'สิทธิ์ทันตกรรม',
@@ -59,22 +60,22 @@ class _SSOListCardHorizontal extends State<SSOListCardHorizontal> {
                     'บาท',
                     '',
                     LinearGradient(
-                        colors: [Color(0xFFF670C3), Color(0xFFF670C3)]))
+                        colors: [AppColors.primaryBright, AppColors.primaryBright]))
                 : myCardUnActivate(
                     context,
                     'สิทธิ์ทันตกรรม',
                     'กรุณาเชื่อมต่อระบบผู้ประกันตน เพื่อแสดงข้อมูล',
                     LinearGradient(
-                        colors: [Color(0xFFF670C3), Color(0xFFF670C3)]),
+                        colors: [AppColors.primaryBright, AppColors.primaryBright]),
                     LinearGradient(
-                        colors: [Color(0xFFC9166D), Color(0xFFF670C3)])),
+                        colors: [AppColors.primary, AppColors.primaryBright])),
             myCard(
                 'บริการออนไลน์',
                 'E-Service',
                 0,
                 '',
                 'assets/images/e-service.png',
-                LinearGradient(colors: [Color(0xFFF670C3), Color(0xFFC9166D)])),
+                LinearGradient(colors: [AppColors.primaryBright, AppColors.primary])),
             SizedBox(
               width: 5.0,
             ),
@@ -86,9 +87,9 @@ class _SSOListCardHorizontal extends State<SSOListCardHorizontal> {
         alignment: Alignment.center,
         padding: EdgeInsets.only(top: 10, bottom: 10),
         // decoration: BoxDecoration(
-        //     color: Color(0xFFC9166D),
+        //     color: AppColors.primary,
         //     border: Border.all(color: Colors.white),
-        //     gradient: LinearGradient(colors: [Color(0xFFC9166D), Colors.yellow])),
+        //     gradient: LinearGradient(colors: [AppColors.primary, Colors.yellow])),
         height: 160,
         child: ListView(
           scrollDirection: Axis.horizontal,
@@ -100,21 +101,21 @@ class _SSOListCardHorizontal extends State<SSOListCardHorizontal> {
                 context,
                 'ยอดเงินสมทบชราภาพ',
                 'กรุณาเชื่อมต่อระบบผู้ประกันตน เพื่อแสดงข้อมูล',
-                LinearGradient(colors: [Color(0xFFC9166D), Color(0xFFF670C3)]),
-                LinearGradient(colors: [Color(0xFFF670C3), Color(0xFFF670C3)])),
+                LinearGradient(colors: [AppColors.primary, AppColors.primaryBright]),
+                LinearGradient(colors: [AppColors.primaryBright, AppColors.primaryBright])),
             myCardUnActivate(
                 context,
                 'สิทธิ์ทันตกรรม',
                 'กรุณาเชื่อมต่อระบบผู้ประกันตน เพื่อแสดงข้อมูล',
-                LinearGradient(colors: [Color(0xFFF670C3), Color(0xFFF670C3)]),
-                LinearGradient(colors: [Color(0xFFC9166D), Color(0xFFF670C3)])),
+                LinearGradient(colors: [AppColors.primaryBright, AppColors.primaryBright]),
+                LinearGradient(colors: [AppColors.primary, AppColors.primaryBright])),
             myCard(
                 'บริการออนไลน์',
                 'E-Service',
                 0,
                 '',
                 'assets/images/e-service.png',
-                LinearGradient(colors: [Color(0xFFF670C3), Color(0xFFC9166D)])),
+                LinearGradient(colors: [AppColors.primaryBright, AppColors.primary])),
             SizedBox(
               width: 5.0,
             ),
@@ -138,7 +139,7 @@ myCard(
     margin: EdgeInsets.only(left: 5, right: 5),
     alignment: Alignment.centerLeft,
     decoration: BoxDecoration(
-      color: Color(0xFFC9166D),
+      color: AppColors.primary,
       // border: Border.all(color: Colors.white.withAlpha(150)),
       borderRadius: BorderRadius.circular(20),
       gradient: color,
@@ -219,7 +220,7 @@ myCardUnActivate(
     margin: EdgeInsets.only(left: 5, right: 5),
     alignment: Alignment.centerLeft,
     decoration: BoxDecoration(
-      color: Color(0xFFC9166D),
+      color: AppColors.primary,
       // border: Border.all(color: Colors.white.withAlpha(150)),
       borderRadius: BorderRadius.circular(20),
       gradient: colorBackgroud,
@@ -303,24 +304,24 @@ myCardUnActivate(
 //       alignment: Alignment.center,
 //       padding: EdgeInsets.only(top: 10, bottom: 10),
 //       // decoration: BoxDecoration(
-//       //     color: Color(0xFFC9166D),
+//       //     color: AppColors.primary,
 //       //     border: Border.all(color: Colors.white),
-//       //     gradient: LinearGradient(colors: [Color(0xFFC9166D), Colors.yellow])),
+//       //     gradient: LinearGradient(colors: [AppColors.primary, Colors.yellow])),
 //       height: 160,
 //       child: ListView(
 //         scrollDirection: Axis.horizontal,
 //         children: [
 //           myCard('ยอดเงินสมทบชราภาพ', 'ณ ปัจจุบัน', 134145, 'บาท', '',
-//               LinearGradient(colors: [Color(0xFFC9166D), Color(0xFFF670C3)])),
+//               LinearGradient(colors: [AppColors.primary, AppColors.primaryBright])),
 //           myCard('สิทธิ์ทันตกรรม', 'ณ ปัจจุบัน', 900, 'บาท', '',
-//               LinearGradient(colors: [Color(0xFFF670C3), Color(0xFFF670C3)])),
+//               LinearGradient(colors: [AppColors.primaryBright, AppColors.primaryBright])),
 //           myCard(
 //               'สิทธิ์ทันตกรรม',
 //               'ณ ปัจจุบัน',
 //               0,
 //               '',
 //               'assets/images/e-service.png',
-//               LinearGradient(colors: [Color(0xFFF670C3), Color(0xFFC9166D)])),
+//               LinearGradient(colors: [AppColors.primaryBright, AppColors.primary])),
 //         ],
 //       ),
 //     );

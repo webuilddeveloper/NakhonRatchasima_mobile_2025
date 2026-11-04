@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:ratchasima/pages/disaster/korat_disaster_alert_page.dart';
 import 'package:ratchasima/pages/notification/notification_list.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
@@ -61,11 +62,21 @@ class KoratNotificationService {
       importance: Importance.high,
     );
 
+    const disasterChannel = AndroidNotificationChannel(
+      'korat_disaster_alerts',
+      'แจ้งเตือนภัยพิบัติฉุกเฉินโคราช',
+      description: 'แจ้งเตือนระดับน้ำลำตะคอง สภาพอากาศ และประกาศฉุกเฉินจังหวัดนครราชสีมา',
+      importance: Importance.max,
+      playSound: true,
+      enableVibration: true,
+    );
+
     final androidImplementation =
         _plugin.resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>();
     await androidImplementation?.createNotificationChannel(updatesChannel);
     await androidImplementation?.createNotificationChannel(activitiesChannel);
+    await androidImplementation?.createNotificationChannel(disasterChannel);
   }
 
   Future<void> show({
@@ -136,11 +147,50 @@ class KoratNotificationService {
     );
   }
 
+  Future<void> showDisasterAlert({
+    required int id,
+    required String title,
+    required String body,
+    String payload = 'disaster_alert',
+  }) async {
+    const details = NotificationDetails(
+      android: AndroidNotificationDetails(
+        'korat_disaster_alerts',
+        'แจ้งเตือนภัยพิบัติฉุกเฉินโคราช',
+        channelDescription: 'แจ้งเตือนระดับน้ำลำตะคอง สภาพอากาศ และประกาศฉุกเฉินจังหวัดนครราชสีมา',
+        importance: Importance.max,
+        priority: Priority.max,
+        playSound: true,
+        enableVibration: true,
+        largeIcon: DrawableResourceAndroidBitmap('ic_launcher'),
+      ),
+      iOS: DarwinNotificationDetails(
+        presentAlert: true,
+        presentBadge: true,
+        presentSound: true,
+        interruptionLevel: InterruptionLevel.timeSensitive,
+      ),
+    );
+    await _plugin.show(
+      id: id,
+      title: title,
+      body: body,
+      notificationDetails: details,
+      payload: payload,
+    );
+  }
+
   void _onNotificationTapped(NotificationResponse response) {
-    if (response.payload != null) {
+    if (response.payload == 'disaster_alert') {
       appNavigatorKey.currentState?.push(
         MaterialPageRoute(
-          builder: (_) => NotificationList(title: 'แจ้งเตือน'),
+          builder: (_) => const KoratDisasterAlertPage(),
+        ),
+      );
+    } else if (response.payload != null) {
+      appNavigatorKey.currentState?.push(
+        MaterialPageRoute(
+          builder: (_) => const NotificationList(title: 'แจ้งเตือน'),
         ),
       );
     }

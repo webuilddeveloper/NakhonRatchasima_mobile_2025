@@ -1,9 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:ratchasima/apptheme.dart';
 import 'package:ratchasima/component/header.dart';
-import 'package:ratchasima/pages/blank_page/blank_loading.dart';
-import 'package:ratchasima/pages/training_course/training_course_list_category.dart';
 
 class TrainingCrouseDetail extends StatefulWidget {
   TrainingCrouseDetail({super.key, this.model, this.changePage});
@@ -130,18 +128,18 @@ class _TrainingCrouseDetail extends State<TrainingCrouseDetail> {
                               SizedBox(height: 10),
                               Text(
                                 '${widget.model['title']}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 20.0,
-                                  color: Color(0xFFC9166D),
+                                  color: AppColors.primary,
                                   fontFamily: 'Kanit',
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               Text(
                                 '${widget.model['titleEN']}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 20.0,
-                                  color: Color(0xFFC9166D),
+                                  color: AppColors.primary,
                                   fontFamily: 'Kanit',
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -414,7 +412,7 @@ class _TrainingCrouseDetail extends State<TrainingCrouseDetail> {
             'ลงทะเบียน',
             style: TextStyle(
               fontSize: 22.0,
-              color: Color(0xFFC9166D),
+              color: AppColors.primary,
               fontFamily: 'Kanit',
               fontWeight: FontWeight.w500,
             ),
@@ -471,7 +469,7 @@ class _TrainingCrouseDetail extends State<TrainingCrouseDetail> {
             'ลงทะเบียนสำเร็จ!',
             style: TextStyle(
               fontSize: 18.0,
-              color: Color(0xFFC9166D),
+              color: AppColors.primary,
               fontFamily: 'Kanit',
               fontWeight: FontWeight.w400,
             ),

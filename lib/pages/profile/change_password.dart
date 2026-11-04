@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:ratchasima/apptheme.dart';
 import 'package:ratchasima/component/header.dart';
 
 import '../../login.dart';
@@ -93,13 +94,13 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           actions: [
             CupertinoDialogAction(
               isDefaultAction: true,
-              child: new Text(
-                "ยกเลิก",
+              child: const Text(
+                "ตกลง",
                 style: TextStyle(
-                  fontSize: 13,
-                  fontFamily: 'Sarabun',
-                  color: Color(0xFFC9166D),
-                  fontWeight: FontWeight.normal,
+                  fontSize: 14,
+                  fontFamily: 'Kanit',
+                  color: AppColors.primary,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
               onPressed: () {
@@ -112,19 +113,19 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     } else {
       return showDialog(
         context: context,
-        builder: (BuildContext context) => new CupertinoAlertDialog(
-          title: new Text(
+        builder: (BuildContext context) => CupertinoAlertDialog(
+          title: const Text(
             'เปลี่ยนรหัสผ่านไม่สำเร็จ',
             style: TextStyle(
               fontSize: 16,
-              fontFamily: 'Sarabun',
+              fontFamily: 'Kanit',
               color: Colors.black,
-              fontWeight: FontWeight.normal,
+              fontWeight: FontWeight.w600,
             ),
           ),
-          content: new Text(
-            result['message'],
-            style: TextStyle(
+          content: Text(
+            result['message'] ?? 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง',
+            style: const TextStyle(
               fontSize: 13,
               fontFamily: 'Sarabun',
               color: Colors.black,
@@ -134,13 +135,13 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           actions: [
             CupertinoDialogAction(
               isDefaultAction: true,
-              child: new Text(
-                "ยกเลิก",
+              child: const Text(
+                "ตกลง",
                 style: TextStyle(
-                  fontSize: 13,
-                  fontFamily: 'Sarabun',
-                  color: Color(0xFFC9166D),
-                  fontWeight: FontWeight.normal,
+                  fontSize: 14,
+                  fontFamily: 'Kanit',
+                  color: AppColors.primary,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
               onPressed: () {
@@ -186,8 +187,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           labelTextFormFieldPasswordOldNew('รหัสผ่านปัจจุบัน', false),
           TextFormField(
             obscureText: showTxtPasswordOld,
-            style: TextStyle(
-              color: Color(0xFFC9166D),
+            style: const TextStyle(
+              color: AppColors.textPrimary,
               fontWeight: FontWeight.normal,
               fontFamily: 'Sarabun',
               fontSize: 15.0,
@@ -204,12 +205,12 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 },
               ),
               filled: true,
-              fillColor: const Color(0xFFFFE3F0),
-              contentPadding: EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
+              fillColor: AppColors.surface,
+              contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
               hintText: 'รหัสผ่านปัจจุบัน',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide.none,
+                borderSide: const BorderSide(color: AppColors.border),
               ),
               errorStyle: TextStyle(
                 fontWeight: FontWeight.normal,
@@ -229,8 +230,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           labelTextFormFieldPasswordOldNew('รหัสผ่านใหม่', true),
           TextFormField(
             obscureText: showTxtPasswordNew,
-            style: TextStyle(
-              color: Color(0xFFC9166D),
+            style: const TextStyle(
+              color: AppColors.textPrimary,
               fontWeight: FontWeight.normal,
               fontFamily: 'Sarabun',
               fontSize: 15.0,
@@ -247,12 +248,12 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 },
               ),
               filled: true,
-              fillColor: const Color(0xFFFFE3F0),
-              contentPadding: EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
+              fillColor: AppColors.surface,
+              contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
               hintText: 'รหัสผ่านใหม่',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide.none,
+                borderSide: const BorderSide(color: AppColors.border),
               ),
               errorStyle: TextStyle(
                 fontWeight: FontWeight.normal,
@@ -278,8 +279,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           labelTextFormFieldPasswordOldNew('ยืนยันรหัสผ่านใหม่', false),
           TextFormField(
             obscureText: showTxtConPasswordNew,
-            style: TextStyle(
-              color: Color(0xFFC9166D),
+            style: const TextStyle(
+              color: AppColors.textPrimary,
               fontWeight: FontWeight.normal,
               fontFamily: 'Sarabun',
               fontSize: 15.0,
@@ -298,12 +299,12 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 },
               ),
               filled: true,
-              fillColor: const Color(0xFFFFE3F0),
-              contentPadding: EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
+              fillColor: AppColors.surface,
+              contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
               hintText: 'ยืนยันรหัสผ่านใหม่',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide.none,
+                borderSide: const BorderSide(color: AppColors.border),
               ),
               errorStyle: TextStyle(
                 fontWeight: FontWeight.normal,
@@ -385,7 +386,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
             ),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5.0),
-              color: Color(0xFFC9166D),
+              color: AppColors.primary,
             ),
             width: 30.0,
             height: 30.0,

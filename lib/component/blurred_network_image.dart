@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -47,13 +48,51 @@ class _BlurredNetworkImageState extends State<BlurredNetworkImage> {
     }
   }
 
+  ImageProvider _getImageProvider(String url) {
+    if (url.startsWith('assets/')) {
+      return AssetImage(url);
+    } else if (url.startsWith('/') || url.startsWith('file://')) {
+      final path = url.replaceFirst('file://', '');
+      return FileImage(File(path));
+    }
+    return NetworkImage(url);
+  }
+
+  Widget _renderImage(String url, {BoxFit fit = BoxFit.cover, double? width, double? height}) {
+    if (url.startsWith('assets/')) {
+      return Image.asset(
+        url,
+        width: width,
+        height: height,
+        fit: fit,
+        errorBuilder: (_, __, ___) => _placeholder(),
+      );
+    } else if (url.startsWith('/') || url.startsWith('file://')) {
+      final path = url.replaceFirst('file://', '');
+      return Image.file(
+        File(path),
+        width: width,
+        height: height,
+        fit: fit,
+        errorBuilder: (_, __, ___) => _placeholder(),
+      );
+    }
+    return Image.network(
+      url,
+      width: width,
+      height: height,
+      fit: fit,
+      errorBuilder: (_, __, ___) => _placeholder(),
+    );
+  }
+
   void _resolveImage() {
     final imageUrl = widget.imageUrl.trim();
     if (imageUrl.isEmpty || imageUrl == _resolvedUrl) return;
 
     _removeImageListener();
     _resolvedUrl = imageUrl;
-    final stream = NetworkImage(imageUrl).resolve(
+    final stream = _getImageProvider(imageUrl).resolve(
       createLocalImageConfiguration(context),
     );
     final listener = ImageStreamListener(
@@ -95,22 +134,20 @@ class _BlurredNetworkImageState extends State<BlurredNetworkImage> {
       child: LayoutBuilder(
         builder: (context, constraints) {
           if (!_shouldBlur(constraints)) {
-            return Image.network(
+            return _renderImage(
               widget.imageUrl,
               width: double.infinity,
               height: double.infinity,
               fit: BoxFit.cover,
-              errorBuilder: (_, __, ___) => _placeholder(),
             );
           }
 
           return Stack(
             fit: StackFit.expand,
             children: [
-              Image.network(
+              _renderImage(
                 widget.imageUrl,
                 fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => _placeholder(),
               ),
               BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
@@ -118,12 +155,11 @@ class _BlurredNetworkImageState extends State<BlurredNetworkImage> {
                   color: Colors.white.withValues(alpha: 0.28),
                 ),
               ),
-              Image.network(
+              _renderImage(
                 widget.imageUrl,
                 width: double.infinity,
                 height: double.infinity,
                 fit: BoxFit.contain,
-                errorBuilder: (_, __, ___) => _placeholder(),
               ),
             ],
           );

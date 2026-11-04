@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../apptheme.dart';
 
 import '../blurred_network_image.dart';
 
@@ -58,11 +59,11 @@ class _ListContentHorizontal extends State<ListContentHorizontal> {
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        Color(0xFFFFE3F0),
-                        Color(0xFFC9166D),
+                        AppColors.primarySoft,
+                        AppColors.primary,
                       ],
                       begin: Alignment.topLeft,
-                      end: new Alignment(1, 0.0),
+                      end: const Alignment(1, 0.0),
                     ),
                     borderRadius: BorderRadius.circular(20),
                   ),
@@ -76,14 +77,14 @@ class _ListContentHorizontal extends State<ListContentHorizontal> {
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.only(bottom: 5),
+                  margin: const EdgeInsets.only(bottom: 5),
                   child: Text(
                     widget.title!,
-                    style: TextStyle(
-                      color: Color(0xFFC9166D),
+                    style: const TextStyle(
+                      color: AppColors.primary,
                       fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                      fontFamily: 'Sarabun',
+                      fontSize: 16,
+                      fontFamily: 'Kanit',
                     ),
                   ),
                 ),
@@ -95,16 +96,15 @@ class _ListContentHorizontal extends State<ListContentHorizontal> {
               },
               child: Container(
                 alignment: Alignment.centerLeft,
-                padding: EdgeInsets.only(right: 15),
-                margin: EdgeInsets.only(bottom: 5),
-                child: Text(
+                padding: const EdgeInsets.only(right: 15),
+                margin: const EdgeInsets.only(bottom: 5),
+                child: const Text(
                   'ดูทั้งหมด',
                   style: TextStyle(
-                    color: Color(0xFFF670C3),
-                    decoration: TextDecoration.underline,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                    fontFamily: 'Sarabun',
+                    color: AppColors.primary,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 13,
+                    fontFamily: 'Kanit',
                   ),
                 ),
               ),
@@ -197,7 +197,7 @@ myCard(
               : EdgeInsets.all(5),
       decoration: BoxDecoration(
           borderRadius: new BorderRadius.circular(5),
-          // color: Color(0xFFC9166D),
+          // color: Color(0xFFBF360C),
           color: Colors.transparent),
       width: 150,
       child: Stack(

@@ -9,6 +9,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../component/header.dart';
 import '../../apptheme.dart';
 import '../../shared/api_provider.dart';
+import '../../shared/mock_repository.dart';
 import 'event_calendar_list_vertical.dart';
 
 class EventCalendarList extends StatefulWidget {
@@ -39,10 +40,14 @@ class _EventCalendarList extends State<EventCalendarList> {
 
   @override
   void initState() {
-    // _futureEventCalendarCategory =
-    //     post('${eventCalendarCategoryApi}read', {'skip': 0, 'limit': 100});
     _read();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _refreshController.dispose();
+    super.dispose();
   }
 
   void goBack() async {
@@ -108,91 +113,70 @@ class _EventCalendarList extends State<EventCalendarList> {
       future: postCategory('${eventCalendarCategoryApi}read', {
         'skip': 0,
         'limit': 100,
-      }), // function where you call your api
+      }),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        // AsyncSnapshot<Your object type>
+        final List<dynamic> categories = (snapshot.hasData &&
+                snapshot.data is List &&
+                (snapshot.data as List).isNotEmpty)
+            ? snapshot.data as List
+            : KoratMockRepository.getEventCategories();
 
-        if (snapshot.hasData) {
-          return Container(
-            height: 48.0,
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            margin: const EdgeInsets.symmetric(horizontal: 16.0),
-            decoration: BoxDecoration(
-              color: AppColors.surface,
-              border: Border.all(color: AppColors.border),
-              borderRadius: BorderRadius.circular(14.0),
-            ),
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: snapshot.data.length,
-              itemBuilder: (BuildContext context, int index) {
-                final tabWidth = (MediaQuery.of(context).size.width - 48) /
-                    snapshot.data.length;
-                return GestureDetector(
-                  onTap: () {
-                    if (snapshot.data[index]['code'] != '') {
-                      setState(() {
-                        // keySearch = '';
-                        // isMain = false;
-                        categorySelected = snapshot.data[index]['code'];
-                      });
-                    } else {
-                      setState(() {
-                        // isHighlight = true;
-                        categorySelected = '';
-                        isMain = true;
-                      });
-                    }
-                    setState(() {
-                      categorySelected = snapshot.data[index]['code'];
-                      // selectedIndex = index;
-                    });
-                  },
-                  child: SizedBox(
-                    width: tabWidth,
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 2),
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: categorySelected == snapshot.data[index]['code']
-                            ? AppColors.primarySoft
-                            : Colors.transparent,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Text(
-                        snapshot.data[index]['title'],
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: categorySelected == snapshot.data[index]['code']
-                              ? AppColors.primary
-                              : AppColors.textSecondary,
-                          fontSize: 14.0,
-                          fontWeight: categorySelected == snapshot.data[index]['code']
-                              ? FontWeight.w600
-                              : FontWeight.w400,
-                          fontFamily: 'Kanit',
-                        ),
+        return Container(
+          height: 48.0,
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          margin: const EdgeInsets.symmetric(horizontal: 16.0),
+          decoration: BoxDecoration(
+            color: AppColors.surface,
+            border: Border.all(color: AppColors.border),
+            borderRadius: BorderRadius.circular(14.0),
+          ),
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: categories.length,
+            itemBuilder: (BuildContext context, int index) {
+              final count = categories.isNotEmpty ? categories.length : 1;
+              final tabWidth = (MediaQuery.of(context).size.width - 48) / count;
+              return GestureDetector(
+                onTap: () {
+                  setState(() {
+                    categorySelected = categories[index]['code'] ?? '';
+                  });
+                },
+                child: SizedBox(
+                  width: tabWidth < 90 ? 90 : tabWidth,
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 2),
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: categorySelected == categories[index]['code']
+                          ? AppColors.primarySoft
+                          : Colors.transparent,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text(
+                      categories[index]['title'] ?? '',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: categorySelected == categories[index]['code']
+                            ? AppColors.primary
+                            : AppColors.textSecondary,
+                        fontSize: 14.0,
+                        fontWeight:
+                            categorySelected == categories[index]['code']
+                                ? FontWeight.w600
+                                : FontWeight.w400,
+                        fontFamily: 'Kanit',
                       ),
                     ),
                   ),
-                );
-              },
-            ),
-          );
-        } else {
-          return Container(
-            height: 48.0,
-            margin: const EdgeInsets.symmetric(horizontal: 16.0),
-            decoration: BoxDecoration(
-              color: AppColors.surface,
-              border: Border.all(color: AppColors.border),
-              borderRadius: BorderRadius.circular(14.0),
-            ),
-          );
-        }
+                ),
+              );
+            },
+          ),
+        );
       },
     );
   }

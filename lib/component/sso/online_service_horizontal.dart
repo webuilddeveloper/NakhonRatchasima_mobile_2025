@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import '../../apptheme.dart';
 
 import '../../shared/api_provider.dart';
 
@@ -7,7 +8,7 @@ class SSOOnlineServiceHorizontal extends StatefulWidget {
   SSOOnlineServiceHorizontal({super.key, this.title, this.model});
 
   final String? title;
-  final dynamic? model;
+  final dynamic model;
 
   @override
   _SSOOnlineServiceHorizontal createState() => _SSOOnlineServiceHorizontal();
@@ -39,11 +40,11 @@ class _SSOOnlineServiceHorizontal extends State<SSOOnlineServiceHorizontal> {
                 padding: EdgeInsets.only(left: 15),
                 child: Text(
                   widget.title!,
-                  style: TextStyle(
-                    color: Color(0xFFC9166D),
+                  style: const TextStyle(
+                    color: AppColors.primary,
                     fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                    fontFamily: 'Sarabun',
+                    fontSize: 16,
+                    fontFamily: 'Kanit',
                   ),
                 ),
               ),
@@ -186,11 +187,11 @@ class _SSOOnlineServiceHorizontal extends State<SSOOnlineServiceHorizontal> {
                 padding: EdgeInsets.only(left: 15),
                 child: Text(
                   widget.title!,
-                  style: TextStyle(
-                    color: Color(0xFFC9166D),
+                  style: const TextStyle(
+                    color: AppColors.primary,
                     fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                    fontFamily: 'Sarabun',
+                    fontSize: 16,
+                    fontFamily: 'Kanit',
                   ),
                 ),
               ),
@@ -202,41 +203,12 @@ class _SSOOnlineServiceHorizontal extends State<SSOOnlineServiceHorizontal> {
                     '(ว่างงานหรือชราภาพ)',
                     '',
                     () => {
-                      
                       Fluttertoast.showToast(
-                              msg: "",
-                              // backgroundColor: color,
-                              gravity: ToastGravity.BOTTOM,
-                              // textColor: fontColor
-                            )
-                    },
-                  ),
-                  myCircle(
-                    '',
-                    '',
-                    '',
-                    () => {
-                      
-                      Fluttertoast.showToast(
-                              msg: "",
-                              // backgroundColor: color,
-                              gravity: ToastGravity.BOTTOM,
-                              // textColor: fontColor
-                            )
-                    },
-                  ),
-                  myCircle(
-                    '',
-                    '',
-                    '',
-                    () => {
-                      
-                      Fluttertoast.showToast(
-                              msg: "",
-                              // backgroundColor: color,
-                              gravity: ToastGravity.BOTTOM,
-                              // textColor: fontColor
-                            )
+                        msg: "",
+                        // backgroundColor: color,
+                        gravity: ToastGravity.BOTTOM,
+                        // textColor: fontColor
+                      )
                     },
                   ),
                   myCircle(
@@ -245,11 +217,37 @@ class _SSOOnlineServiceHorizontal extends State<SSOOnlineServiceHorizontal> {
                     '',
                     () => {
                       Fluttertoast.showToast(
-                              msg: "",
-                              // backgroundColor: color,
-                              gravity: ToastGravity.BOTTOM,
-                              // textColor: fontColor
-                            )
+                        msg: "",
+                        // backgroundColor: color,
+                        gravity: ToastGravity.BOTTOM,
+                        // textColor: fontColor
+                      )
+                    },
+                  ),
+                  myCircle(
+                    '',
+                    '',
+                    '',
+                    () => {
+                      Fluttertoast.showToast(
+                        msg: "",
+                        // backgroundColor: color,
+                        gravity: ToastGravity.BOTTOM,
+                        // textColor: fontColor
+                      )
+                    },
+                  ),
+                  myCircle(
+                    '',
+                    '',
+                    '',
+                    () => {
+                      Fluttertoast.showToast(
+                        msg: "",
+                        // backgroundColor: color,
+                        gravity: ToastGravity.BOTTOM,
+                        // textColor: fontColor
+                      )
                     },
                   ),
                 ],
@@ -273,7 +271,7 @@ myCircle(String title, String subTitle, String image, Function nav) {
         child: Column(
           children: [
             CircleAvatar(
-              backgroundColor: Color(0xFFF670C3),
+              backgroundColor: AppColors.primarySoft,
               radius: 30,
               child: Image.asset(
                 image,
@@ -283,14 +281,14 @@ myCircle(String title, String subTitle, String image, Function nav) {
             ),
             Container(
               width: 75.0,
-              margin: EdgeInsets.only(top: 5.0),
+              margin: const EdgeInsets.only(top: 5.0),
               child: Text(
                 title,
-                style: TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFFC9166D),
-                  fontFamily: 'Sarabun',
+                style: const TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textPrimary,
+                  fontFamily: 'Kanit',
                 ),
                 maxLines: 2,
                 textAlign: TextAlign.center,
@@ -300,10 +298,10 @@ myCircle(String title, String subTitle, String image, Function nav) {
             Container(
               child: Text(
                 subTitle,
-                style: TextStyle(
-                  fontSize: 8,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFFC9166D),
+                style: const TextStyle(
+                  fontSize: 9,
+                  fontWeight: FontWeight.normal,
+                  color: AppColors.textSecondary,
                   fontFamily: 'Sarabun',
                 ),
                 overflow: TextOverflow.ellipsis,

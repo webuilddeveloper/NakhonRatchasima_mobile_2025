@@ -48,6 +48,8 @@ class _NewsList extends State<NewsList> {
 
   @override
   void dispose() {
+    txtDescription.dispose();
+    _refreshController.dispose();
     super.dispose();
   }
 

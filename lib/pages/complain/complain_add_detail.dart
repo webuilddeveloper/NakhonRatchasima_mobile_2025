@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:image_picker/image_picker.dart';
@@ -6,6 +5,7 @@ import 'package:ratchasima/shared/api_provider.dart';
 import 'package:ratchasima/component/korat_ui.dart';
 import 'package:ratchasima/apptheme.dart';
 import 'package:ratchasima/pages/reporter/reporter_local_store.dart';
+import 'package:ratchasima/pages/reporter/reporter_history_list.dart';
 
 import '../../component/blurred_network_image.dart';
 
@@ -41,23 +41,42 @@ class _ComplainAddDetailState extends State<ComplainAddDetail> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    txtTitle.dispose();
+    txtDescription.dispose();
+    super.dispose();
+  }
+
   Future<void> _takePhoto() async {
     if (_images.length >= _maxImages) {
       _showMaxImagesReachedDialog();
       return;
     }
 
-    final XFile? photo = await _picker.pickImage(source: ImageSource.camera);
-    if (photo != null) {
-      try {
-        String imageUrl = await uploadImage(photo);
+    try {
+      final XFile? photo = await _picker.pickImage(source: ImageSource.camera);
+      if (photo != null) {
+        String imageUrl = photo.path;
+        try {
+          imageUrl = await uploadImage(photo);
+        } catch (_) {}
 
         setState(() {
           _images.add({"imageUrl": imageUrl});
         });
-      } catch (e) {
-        print("Upload failed: $e");
       }
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'ไม่สามารถเข้าถึงกล้องถ่ายรูปได้ กรุณาตรวจสอบสิทธิ์ในตั้งค่า (Settings)',
+            style: TextStyle(fontFamily: 'Sarabun'),
+          ),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
     }
   }
 
@@ -67,18 +86,29 @@ class _ComplainAddDetailState extends State<ComplainAddDetail> {
       return;
     }
 
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-
-    if (image != null) {
-      try {
-        String imageUrl = await uploadImage(image);
+    try {
+      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      if (image != null) {
+        String imageUrl = image.path;
+        try {
+          imageUrl = await uploadImage(image);
+        } catch (_) {}
 
         setState(() {
           _images.add({"imageUrl": imageUrl});
         });
-      } catch (e) {
-        print("Upload failed: $e");
       }
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'ไม่สามารถเข้าถึงคลังรูปภาพได้ กรุณาตรวจสอบสิทธิ์ในตั้งค่า (Settings)',
+            style: TextStyle(fontFamily: 'Sarabun'),
+          ),
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
     }
   }
 
@@ -107,55 +137,165 @@ class _ComplainAddDetailState extends State<ComplainAddDetail> {
   }
 
   Future<dynamic> submitReporter() async {
+    final firstImage = _images.isNotEmpty ? _images.first['imageUrl'] : '';
     ReporterLocalStore.add(
       title: txtTitle.text.trim(),
       category: widget.label,
       description: txtDescription.text.trim(),
+      imageUrl: firstImage,
     );
+    final reportCode = ReporterLocalStore.reports.isNotEmpty
+        ? ReporterLocalStore.reports.first['code']
+        : 'KRT-REPORTER';
 
-    if (mounted) {
-      return showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (BuildContext context) {
-          return WillPopScope(
-            onWillPop: () {
-              return Future.value(false);
-            },
-            child: CupertinoAlertDialog(
-              title: new Text(
-                'บันทึกข้อมูลเรียบร้อยแล้ว',
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontFamily: 'Sarabun',
-                  color: Colors.black,
-                  fontWeight: FontWeight.normal,
-                ),
+    if (!mounted) return;
+
+    return showGeneralDialog(
+      barrierDismissible: false,
+      context: context,
+      barrierLabel: 'success',
+      barrierColor: Colors.black.withValues(alpha: 0.45),
+      transitionDuration: const Duration(milliseconds: 220),
+      pageBuilder: (BuildContext ctx, anim1, anim2) {
+        return Center(
+          child: Material(
+            color: Colors.transparent,
+            child: Container(
+              width: MediaQuery.of(ctx).size.width * 0.85,
+              constraints: const BoxConstraints(maxWidth: 350),
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(24),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.12),
+                    blurRadius: 20,
+                    offset: const Offset(0, 8),
+                  ),
+                ],
               ),
-              content: const Text(" "),
-              actions: [
-                CupertinoDialogAction(
-                  isDefaultAction: true,
-                  child: new Text(
-                    "ตกลง",
-                    style: const TextStyle(
-                      fontSize: 13,
-                      fontFamily: 'Sarabun',
-                      color: Color(0xFFC9166D),
-                      fontWeight: FontWeight.normal,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 64,
+                    height: 64,
+                    decoration: const BoxDecoration(
+                      color: AppColors.primarySoft,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.check_circle_rounded,
+                      color: AppColors.primary,
+                      size: 38,
                     ),
                   ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                    goBack();
-                  },
-                ),
-              ],
+                  const SizedBox(height: 16),
+                  const Text(
+                    'ส่งเรื่องแจ้งปัญหาเรียบร้อยแล้ว',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'Kanit',
+                      fontSize: 19,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.textPrimary,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                    decoration: BoxDecoration(
+                      color: AppColors.surfaceWarm,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Text(
+                      'รหัสเรื่อง: $reportCode',
+                      style: const TextStyle(
+                        fontFamily: 'Kanit',
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.primary,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  const Text(
+                    'เรื่องร้องเรียนของคุณถูกบันทึกเข้าระบบแล้ว เจ้าหน้าที่เทศบาลจะดำเนินการตรวจสอบและประสานงานแก้ไขต่อไป',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'Kanit',
+                      fontSize: 13.5,
+                      color: AppColors.textSecondary,
+                      height: 1.4,
+                    ),
+                  ),
+                  const SizedBox(height: 22),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(ctx);
+                        goBack();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primary,
+                        foregroundColor: Colors.white,
+                        elevation: 0,
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(13),
+                        ),
+                      ),
+                      child: const Text(
+                        'เสร็จสิ้น',
+                        style: TextStyle(
+                          fontFamily: 'Kanit',
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  SizedBox(
+                    width: double.infinity,
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.pop(ctx);
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) =>
+                                const ReporterHistoryList(title: 'ติดตามปัญหา'),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        'ติดตามสถานะเรื่องนี้',
+                        style: TextStyle(
+                          fontFamily: 'Kanit',
+                          fontSize: 13.5,
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          );
-        },
-      );
-    }
+          ),
+        );
+      },
+      transitionBuilder: (ctx, anim1, anim2, child) {
+        return Transform.scale(
+          scale: 0.85 + (0.15 * anim1.value),
+          child: Opacity(opacity: anim1.value, child: child),
+        );
+      },
+    );
   }
 
   void goBack() async {
@@ -443,45 +583,77 @@ class _ComplainAddDetailState extends State<ComplainAddDetail> {
   }
 
   void _showErrorDialog(String message) {
-    showDialog(
+    showGeneralDialog(
       context: context,
-      builder: (BuildContext context) {
-        return CupertinoAlertDialog(
-          title: Text(
-            'แจ้งเตือน',
-            style: const TextStyle(
-              fontSize: 16,
-              fontFamily: 'Sarabun',
-              color: Colors.black,
-              fontWeight: FontWeight.normal,
-            ),
-          ),
-          content: Text(
-            message,
-            style: const TextStyle(
-              fontSize: 13,
-              fontFamily: 'Sarabun',
-              color: Colors.black,
-              fontWeight: FontWeight.normal,
-            ),
-          ),
-          actions: [
-            CupertinoDialogAction(
-              isDefaultAction: true,
-              child: Text(
-                "ตกลง",
-                style: const TextStyle(
-                  fontSize: 13,
-                  fontFamily: 'Sarabun',
-                  color: Color(0xFFC9166D),
-                  fontWeight: FontWeight.normal,
-                ),
+      barrierDismissible: true,
+      barrierLabel: 'dismiss',
+      barrierColor: Colors.black.withValues(alpha: 0.45),
+      transitionDuration: const Duration(milliseconds: 200),
+      pageBuilder: (ctx, anim1, anim2) {
+        return Center(
+          child: Material(
+            color: Colors.transparent,
+            child: Container(
+              width: MediaQuery.of(ctx).size.width * 0.82,
+              constraints: const BoxConstraints(maxWidth: 340),
+              padding: const EdgeInsets.all(22),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(22),
               ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 54,
+                    height: 54,
+                    decoration: BoxDecoration(
+                      color: AppColors.error.withValues(alpha: 0.12),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(Icons.info_outline_rounded,
+                        color: AppColors.error, size: 30),
+                  ),
+                  const SizedBox(height: 14),
+                  const Text('ข้อมูลไม่ครบถ้วน',
+                      style: TextStyle(
+                          fontFamily: 'Kanit',
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.textPrimary)),
+                  const SizedBox(height: 8),
+                  Text(message,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                          fontFamily: 'Kanit',
+                          fontSize: 14,
+                          color: AppColors.textSecondary)),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () => Navigator.pop(ctx),
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primary,
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12))),
+                      child: const Text('เข้าใจแล้ว',
+                          style: TextStyle(
+                              fontFamily: 'Kanit',
+                              fontWeight: FontWeight.w600)),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ],
+          ),
+        );
+      },
+      transitionBuilder: (ctx, anim1, anim2, child) {
+        return Transform.scale(
+          scale: 0.85 + (0.15 * anim1.value),
+          child: Opacity(opacity: anim1.value, child: child),
         );
       },
     );

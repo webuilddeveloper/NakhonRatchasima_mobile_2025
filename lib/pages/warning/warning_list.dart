@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../component/key_search.dart';
 import '../../component/tab_category.dart';
-import '../../shared/api_provider.dart'  as service;
+import '../../shared/api_provider.dart' as service;
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../widget/header.dart';
@@ -88,7 +88,7 @@ class _WarningList extends State<WarningList> {
       backgroundColor: Colors.white,
       appBar: header(context, goBack, title: widget.title),
       // AppBar(
-      //   backgroundColor: Color(0xFFC9166D),
+      //   backgroundColor: Color(0xFFBF360C),
       //   elevation: 0.0,
       //   // leading: FlutterLogo(),
       //   leading: Container(
@@ -107,7 +107,7 @@ class _WarningList extends State<WarningList> {
       //         topLeft: const Radius.circular(5.0),
       //         topRight: const Radius.circular(5.0),
       //       ),
-      //       color: Color(0xFFC9166D),
+      //       color: Color(0xFFBF360C),
       //     ),
       //   ),
 
@@ -146,8 +146,8 @@ class _WarningList extends State<WarningList> {
                 ),
                 onChange: (String val) {
                   setState(
-                    () => {
-                      category = val,
+                    () {
+                      category = val;
                       warning = new WarningListVertical(
                         site: 'DDPM',
                         model: service.post('${service.warningApi}read', {
@@ -158,7 +158,7 @@ class _WarningList extends State<WarningList> {
                         }),
                         url: '${service.warningApi}read',
                         urlGallery: '${service.warningGalleryApi}',
-                      ),
+                      );
                     },
                   );
                 },

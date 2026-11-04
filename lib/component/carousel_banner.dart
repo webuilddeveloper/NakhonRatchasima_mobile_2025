@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import '../apptheme.dart';
 
 import 'blurred_network_image.dart';
 
@@ -49,11 +50,12 @@ class _CarouselBanner extends State<CarouselBanner> {
               children: [
                 InkWell(
                   onTap: () {
-                    widget.nav!(
-                      snapshot.data[_current]['linkUrl'],
-                      snapshot.data[_current]['action'],
-                      snapshot.data[_current],
-                      snapshot.data[_current]['code'],
+                    final item = snapshot.data[_current];
+                    widget.nav?.call(
+                      (item['linkUrl'] ?? item['link'] ?? '').toString(),
+                      (item['action'] ?? 'in').toString(),
+                      item,
+                      (item['code'] ?? '').toString(),
                       '',
                     );
                   },
@@ -110,8 +112,8 @@ class _CarouselBanner extends State<CarouselBanner> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                           color: _current == index
-                              ? Color(0xFFC9166D)
-                              : Color(0xFFFFE3F0),
+                              ? AppColors.primary
+                              : AppColors.primarySoft,
                           // : Color.fromRGBO(0, 0, 0, 0.4),
                         ),
                       );

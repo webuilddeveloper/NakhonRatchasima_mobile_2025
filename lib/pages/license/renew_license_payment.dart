@@ -69,7 +69,7 @@ class _RenewLicensePayment extends State<RenewLicensePayment> {
                   fontFamily: 'Kanit',
                   fontWeight: FontWeight.normal,
                   decoration: TextDecoration.underline,
-                  color: Color(0xFFC9166D),
+                  color: Color(0xFFBF360C),
                 ),
               ),
             ),
@@ -97,7 +97,7 @@ class _RenewLicensePayment extends State<RenewLicensePayment> {
                   'ชำระค่าธรรมเนียม',
                   style: TextStyle(
                     fontSize: 20.0,
-                    color: Color(0xFFC9166D),
+                    color: Color(0xFFBF360C),
                     fontFamily: 'Kanit',
                     fontWeight: FontWeight.bold,
                   ),
@@ -209,7 +209,7 @@ class _RenewLicensePayment extends State<RenewLicensePayment> {
                         child: const Icon(
                           Icons.upload_file,
                           size: 50,
-                          color: Color(0xFFC9166D),
+                          color: Color(0xFFBF360C),
                         ),
                       ),
                     ),
@@ -410,7 +410,7 @@ class _RenewLicensePayment extends State<RenewLicensePayment> {
                   style: TextStyle(
                     fontSize: 15,
                     fontFamily: 'Kanit',
-                    color: Color(0xFFC9166D),
+                    color: Color(0xFFBF360C),
                     fontWeight: FontWeight.normal,
                   ),
                 ),

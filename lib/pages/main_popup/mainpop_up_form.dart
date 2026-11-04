@@ -1,6 +1,4 @@
-import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../component/blurred_network_image.dart';
@@ -100,7 +98,7 @@ class _MainPopup extends State<MainPopup> {
               //           borderRadius: BorderRadius.circular(5),
               //           // shape: BoxShape.circle,
               //           color: _current == index
-              //               ? Color(0xFFF670C3)
+              //               ? Color(0xFFD84315)
               //               : Color.fromRGBO(0, 0, 0, 0.4),
               //         ));
               //   }).toList(),

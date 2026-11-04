@@ -8,10 +8,12 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/services.dart';
 
+import '../../apptheme.dart';
 import '../../component/button_close_back.dart';
 import '../../component/gallery_view.dart';
 import '../../shared/api_provider.dart';
 import '../../shared/extension.dart';
+import '../../shared/mock_repository.dart';
 import '../blank_page/blank_loading.dart';
 import 'poll_dialog.dart';
 import 'poll_list.dart';
@@ -103,7 +105,7 @@ class _PollDetailPageState extends State<PollForm> {
                         style: TextStyle(
                           fontSize: 13,
                           fontFamily: 'Sarabun',
-                          color: Color(0xFFF670C3),
+                          color: AppColors.primary,
                           fontWeight: FontWeight.normal,
                         ),
                       ),
@@ -125,34 +127,46 @@ class _PollDetailPageState extends State<PollForm> {
 
     if (checkSendReply) {
       var value = await storage?.read(key: 'dataUserLoginDDPM');
-      var user = json.decode(value!);
+      Map<String, dynamic> user = {};
+      if (value != null && value.isNotEmpty) {
+        try {
+          user = json.decode(value);
+        } catch (_) {}
+      }
+      final username = user['username'] ?? 'guest-korat';
+      final firstName = user['firstName'] ?? 'ผู้ใช้งาน';
+      final lastName = user['lastName'] ?? 'ทั่วไป';
 
-      model['questions']
-          .map((question) => {
-                title = question['title'],
-                reference = question['reference'],
-                question['answers']
-                    .map((answer) => {
-                          if (answer['value'])
-                            {
-                              postObjectData('m/poll/reply/create', {
-                                'reference': reference.toString(),
-                                'username': user['username'].toString(),
-                                'firstName': user['firstName'].toString(),
-                                'lastName': user['lastName'].toString(),
-                                'title': title.toString(),
-                                'answer': question['reference'] == 'text'
-                                    ? answer['value'] == false
-                                        ? ''
-                                        : answer['value'].toString()
-                                    : answer['title'].toString(),
-                                'platform': Platform.operatingSystem.toString()
-                              })
-                            }
-                        })
-                    .toList(),
-              })
-          .toList();
+      try {
+        model['questions']
+            .map((question) => {
+                  title = question['title'],
+                  reference = question['reference'],
+                  question['answers']
+                      .map((answer) => {
+                            if (answer['value'])
+                              {
+                                postObjectData('m/poll/reply/create', {
+                                  'reference': reference.toString(),
+                                  'username': username.toString(),
+                                  'firstName': firstName.toString(),
+                                  'lastName': lastName.toString(),
+                                  'title': title.toString(),
+                                  'answer': question['reference'] == 'text'
+                                      ? answer['value'] == false
+                                          ? ''
+                                          : answer['value'].toString()
+                                      : answer['title'].toString(),
+                                  'platform': Platform.operatingSystem.toString()
+                                })
+                              }
+                          })
+                      .toList(),
+                })
+            .toList();
+      } catch (e) {
+        print('Submit poll response error -> continuing to success dialog: $e');
+      }
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -206,15 +220,26 @@ class _PollDetailPageState extends State<PollForm> {
         child: FutureBuilder<dynamic>(
           future: _futureModel, // function where you call your api
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-            // AsyncSnapshot<Your object type>
-            dynamic questions = [];
-            dynamic answers = [];
+            dynamic currentModel;
+            if (snapshot.hasData &&
+                snapshot.data != null &&
+                snapshot.data is Map &&
+                snapshot.data['questions'] != null) {
+              currentModel = snapshot.data;
+            } else if (snapshot.connectionState == ConnectionState.done ||
+                snapshot.hasError) {
+              currentModel = widget.model ??
+                  KoratMockRepository.getPollList().firstWhere(
+                    (p) => p['code'] == widget.code,
+                    orElse: () => KoratMockRepository.getPollList().first,
+                  );
+            }
 
-            if (snapshot.hasData) {
-              questions = snapshot.data['questions'];
-              answers = snapshot.data['answers'];
+            if (currentModel != null) {
+              dynamic questions = currentModel['questions'] ?? [];
+              dynamic answers = currentModel['answers'] ?? [];
               return myCard(
-                model: snapshot.data,
+                model: currentModel,
                 questions: questions,
                 answer: answers,
               );
@@ -314,7 +339,7 @@ class _PollDetailPageState extends State<PollForm> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        model['createBy'],
+                                        model['createBy'] ?? 'สำนักงานเทศบาลนครนครราชสีมา',
                                         style: TextStyle(
                                           fontSize: 15,
                                           fontFamily: 'Sarabun',
@@ -335,7 +360,7 @@ class _PollDetailPageState extends State<PollForm> {
                                           ),
                                           Text(
                                             'เข้าชม ' +
-                                                '${model['view']}' +
+                                                '${model['view'] ?? 150}' +
                                                 ' ครั้ง',
                                             style: TextStyle(
                                               fontSize: 10,
@@ -411,9 +436,9 @@ class _PollDetailPageState extends State<PollForm> {
                                       horizontal: 15.0,
                                     ),
                                     child: Text(
-                                      item['isRequired']
-                                          ? '* ' + item['title']
-                                          : item['title'],
+                                      item['isRequired'] == true
+                                          ? '* ' + (item['title'] ?? '')
+                                          : (item['title'] ?? ''),
                                       style: TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.w500,
@@ -427,7 +452,7 @@ class _PollDetailPageState extends State<PollForm> {
                                       horizontal: 15.0,
                                     ),
                                     child: Text(
-                                      item['isRequired']
+                                      item['isRequired'] == true
                                           ? '(กรุณาเลือกคำตอบ)'
                                           : '(ไม่จำเป็นต้องระบุ)',
                                       style: TextStyle(

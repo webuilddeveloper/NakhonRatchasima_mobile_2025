@@ -63,7 +63,7 @@ class _RenewLicenseDetail extends State<RenewLicenseDetail> {
                   'รายละเอียดข้อมูล',
                   style: TextStyle(
                     fontSize: 20.0,
-                    color: Color(0xFFC9166D),
+                    color: Color(0xFFBF360C),
                     fontFamily: 'Kanit',
                     fontWeight: FontWeight.bold,
                   ),
@@ -225,7 +225,7 @@ class _RenewLicenseDetail extends State<RenewLicenseDetail> {
                           textAlign: TextAlign.start,
                           style: TextStyle(
                             fontSize: 15.0,
-                            color: Color(0xFFC9166D),
+                            color: Color(0xFFBF360C),
                             fontFamily: 'Kanit',
                             fontWeight: FontWeight.w400,
                             decoration: TextDecoration.underline,
@@ -262,7 +262,7 @@ class _RenewLicenseDetail extends State<RenewLicenseDetail> {
                           textAlign: TextAlign.start,
                           style: TextStyle(
                             fontSize: 15.0,
-                            color: Color(0xFFC9166D),
+                            color: Color(0xFFBF360C),
                             fontFamily: 'Kanit',
                             fontWeight: FontWeight.w400,
                             decoration: TextDecoration.underline,
@@ -333,7 +333,7 @@ class _RenewLicenseDetail extends State<RenewLicenseDetail> {
                       'แก้ไขข้อมูล',
                       style: new TextStyle(
                         fontSize: 16.0,
-                        color: Color(0xFFC9166D),
+                        color: Color(0xFFBF360C),
                         fontWeight: FontWeight.normal,
                         fontFamily: 'Kanit',
                       ),

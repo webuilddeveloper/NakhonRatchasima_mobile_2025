@@ -99,7 +99,7 @@ class _PolicyIdentityVerificationPageState
                     style: TextStyle(
                       fontSize: 13,
                       fontFamily: 'Sarabun',
-                      color: Color(0xFFC9166D),
+                      color: Color(0xFFBF360C),
                       fontWeight: FontWeight.normal,
                     ),
                   ),
@@ -152,7 +152,7 @@ class _PolicyIdentityVerificationPageState
                       style: TextStyle(
                         fontSize: 13,
                         fontFamily: 'Sarabun',
-                        color: Color(0xFFC9166D),
+                        color: Color(0xFFBF360C),
                         fontWeight: FontWeight.normal,
                       ),
                     ),
@@ -345,10 +345,10 @@ class _PolicyIdentityVerificationPageState
                 borderRadius: BorderRadius.circular(18),
               ),
               side: BorderSide(
-                color: Color(0xFFC9166D),
+                color: Color(0xFFBF360C),
               ),
               textStyle: TextStyle(color: Colors.white),
-              overlayColor: Color(0xFFC9166D),
+              overlayColor: Color(0xFFBF360C),
             ),
             onPressed: () {
               sendPolicy();

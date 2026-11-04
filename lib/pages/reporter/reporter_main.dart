@@ -57,7 +57,59 @@ class _ActionCard extends StatelessWidget {
   final Color color;
   final VoidCallback onTap;
   @override
-  Widget build(BuildContext context) => Container(margin: const EdgeInsets.only(bottom: 10), child: Material(color: AppColors.surface, borderRadius: KoratRadius.md, child: InkWell(onTap: onTap, borderRadius: KoratRadius.md, child: Padding(padding: const EdgeInsets.all(15), child: Row(children: [Container(width: 52, height: 52, decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(15)), child: Icon(icon, color: color, size: 27)), const SizedBox(width: 13), Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(title, style: const TextStyle(color: AppColors.textPrimary, fontFamily: 'Kanit', fontSize: 17, fontWeight: FontWeight.w600)), Text(subtitle, style: const TextStyle(color: AppColors.textSecondary, fontFamily: 'Sarabun', fontSize: 12))])), Icon(Icons.chevron_right_rounded, color: color, size: 26)]))));
+  Widget build(BuildContext context) => Container(
+        margin: const EdgeInsets.only(bottom: 10),
+        child: Material(
+          color: AppColors.surface,
+          borderRadius: KoratRadius.md,
+          child: InkWell(
+            onTap: onTap,
+            borderRadius: KoratRadius.md,
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: Row(
+                children: [
+                  Container(
+                    width: 52,
+                    height: 52,
+                    decoration: BoxDecoration(
+                      color: color.withValues(alpha: 0.12),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Icon(icon, color: color, size: 27),
+                  ),
+                  const SizedBox(width: 13),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          style: const TextStyle(
+                            color: AppColors.textPrimary,
+                            fontFamily: 'Kanit',
+                            fontSize: 17,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        Text(
+                          subtitle,
+                          style: const TextStyle(
+                            color: AppColors.textSecondary,
+                            fontFamily: 'Sarabun',
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Icon(Icons.chevron_right_rounded, color: color, size: 26),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
 }
 
 class _StatCard extends StatelessWidget {

@@ -25,7 +25,8 @@ class _ComplainListCategoryState extends State<ComplainListCategory> {
       backgroundColor: AppColors.background,
       appBar: KoratAppBar(
         title: widget.title ?? 'แจ้งเหตุ / แจ้งปัญหา',
-        showBack: false,
+        showBack: Navigator.canPop(context),
+        onBack: () => Navigator.pop(context),
       ),
       body: ListView(
         physics: const AlwaysScrollableScrollPhysics(),

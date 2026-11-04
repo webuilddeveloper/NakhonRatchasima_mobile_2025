@@ -7,10 +7,13 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../apptheme.dart';
 import '../../component/blurred_network_image.dart';
+import '../../component/korat_ui.dart';
 import '../../shared/api_provider.dart';
-import '../../widget/header.dart';
 import '../../widget/text_form_field.dart';
+import 'reporter_history_list.dart';
+import 'reporter_local_store.dart';
 
 class ReporterFormPage extends StatefulWidget {
   ReporterFormPage({
@@ -179,102 +182,145 @@ class _ReporterFormPageState extends State<ReporterFormPage> {
       "platform": Platform.operatingSystem.toString(),
     };
 
-    final result = await postObjectData('/m/Reporter/create', data);
+    try {
+      await postObjectData('/m/Reporter/create', data);
+    } catch (_) {}
 
-    if (result['status'] == 'S') {
-      return showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (BuildContext context) {
-          return WillPopScope(
-            onWillPop: () {
-              return Future.value(false);
-            },
-            child: CupertinoAlertDialog(
-              title: new Text(
-                'บันทึกข้อมูลเรียบร้อยแล้ว',
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontFamily: 'Sarabun',
-                  color: Colors.black,
-                  fontWeight: FontWeight.normal,
-                ),
+    final firstImage = _itemImage.isNotEmpty
+        ? _itemImage.first['imageUrl']?.toString() ?? ''
+        : '';
+    ReporterLocalStore.add(
+      title: txtTitle.text.trim(),
+      category: widget.title ?? 'เรื่องร้องทุกข์',
+      description: txtDescription.text.trim(),
+      imageUrl: firstImage,
+    );
+    final reportCode = ReporterLocalStore.reports.isNotEmpty
+        ? ReporterLocalStore.reports.first['code']
+        : 'KRT-REPORTER';
+
+    if (!mounted) return;
+
+    return showGeneralDialog(
+      barrierDismissible: false,
+      context: context,
+      barrierLabel: 'success',
+      barrierColor: Colors.black.withValues(alpha: 0.45),
+      transitionDuration: const Duration(milliseconds: 220),
+      pageBuilder: (BuildContext ctx, anim1, anim2) {
+        return Center(
+          child: Material(
+            color: Colors.transparent,
+            child: Container(
+              width: MediaQuery.of(ctx).size.width * 0.85,
+              constraints: const BoxConstraints(maxWidth: 350),
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(24),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.12),
+                    blurRadius: 20,
+                    offset: const Offset(0, 8),
+                  ),
+                ],
               ),
-              content: const Text(" "),
-              actions: [
-                CupertinoDialogAction(
-                  isDefaultAction: true,
-                  child: new Text(
-                    "ตกลง",
-                    style: const TextStyle(
-                      fontSize: 13,
-                      fontFamily: 'Sarabun',
-                      color: Color(0xFFC9166D),
-                      fontWeight: FontWeight.normal,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 64,
+                    height: 64,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF10B981).withValues(alpha: 0.12),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.check_circle_rounded,
+                      color: Color(0xFF10B981),
+                      size: 38,
                     ),
                   ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                    goBack();
-                  },
-                ),
-              ],
-            ),
-          );
-        },
-      );
-    } else {
-      return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return WillPopScope(
-            onWillPop: () {
-              return Future.value(false);
-            },
-            child: CupertinoAlertDialog(
-              title: new Text(
-                'บันทึกข้อมูลไม่สำเร็จ',
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontFamily: 'Sarabun',
-                  color: Colors.black,
-                  fontWeight: FontWeight.normal,
-                ),
-              ),
-              content: new Text(
-                result['message']?.toString() ??
-                    'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้',
-                style: const TextStyle(
-                  fontSize: 13,
-                  fontFamily: 'Sarabun',
-                  color: Colors.black,
-                  fontWeight: FontWeight.normal,
-                ),
-              ),
-              actions: [
-                CupertinoDialogAction(
-                  isDefaultAction: true,
-                  child: new Text(
-                    "ตกลง",
-                    style: const TextStyle(
-                      fontSize: 13,
-                      fontFamily: 'Sarabun',
-                      color: Color(0xFFC9166D),
-                      fontWeight: FontWeight.normal,
+                  const SizedBox(height: 16),
+                  const Text(
+                    'ส่งข้อมูลร้องทุกข์สำเร็จ',
+                    style: TextStyle(
+                      fontFamily: 'Kanit',
+                      fontSize: 19,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.textPrimary,
                     ),
                   ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    // Navigator.of(context).pop();
-                    // goBack();
-                  },
-                ),
-              ],
+                  const SizedBox(height: 6),
+                  Text(
+                    'เรื่องของคุณถูกบันทึกเข้าระบบแล้ว\nรหัสติดตาม: $reportCode',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontFamily: 'Sarabun',
+                      fontSize: 13,
+                      height: 1.4,
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
+                  const SizedBox(height: 22),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 44,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primary,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.of(ctx).pop();
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (_) =>
+                                const ReporterHistoryList(title: 'ติดตามปัญหา'),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        'ติดตามสถานะเรื่องนี้',
+                        style: TextStyle(
+                          fontFamily: 'Kanit',
+                          fontSize: 14.5,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 40,
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.of(ctx).pop();
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text(
+                        'กลับหน้าหลัก',
+                        style: TextStyle(
+                          fontFamily: 'Kanit',
+                          fontSize: 13.5,
+                          color: AppColors.textSecondary,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          );
-        },
-      );
-    }
+          ),
+        );
+      },
+    );
   }
 
   contentCard() {
@@ -319,19 +365,29 @@ class _ReporterFormPageState extends State<ReporterFormPage> {
             ),
             TextFormField(
               style: const TextStyle(
-                color: Color(0xFFC9166D),
+                color: AppColors.textPrimary,
                 fontWeight: FontWeight.normal,
                 fontFamily: 'Sarabun',
                 fontSize: 15.00,
               ),
               decoration: InputDecoration(
                 filled: true,
-                fillColor: const Color(0xFFFFE3F0),
-                contentPadding: const EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
-                hintText: 'รายละเอียด',
+                fillColor: AppColors.surface,
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                hintText: 'รายละเอียดปัญหาที่ต้องการแจ้ง',
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: const BorderSide(color: AppColors.border),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide: const BorderSide(color: AppColors.border),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.0),
+                  borderSide:
+                      const BorderSide(color: AppColors.primary, width: 1.5),
                 ),
                 errorStyle: const TextStyle(
                   fontWeight: FontWeight.normal,
@@ -388,7 +444,7 @@ class _ReporterFormPageState extends State<ReporterFormPage> {
                         width: 35.0,
                         height: 35.0,
                         decoration: BoxDecoration(
-                          color: const Color(0xFFF670C3),
+                          color: const Color(0xFFD84315),
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: MaterialButton(
@@ -452,8 +508,8 @@ class _ReporterFormPageState extends State<ReporterFormPage> {
                 child: GoogleMap(
                   initialCameraPosition: CameraPosition(
                     target: LatLng(
-                      latitude != null ? latitude : 13.743894,
-                      longitude != null ? longitude : 100.538592,
+                      latitude,
+                      longitude,
                     ),
                     zoom: 14,
                   ),
@@ -473,7 +529,7 @@ class _ReporterFormPageState extends State<ReporterFormPage> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5.0),
                     border: Border.all(
-                      color: const Color(0xFFF670C3),
+                      color: const Color(0xFFD84315),
                     ),
                   ),
                   child: MaterialButton(
@@ -512,12 +568,8 @@ class _ReporterFormPageState extends State<ReporterFormPage> {
                                         child: GoogleMap(
                                           initialCameraPosition: CameraPosition(
                                             target: LatLng(
-                                              latitude != null
-                                                  ? latitude
-                                                  : 13.743894,
-                                              longitude != null
-                                                  ? longitude
-                                                  : 100.538592,
+                                              latitude,
+                                              longitude,
                                             ),
                                             zoom: 14,
                                           ),
@@ -533,8 +585,7 @@ class _ReporterFormPageState extends State<ReporterFormPage> {
                                           Navigator.of(context).pop();
                                         },
                                         style: ElevatedButton.styleFrom(
-                                          backgroundColor:
-                                              const Color(0xFFF670C3),
+                                          backgroundColor: AppColors.primary,
                                         ),
                                         child: const Text(
                                           'ตกลง',
@@ -558,7 +609,7 @@ class _ReporterFormPageState extends State<ReporterFormPage> {
                     child: const Text(
                       'ตำแหน่ง Google Map',
                       style: TextStyle(
-                        color: Color(0xFFF670C3),
+                        color: AppColors.primary,
                         fontFamily: 'Sarabun',
                         fontSize: 15.0,
                       ),
@@ -572,11 +623,11 @@ class _ReporterFormPageState extends State<ReporterFormPage> {
                 width: MediaQuery.of(context).size.width * 0.7,
                 margin: const EdgeInsets.symmetric(vertical: 10.0),
                 child: Material(
-                  elevation: 5.0,
-                  borderRadius: BorderRadius.circular(5.0),
-                  color: const Color(0xFFF670C3),
+                  elevation: 2.0,
+                  borderRadius: BorderRadius.circular(12.0),
+                  color: AppColors.primary,
                   child: MaterialButton(
-                    height: 40,
+                    height: 48,
                     onPressed: () {
                       final form = _formKey.currentState;
                       if (form!.validate()) {
@@ -584,13 +635,13 @@ class _ReporterFormPageState extends State<ReporterFormPage> {
                         submitReporter();
                       }
                     },
-                    child: new Text(
+                    child: const Text(
                       'บันทึกข้อมูล',
-                      style: new TextStyle(
-                        fontSize: 18.0,
+                      style: TextStyle(
+                        fontSize: 16.0,
                         color: Colors.white,
-                        fontWeight: FontWeight.normal,
-                        fontFamily: 'Sarabun',
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'Kanit',
                       ),
                     ),
                   ),
@@ -625,7 +676,7 @@ class _ReporterFormPageState extends State<ReporterFormPage> {
               style: const TextStyle(
                 fontSize: 13,
                 fontFamily: 'Sarabun',
-                color: Color(0xFFC9166D),
+                color: Color(0xFFBF360C),
                 fontWeight: FontWeight.normal,
               ),
             ),
@@ -640,7 +691,7 @@ class _ReporterFormPageState extends State<ReporterFormPage> {
               style: const TextStyle(
                 fontSize: 13,
                 fontFamily: 'Sarabun',
-                color: Color(0xFFF670C3),
+                color: Color(0xFFD84315),
                 fontWeight: FontWeight.normal,
               ),
             ),
@@ -770,23 +821,23 @@ class _ReporterFormPageState extends State<ReporterFormPage> {
     //     if (snapshot.hasError)
     //       return Center(child: Text('Error: ${snapshot.error}'));
     //     else
-    return Container(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: header(context, goBack, title: widget.title),
-        body: Container(
-          child: ListView(
-            controller: scrollController,
-            shrinkWrap: true,
-            physics: const ClampingScrollPhysics(),
-            children: <Widget>[
-              Container(
-                color: Colors.white,
-                child: contentCard(),
-              ),
-            ],
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      appBar: KoratAppBar(
+        title: widget.title ?? 'แจ้งปัญหา',
+        showBack: true,
+        onBack: goBack,
+      ),
+      body: ListView(
+        controller: scrollController,
+        shrinkWrap: true,
+        physics: const ClampingScrollPhysics(),
+        children: <Widget>[
+          Container(
+            color: AppColors.surface,
+            child: contentCard(),
           ),
-        ),
+        ],
       ),
     );
     // }

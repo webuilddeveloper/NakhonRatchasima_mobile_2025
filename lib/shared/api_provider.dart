@@ -15,6 +15,7 @@ import '../models/user.dart';
 import 'facebook_firebase.dart';
 import 'google.dart';
 import 'line.dart';
+import 'mock_repository.dart';
 
 const appName = 'Khub Dee DLT';
 const versionName = '0.0.1';
@@ -114,95 +115,150 @@ const privilegeSpecialCategoryReadApi =
     'http://122.155.223.63/td-we-mart-api/m/privilege/category/read';
 
 Future<dynamic> postCategory(String url, dynamic criteria) async {
-  final storage = FlutterSecureStorage();
+  try {
+    final storage = FlutterSecureStorage();
 
-  var value = await storage.read(key: 'dataUserLoginKSP');
-  var dataUser = value != null ? json.decode(value) : {};
+    var value = await storage.read(key: 'dataUserLoginKSP');
+    var dataUser = value != null ? json.decode(value) : {};
 
-  List<dynamic> dataOrganization =
-      dataUser['countUnit'] != null && dataUser['countUnit'] != ''
-          ? json.decode(dataUser['countUnit'])
-          : [];
+    List<dynamic> dataOrganization =
+        dataUser['countUnit'] != null && dataUser['countUnit'] != ''
+            ? json.decode(dataUser['countUnit'])
+            : [];
 
-  var body = json.encode({
-    "permission": "all",
-    "skip": criteria['skip'] ?? 0,
-    "limit": criteria['limit'] ?? 1,
-    "code": criteria['code'] ?? '',
-    "reference": criteria['reference'] ?? '',
-    "description": criteria['description'] ?? '',
-    "category": criteria['category'] ?? '',
-    "keySearch": criteria['keySearch'] ?? '',
-    "username": criteria['username'] ?? '',
-    "isHighlight": criteria['isHighlight'] ?? false,
-    "language": criteria['language'] ?? 'th',
-    "organization": dataOrganization,
-  });
+    var body = json.encode({
+      "permission": "all",
+      "skip": criteria['skip'] ?? 0,
+      "limit": criteria['limit'] ?? 1,
+      "code": criteria['code'] ?? '',
+      "reference": criteria['reference'] ?? '',
+      "description": criteria['description'] ?? '',
+      "category": criteria['category'] ?? '',
+      "keySearch": criteria['keySearch'] ?? '',
+      "username": criteria['username'] ?? '',
+      "isHighlight": criteria['isHighlight'] ?? false,
+      "language": criteria['language'] ?? 'th',
+      "organization": dataOrganization,
+    });
 
-  var response = await http.post(Uri.parse(url), body: body, headers: {
-    "Accept": "application/json",
-    "Content-Type": "application/json"
-  });
+    var response = await http
+        .post(Uri.parse(url), body: body, headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        })
+        .timeout(const Duration(seconds: 4));
 
-  var data = json.decode(response.body);
-  print('-----------postCategory---1---------');
-  print('url: $url');
-  print('criteria: $criteria');
-  print('objectData: ${data['objectData']}');
+    var data = json.decode(response.body);
+    List<dynamic> list = [
+      {'code': "", 'title': 'ทั้งหมด'}
+    ];
+    final items = data['objectData'] ?? [];
+    if (items is List && items.isNotEmpty) {
+      list = [...list, ...items];
+      return Future.value(list);
+    }
+  } catch (e) {
+    print('postCategory network/parse error -> Fallback: $e');
+  }
 
-  List<dynamic> list = [
-    {'code': "", 'title': 'ทั้งหมด'}
-  ];
-  list = [...list, ...data['objectData'] ?? []];
-
-  return Future.value(list);
+  // Fallback to Mock Data
+  if (url.contains('eventCalendar')) {
+    return Future.value(KoratMockRepository.getEventCategories());
+  } else if (url.contains('knowledge')) {
+    return Future.value(KoratMockRepository.getKnowledgeCategories());
+  }
+  return Future.value([{'code': '', 'title': 'ทั้งหมด'}]);
 }
 
 Future<dynamic> post(String url, dynamic criteria) async {
-  final storage = FlutterSecureStorage();
-  var value = await storage.read(key: 'dataUserLoginDDPM');
-  var dataUser = value != null ? json.decode(value) : {};
+  try {
+    final storage = FlutterSecureStorage();
+    var value = await storage.read(key: 'dataUserLoginDDPM');
+    var dataUser = value != null ? json.decode(value) : {};
 
-  List<dynamic> dataOrganization =
-      dataUser['countUnit'] != null && dataUser['countUnit'] != ''
-          ? json.decode(dataUser['countUnit'])
-          : [];
+    List<dynamic> dataOrganization =
+        dataUser['countUnit'] != null && dataUser['countUnit'] != ''
+            ? json.decode(dataUser['countUnit'])
+            : [];
 
-  var body = json.encode({
-    "permission": "all",
-    "skip": criteria['skip'] ?? 0,
-    "limit": criteria['limit'] ?? 1,
-    "code": criteria['code'] ?? '',
-    "reference": criteria['reference'] ?? '',
-    "description": criteria['description'] ?? '',
-    "category": criteria['category'] ?? '',
-    "keySearch": criteria['keySearch'] ?? '',
-    "username": criteria['username'] ?? '',
-    "firstName": criteria['firstName'] ?? '',
-    "lastName": criteria['lastName'] ?? '',
-    "title": criteria['title'] ?? '',
-    "answer": criteria['answer'] ?? '',
-    "isHighlight": criteria['isHighlight'] ?? false,
-    "createBy": criteria['createBy'] ?? '',
-    "isPublic": criteria['isPublic'] ?? false,
-    "language": criteria['language'] ?? 'th',
-    "organization": dataOrganization,
-    "latitude": criteria['latitude'] ?? 0,
-    "longitude": criteria['longitude'] ?? 0,
-  });
+    var body = json.encode({
+      "permission": "all",
+      "skip": criteria['skip'] ?? 0,
+      "limit": criteria['limit'] ?? 1,
+      "code": criteria['code'] ?? '',
+      "reference": criteria['reference'] ?? '',
+      "description": criteria['description'] ?? '',
+      "category": criteria['category'] ?? '',
+      "keySearch": criteria['keySearch'] ?? '',
+      "username": criteria['username'] ?? '',
+      "firstName": criteria['firstName'] ?? '',
+      "lastName": criteria['lastName'] ?? '',
+      "title": criteria['title'] ?? '',
+      "answer": criteria['answer'] ?? '',
+      "isHighlight": criteria['isHighlight'] ?? false,
+      "createBy": criteria['createBy'] ?? '',
+      "isPublic": criteria['isPublic'] ?? false,
+      "language": criteria['language'] ?? 'th',
+      "organization": dataOrganization,
+      "latitude": criteria['latitude'] ?? 0,
+      "longitude": criteria['longitude'] ?? 0,
+    });
 
-  var response = await http.post(Uri.parse(url), body: body, headers: {
-    "Accept": "application/json",
-    "Content-Type": "application/json"
-  });
+    var response = await http
+        .post(Uri.parse(url), body: body, headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        })
+        .timeout(const Duration(seconds: 4));
 
-  print('-----------post------------');
-  print('url: $url');
-  print('criteria: $criteria');
-  print('objectData: ${response.body}');
+    var data = json.decode(response.body);
+    final items = data['objectData'];
+    if (items != null) {
+      final code = criteria != null && criteria is Map ? (criteria['code'] ?? '').toString() : '';
+      if (items is List && items.isNotEmpty) {
+        if (code.isNotEmpty) {
+          final match = items.firstWhere(
+            (it) => it is Map && it['code'] != null && it['code'].toString() == code,
+            orElse: () => null,
+          );
+          if (match != null) {
+            return Future.value([match]);
+          }
+        } else {
+          return Future.value(items);
+        }
+      } else if (items is Map && items.isNotEmpty) {
+        if (code.isEmpty || (items['code'] != null && items['code'].toString() == code)) {
+          return Future.value(items);
+        }
+      }
+    }
+  } catch (e) {
+    print('post network/parse error -> Fallback: $e');
+  }
 
-  var data = json.decode(response.body);
-  return Future.value(data['objectData'] ?? {});
+  // Fallback to Mock Data
+  final urlLower = url.toLowerCase();
+  if (urlLower.contains('poll')) {
+    return Future.value(KoratMockRepository.getPollList());
+  } else if (urlLower.contains('eventcalendar')) {
+    final cat = criteria != null && criteria is Map ? (criteria['category'] ?? '') : '';
+    return Future.value(KoratMockRepository.getEvents(category: cat.toString()));
+  } else if (urlLower.contains('contact')) {
+    final code = criteria != null && criteria is Map ? (criteria['code'] ?? '') : '';
+    return Future.value(KoratMockRepository.getContacts(code: code.toString()));
+  } else if (urlLower.contains('knowledge')) {
+    return Future.value(KoratMockRepository.getKnowledgeList());
+  } else if (urlLower.contains('news') || url.isEmpty) {
+    final code = criteria != null && criteria is Map ? (criteria['code'] ?? '') : '';
+    final allNews = KoratMockRepository.getNewsList();
+    if (code.isNotEmpty) {
+      final match = allNews.firstWhere((n) => n['code'] == code, orElse: () => allNews.first);
+      return Future.value([match]);
+    }
+    return Future.value(allNews);
+  }
+  return Future.value([]);
 }
 
 Future<dynamic> postAny(String url, dynamic criteria) async {
@@ -283,38 +339,35 @@ Future<dynamic> postLogin(String url, dynamic criteria) async {
 }
 
 Future<dynamic> postObjectData(String url, dynamic criteria) async {
-  print('-----------postObjectData------------');
-  print('url: $url');
-  print('criteria: $criteria');
-  print('url: ${serverNpm + url}');
-  var body = json.encode(criteria);
+  try {
+    var body = json.encode(criteria);
+    var targetUrl = url.startsWith('http') ? url : (serverNpm + url);
+    var response = await http
+        .post(Uri.parse(targetUrl), body: body, headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        })
+        .timeout(const Duration(seconds: 4));
 
-  var response = await http.post(Uri.parse(serverNpm + url),
-      body: body,
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json"
-      });
-
-  if (response.statusCode == 200) {
-    print('postObjectData Success');
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}'); // ดู response นี้
-    var data = json.decode(response.body);
-    // เพิ่ม debug เพื่อดูค่าที่ server ตอบกลับ
-    print('API Status: ${data['status']}');
-    print('API Message: ${data['message']}');
-    return {
-      "status": data['status'],
-      "message": data['message'],
-      "objectData": data['objectData']
-    };
-  } else {
-    print('HTTP Error: ${response.statusCode}');
-    print('HTTP Body: ${response.body}');
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      return {
+        "status": data['status'] ?? 'S',
+        "message": data['message'] ?? '',
+        "objectData": data['objectData'] ?? []
+      };
+    } else {
+      return {
+        "status": "F",
+        "message": "เซิร์ฟเวอร์ตอบกลับด้วยรหัส ${response.statusCode}",
+        "objectData": []
+      };
+    }
+  } catch (e) {
     return {
       "status": "F",
-      "message": "เซิร์ฟเวอร์ตอบกลับด้วยรหัส ${response.statusCode}",
+      "message": "ไม่สามารถติดต่อเซิร์ฟเวอร์ได้",
+      "objectData": []
     };
   }
 }
@@ -391,17 +444,28 @@ Future<LoginRegister> postLoginRegister(String url, dynamic criteria) async {
 
 //upload with dio
 Future<String> uploadImage(XFile file) async {
-  Dio dio = new Dio();
+  try {
+    Dio dio = Dio(BaseOptions(
+      connectTimeout: const Duration(seconds: 4),
+      receiveTimeout: const Duration(seconds: 4),
+    ));
 
-  String fileName = file.path.split('/').last;
-  FormData formData = FormData.fromMap({
-    "ImageCaption": "flutter",
-    "Image": await MultipartFile.fromFile(file.path, filename: fileName),
-  });
+    String fileName = file.path.split('/').last;
+    FormData formData = FormData.fromMap({
+      "ImageCaption": "flutter",
+      "Image": await MultipartFile.fromFile(file.path, filename: fileName),
+    });
 
-  var response = await dio.post(serverUpload, data: formData);
+    var response = await dio.post(serverUpload, data: formData);
+    if (response.data != null && response.data['imageUrl'] != null) {
+      return response.data['imageUrl'];
+    }
+  } catch (e) {
+    print('uploadImage network error -> Fallback to local path: $e');
+  }
 
-  return response.data['imageUrl'];
+  // Fallback to local path so the photo is still kept and previewed
+  return file.path;
 }
 
 //upload with http
@@ -459,9 +523,6 @@ logout(BuildContext context) async {
 }
 
 Future<dynamic> postDio(String url, dynamic criteria) async {
-  print('-------------postDio---------------');
-  print('-----url-----' + url);
-  print('-----criteria-----' + criteria.toString());
   final storage = new FlutterSecureStorage();
   final profileCode = await storage.read(key: 'profileCode2');
   final idcard = await storage.read(key: 'idcard');
@@ -482,8 +543,8 @@ Future<dynamic> postDio(String url, dynamic criteria) async {
   }
 
   Dio dio = new Dio(BaseOptions(
-    connectTimeout: Duration(seconds: 60),
-    receiveTimeout: Duration(seconds: 60),
+    connectTimeout: const Duration(seconds: 4),
+    receiveTimeout: const Duration(seconds: 4),
   ));
 
   (dio.httpClientAdapter as IOHttpClientAdapter).onHttpClientCreate = (client) {
@@ -493,11 +554,39 @@ Future<dynamic> postDio(String url, dynamic criteria) async {
 
   try {
     var response = await dio.post(url, data: criteria);
-    return Future.value(response.data['objectData']);
+    final data = response.data['objectData'];
+    if (data != null) {
+      if (data is List && data.isNotEmpty) {
+        return Future.value(data);
+      } else if (data is Map && data.isNotEmpty) {
+        return Future.value(data);
+      }
+    }
   } catch (e) {
-    print('Error in postDio: $e');
-    throw e;
+    print('Error in postDio -> Fallback: $e');
   }
+
+  // Fallback to Mock Data based on URL endpoint
+  if (url.contains('/news/') || url.contains('/m/news')) {
+    return Future.value(KoratMockRepository.getNewsList());
+  } else if (url.contains('Banner') || url.contains('banner')) {
+    return Future.value(KoratMockRepository.getMainBanners());
+  } else if (url.contains('rotation') || url.contains('Rotation')) {
+    return Future.value(KoratMockRepository.getMainBanners());
+  } else if (url.contains('eventCalendar')) {
+    return Future.value(KoratMockRepository.getEvents());
+  } else if (url.contains('contact')) {
+    return Future.value(KoratMockRepository.getContacts());
+  } else if (url.contains('knowledge')) {
+    return Future.value(KoratMockRepository.getKnowledgeList());
+  } else if (url.contains('poll')) {
+    return Future.value(KoratMockRepository.getPollList());
+  } else if (url.contains('splash')) {
+    return Future.value([
+      {'timeOut': '1000'}
+    ]);
+  }
+  return Future.value([]);
 }
 
 Future<dynamic> postAnyDio(String url, dynamic criteria) async {

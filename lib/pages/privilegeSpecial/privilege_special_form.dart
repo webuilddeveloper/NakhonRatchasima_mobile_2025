@@ -1,9 +1,7 @@
-import 'dart:ui';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'dart:async';
 
 import 'package:flutter/services.dart';
@@ -29,7 +27,6 @@ class PrivilegeSpecialForm extends StatefulWidget {
 }
 
 class _PrivilegeSpecialDetailPageState extends State<PrivilegeSpecialForm> {
-
   Future<dynamic>? _futureModel;
 
   String? code;
@@ -66,8 +63,9 @@ class _PrivilegeSpecialDetailPageState extends State<PrivilegeSpecialForm> {
     for (var item in result) {
       data.add(item['imageUrl']);
 
-      dataPro.add(
-          item['imageUrl'] != null ? NetworkImage(item['imageUrl']) : NetworkImage(""));
+      dataPro.add(item['imageUrl'] != null
+          ? NetworkImage(item['imageUrl'])
+          : NetworkImage(""));
     }
     setState(() {
       urlImage = data;
@@ -118,7 +116,9 @@ class _PrivilegeSpecialDetailPageState extends State<PrivilegeSpecialForm> {
     double statusBarHeight = MediaQuery.of(context).padding.top;
     List image = ['${model['imageUrl']}'];
     List<ImageProvider> imagePro = [
-      model['imageUrl'] != null ? NetworkImage(model['imageUrl']) : NetworkImage("")
+      model['imageUrl'] != null
+          ? NetworkImage(model['imageUrl'])
+          : NetworkImage("")
     ];
     return MediaQuery.removePadding(
       context: context,
@@ -226,12 +226,11 @@ class _PrivilegeSpecialDetailPageState extends State<PrivilegeSpecialForm> {
                       left: 10,
                     ),
                     child: Html(
-                      data: model['description'],
-                      onLinkTap: (url, context, attributes) {
-                  // ignore: deprecated_member_use
-                        launch(url!);
-                      }
-                    ),
+                        data: model['description'],
+                        onLinkTap: (url, context, attributes) {
+                          // ignore: deprecated_member_use
+                          launch(url!);
+                        }),
                   ),
                   SizedBox(
                     height: 20.0,
@@ -378,7 +377,7 @@ class _PrivilegeSpecialDetailPageState extends State<PrivilegeSpecialForm> {
                               Text(
                                 'อ่าน',
                                 style: TextStyle(
-                                  color: Color(0xFFF670C3),
+                                  color: Color(0xFFD84315),
                                   fontFamily: 'Kanit',
                                 ),
                               ),
@@ -414,7 +413,7 @@ class _PrivilegeSpecialDetailPageState extends State<PrivilegeSpecialForm> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5.0),
             border: Border.all(
-              color: Color(0xFFF670C3),
+              color: Color(0xFFD84315),
             ),
           ),
           child: MaterialButton(
@@ -425,7 +424,7 @@ class _PrivilegeSpecialDetailPageState extends State<PrivilegeSpecialForm> {
             child: Text(
               '${model['textButton']}',
               style: TextStyle(
-                color: Color(0xFFF670C3),
+                color: Color(0xFFD84315),
                 fontFamily: 'Kanit',
               ),
               textAlign: TextAlign.center,

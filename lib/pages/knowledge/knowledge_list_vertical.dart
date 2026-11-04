@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../apptheme.dart';
 import '../../component/blurred_network_image.dart';
+import '../../shared/mock_repository.dart';
 import 'knowledge_form.dart';
 
 class KnowledgeListVertical extends StatefulWidget {
@@ -78,54 +79,11 @@ class _KnowledgeListVerticalState extends State<KnowledgeListVertical> {
           );
         }
 
-        // Error state
-        if (snapshot.hasError) {
-          return Container(
-            height: 200,
-            alignment: Alignment.center,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.error_outline, size: 48, color: Colors.red[300]),
-                const SizedBox(height: 16),
-                Text(
-                  'เกิดข้อผิดพลาด: ${snapshot.error}',
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontFamily: 'Sarabun',
-                    color: Colors.red,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-          );
-        }
-
-        // Empty state
-        if (!snapshot.hasData || snapshot.data.isEmpty) {
-          return Container(
-            height: 200,
-            alignment: Alignment.center,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.library_books_outlined,
-                    size: 48, color: Colors.grey[400]),
-                const SizedBox(height: 16),
-                const Text(
-                  'ไม่พบข้อมูล',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontFamily: 'Sarabun',
-                    color: Color.fromRGBO(0, 0, 0, 0.6),
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
-            ),
-          );
-        }
+        final List<dynamic> data = (snapshot.hasData &&
+                snapshot.data is List &&
+                (snapshot.data as List).isNotEmpty)
+            ? snapshot.data as List
+            : KoratMockRepository.getKnowledgeList();
 
         // Data state
         return Container(
@@ -139,9 +97,9 @@ class _KnowledgeListVerticalState extends State<KnowledgeListVertical> {
             ),
             physics: const ClampingScrollPhysics(),
             shrinkWrap: true,
-            itemCount: snapshot.data.length,
+            itemCount: data.length,
             itemBuilder: (context, index) {
-              final item = snapshot.data[index];
+              final item = data[index];
               return Card(
                 elevation: 0,
                 color: AppColors.surface,
@@ -157,7 +115,7 @@ class _KnowledgeListVerticalState extends State<KnowledgeListVertical> {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              KnowledgeForm(code: item['code']),
+                              KnowledgeForm(code: item['code'], model: item),
                         ),
                       );
                     }

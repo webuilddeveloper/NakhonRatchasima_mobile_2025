@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../component/gallery_view.dart';
 import '../../component/header.dart';
@@ -160,7 +159,7 @@ class _VehicleInspectioPageState extends State<VehicleInspectio> {
               //               child: Material(
               //                 elevation: 2.0,
               //                 borderRadius: BorderRadius.circular(5.0),
-              //                 color: Color(0xFFF670C3),
+              //                 color: Color(0xFFD84315),
               //                 child: MaterialButton(
               //                   // minWidth: MediaQuery.of(context).size.width,
               //                   onPressed: () {},
@@ -168,7 +167,7 @@ class _VehicleInspectioPageState extends State<VehicleInspectio> {
               //                     'ชำระเงินภาษี',
               //                     style: new TextStyle(
               //                       fontSize: 13.0,
-              //                       color: Color(0xFFC9166D),
+              //                       color: Color(0xFFBF360C),
               //                       fontWeight: FontWeight.normal,
               //                       fontFamily: 'Sarabun',
               //                     ),

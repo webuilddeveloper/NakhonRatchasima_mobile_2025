@@ -233,7 +233,7 @@ class _TrafficTicketDetailPageState extends State<TrafficTicketDetail> {
                   alignment: Alignment.center,
                   // margin: EdgeInsets.symmetric(horizontal: 10),
                   decoration: BoxDecoration(
-                      color: const Color(0xFFF670C3),
+                      color: const Color(0xFFD84315),
                       borderRadius: BorderRadius.circular(5),
                       boxShadow: [
                         BoxShadow(
@@ -249,7 +249,7 @@ class _TrafficTicketDetailPageState extends State<TrafficTicketDetail> {
                     style: TextStyle(
                       fontFamily: 'Sarabun',
                       fontSize: 13,
-                      color: Color(0xFFC9166D),
+                      color: Color(0xFFBF360C),
                     ),
                   ),
                 ),
@@ -271,7 +271,7 @@ class _TrafficTicketDetailPageState extends State<TrafficTicketDetail> {
               style: TextStyle(
                 fontFamily: 'Sarabun',
                 fontSize: 13,
-                color: Color(0xFFC9166D),
+                color: Color(0xFFBF360C),
                 decoration: TextDecoration.underline,
               ),
             ),
@@ -350,7 +350,7 @@ class _TrafficTicketDetailPageState extends State<TrafficTicketDetail> {
                   fontFamily: 'Sarabun',
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFFC9166D),
+                  color: Color(0xFFBF360C),
                 ),
               ),
               const Text(
@@ -384,7 +384,7 @@ class _TrafficTicketDetailPageState extends State<TrafficTicketDetail> {
                         width: 150,
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFC9166D),
+                          color: const Color(0xFFBF360C),
                           borderRadius: BorderRadius.circular(5),
                         ),
                         child: Column(

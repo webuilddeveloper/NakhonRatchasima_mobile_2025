@@ -40,11 +40,9 @@ class _ReporterDisasterListVertical
   checkImageAvatar(String img) {
     return CircleAvatar(
       backgroundColor: Colors.white,
-      backgroundImage: img != null
-          ? NetworkImage(
-              img,
-            )
-          : null,
+      backgroundImage: NetworkImage(
+        img,
+      ),
     );
   }
 
@@ -101,7 +99,8 @@ class _ReporterDisasterListVertical
                             color: Colors.grey.withOpacity(0.5),
                             spreadRadius: 0,
                             blurRadius: 7,
-                            offset: const Offset(0, 3), // changes position of shadow
+                            offset: const Offset(
+                                0, 3), // changes position of shadow
                           ),
                         ],
                       ),

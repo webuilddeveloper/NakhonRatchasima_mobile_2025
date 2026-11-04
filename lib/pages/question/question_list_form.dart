@@ -8,6 +8,7 @@ import 'package:ratchasima/widget/text_form_field.dart';
 
 import '../../component/blurred_network_image.dart';
 import '../../shared/api_provider.dart';
+import '../../shared/mock_repository.dart';
 
 class QuestionListForm extends StatefulWidget {
   QuestionListForm({super.key, this.title});
@@ -18,6 +19,7 @@ class QuestionListForm extends StatefulWidget {
 
 class _QuestionListForm extends State<QuestionListForm> {
   bool hideSearch = true;
+  final txtTitle = TextEditingController();
   final txtDescription = TextEditingController();
   String? keySearch;
   String? category;
@@ -27,7 +29,7 @@ class _QuestionListForm extends State<QuestionListForm> {
 
   @override
   void dispose() {
-    // Clean up the controller when the widget is disposed.
+    txtTitle.dispose();
     txtDescription.dispose();
     super.dispose();
   }
@@ -88,7 +90,7 @@ class _QuestionListForm extends State<QuestionListForm> {
                     ),
                   ),
                   textFormFieldNoValidatorQuestion(
-                    txtDescription,
+                    txtTitle,
                     '',
                     true,
                     false,
@@ -161,21 +163,38 @@ class _QuestionListForm extends State<QuestionListForm> {
                       height: 50,
                       child: Material(
                         elevation: 2.0,
-                        color: Color(0xFFC9166D),
+                        color: Color(0xFFBF360C),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         child: MaterialButton(
                           height: 30,
                           onPressed: () {
-                            // Navigator.pushAndRemoveUntil(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) => QuestionList(),
-                            //   ),
-                            //   (Route<dynamic> route) => false,
-                            // );
-                            Navigator.of(context).pop();
+                            if (txtTitle.text.trim().isEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('กรุณาระบุหัวข้อคำถาม',
+                                      style: TextStyle(fontFamily: 'Sarabun')),
+                                  behavior: SnackBarBehavior.floating,
+                                ),
+                              );
+                              return;
+                            }
+                            KoratMockRepository.addQuestion(
+                              txtTitle.text.trim(),
+                              txtDescription.text.trim().isEmpty
+                                  ? txtTitle.text.trim()
+                                  : txtDescription.text.trim(),
+                            );
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                    'ส่งคำถามเรียบร้อยแล้ว เจ้าหน้าที่จะตอบกลับภายใน 24 ชม.',
+                                    style: TextStyle(fontFamily: 'Sarabun')),
+                                behavior: SnackBarBehavior.floating,
+                              ),
+                            );
+                            Navigator.of(context).pop(true);
                           },
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -310,7 +329,7 @@ class _QuestionListForm extends State<QuestionListForm> {
               style: TextStyle(
                 fontSize: 13,
                 fontFamily: 'Kanit',
-                color: Color(0xFFC9166D),
+                color: Color(0xFFBF360C),
                 fontWeight: FontWeight.normal,
               ),
             ),

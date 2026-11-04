@@ -37,8 +37,8 @@ class _ContactList extends State<ContactList> {
   // final ScrollController _controller = ScrollController();
   @override
   void dispose() {
-    // Clean up the controller when the widget is disposed.
     txtDescription.dispose();
+    _refreshController.dispose();
     super.dispose();
   }
 

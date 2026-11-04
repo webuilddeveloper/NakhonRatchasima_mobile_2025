@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import '../apptheme.dart';
 
 import '../component/header.dart';
 import 'score_criteria.dart';
@@ -104,7 +104,7 @@ class _BehaviorPointsPageState extends State<BehaviorPoints> {
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Sarabun',
                       fontSize: 30.0,
-                      color: Color(0xFFF670C3),
+                      color: AppColors.primary,
                     ),
                   ),
                 ),
@@ -227,7 +227,7 @@ class _BehaviorPointsPageState extends State<BehaviorPoints> {
                 style: TextStyle(
                   fontFamily: 'Sarabun',
                   fontSize: 20,
-                  color: Color(0xFFF670C3),
+                  color: AppColors.primary,
                 ),
               ),
             ],

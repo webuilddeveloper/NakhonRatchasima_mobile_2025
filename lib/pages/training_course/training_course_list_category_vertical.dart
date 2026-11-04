@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../apptheme.dart';
 
 import 'training_course_list.dart';
 
@@ -121,7 +122,7 @@ class TrainingCourseListCategoryVerticalState
                                               fontWeight: FontWeight.normal,
                                               fontSize: 16,
                                               fontFamily: 'Kanit',
-                                              color: Color(0xFFC9166D),
+                                              color: AppColors.textPrimary,
                                             ),
                                             maxLines: 2,
                                             overflow: TextOverflow.ellipsis,

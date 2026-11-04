@@ -8,6 +8,7 @@ import '../../component/link_url_out.dart';
 import '../../component/link_url_in.dart';
 import '../../shared/api_provider.dart';
 import '../../shared/extension.dart';
+import '../../shared/mock_repository.dart';
 
 class KnowledgeForm extends StatefulWidget {
   KnowledgeForm({super.key, required this.code, this.model, this.urlComment});
@@ -57,127 +58,29 @@ class _KnowledgeDetailPageState extends State<KnowledgeForm> {
       body: FutureBuilder<dynamic>(
         future: _futureModel,
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          if (snapshot.hasData) {
-            return myContent(
-              snapshot.data[0],
-            );
-          } else {
-            if (widget.model != null) {
-              return myContent(
-                widget.model,
-              );
-            } else {
-              return SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Stack(
-                      alignment: Alignment.topCenter,
-                      // overflow: Overflow.visible,
-                      children: [
-                        Stack(
-                          children: [
-                            Container(
-                              height: 540,
-                              width: double.infinity,
-                            ),
-                            Container(
-                              height: 540,
-                              color: Colors.black.withOpacity(0.5),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            SizedBox(
-                              height: 60.0,
-                            ),
-                            Container(
-                              height: 110,
-                              width: double.infinity,
-                              alignment: Alignment.center,
-                              padding: EdgeInsets.only(
-                                  left: 20.0, right: 20.0, top: 10.0),
-                              child: Column(
-                                children: [
-                                  Text(
-                                    '',
-                                    style: TextStyle(
-                                      fontSize: 25,
-                                      color: Colors.white,
-                                      fontFamily: 'Sarabun',
-                                    ),
-                                    maxLines: 2,
-                                    textAlign: TextAlign.center,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  Text(
-                                    '',
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      color: Colors.white,
-                                      fontFamily: 'Sarabun',
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-                            Container(
-                              width: 400.0,
-                              padding: EdgeInsets.only(left: 90.0, right: 90.0),
-                              child: Material(
-                                elevation: 5.0,
-                                borderRadius: BorderRadius.circular(10.0),
-                                color: Colors.white,
-                                child: Container(
-                                  alignment: Alignment(1, 1),
-                                  child: MaterialButton(
-                                    minWidth: MediaQuery.of(context).size.width,
-                                    onPressed: () {},
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        Container(
-                                          child: Padding(
-                                            padding: EdgeInsets.all(5.0),
-                                            child: Image.asset(
-                                              'assets/logo/icons/Group337.png',
-                                              height: 5.0,
-                                              width: 5.0,
-                                            ),
-                                          ),
-                                          width: 35.0,
-                                          height: 35.0,
-                                        ),
-                                        Text(
-                                          'อ่าน',
-                                          style: TextStyle(
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                            fontFamily: 'Sarabun',
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 50.0,
-                    ),
-                  ],
-                ),
-              );
+          dynamic currentModel;
+          if (snapshot.hasData && snapshot.data != null) {
+            if (snapshot.data is List && (snapshot.data as List).isNotEmpty) {
+              currentModel = snapshot.data[0];
+            } else if (snapshot.data is Map) {
+              currentModel = snapshot.data;
             }
           }
+          currentModel ??= widget.model;
+          if (currentModel == null &&
+              (snapshot.connectionState == ConnectionState.done ||
+                  snapshot.hasError)) {
+            currentModel = KoratMockRepository.getKnowledgeList().firstWhere(
+              (k) => k['code'] == widget.code,
+              orElse: () => KoratMockRepository.getKnowledgeList().first,
+            );
+          }
+
+          if (currentModel != null) {
+            return myContent(currentModel);
+          }
+
+          return const Center(child: CircularProgressIndicator());
         },
       ),
     );
@@ -187,127 +90,183 @@ class _KnowledgeDetailPageState extends State<KnowledgeForm> {
     final fileUrl = model['fileUrl']?.toString().trim() ?? '';
     final linkUrl = model['linkUrl']?.toString().trim() ?? '';
     final hasResource = fileUrl.isNotEmpty || linkUrl.isNotEmpty;
+    final String imageUrl = (model['imageUrl'] ?? '').toString().trim();
+    final bool hasImage = imageUrl.isNotEmpty;
+    final bool isAsset = hasImage && imageUrl.startsWith('assets/');
+
+    final author = (model['author'] ?? '').toString().trim();
+    final publisher = (model['publisher'] ?? '').toString().trim();
+    final bookType = (model['bookType'] ?? '').toString().trim();
+    final numberOfPages = (model['numberOfPages'] ?? '').toString().trim();
+    final size = (model['size'] ?? '').toString().trim();
+    final description = (model['description'] ?? '').toString().trim();
+
+    String categoryTitle = '';
+    if (model['categoryList'] != null &&
+        model['categoryList'] is List &&
+        (model['categoryList'] as List).isNotEmpty &&
+        model['categoryList'][0] is Map &&
+        model['categoryList'][0]['title'] != null) {
+      categoryTitle = model['categoryList'][0]['title'].toString().trim();
+    } else if (model['categoryTitle'] != null) {
+      categoryTitle = model['categoryTitle'].toString().trim();
+    } else if (model['category'] != null) {
+      final cat = model['category'].toString().trim();
+      if (cat == '1') {
+        categoryTitle = 'คู่มือบริการประชาชน';
+      } else if (cat == '2') {
+        categoryTitle = 'สิทธิและสวัสดิการ';
+      } else if (cat == '3') {
+        categoryTitle = 'การเกษตรและสิ่งแวดล้อม';
+      } else if (cat.isNotEmpty) {
+        categoryTitle = cat;
+      }
+    }
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Stack(
             alignment: Alignment.topCenter,
-            // overflow: Overflow.visible,
             children: [
               Stack(
                 children: [
                   Container(
-                    height: 540,
+                    height: 480,
                     width: double.infinity,
-                    child: Image.network(
-                      model['imageUrl'],
-                      fit: BoxFit.cover,
-                    ),
+                    color: Colors.grey.shade900,
+                    child: hasImage
+                        ? (isAsset
+                            ? Image.asset(imageUrl, fit: BoxFit.cover)
+                            : Image.network(
+                                imageUrl,
+                                fit: BoxFit.cover,
+                                errorBuilder: (_, __, ___) =>
+                                    Container(color: Colors.grey.shade900),
+                              ))
+                        : Container(color: Colors.grey.shade900),
                   ),
                   Container(
-                    height: 540,
-                    color: Colors.black.withOpacity(0.5),
+                    height: 480,
+                    color: Colors.black.withValues(alpha: 0.55),
                   ),
                 ],
               ),
               Column(
                 children: [
-                  SizedBox(
-                    height: 60.0,
+                  const SizedBox(height: 60.0),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: hasImage
+                        ? (isAsset
+                            ? Image.asset(imageUrl,
+                                height: 260, width: 200, fit: BoxFit.cover)
+                            : Image.network(
+                                imageUrl,
+                                height: 260,
+                                width: 200,
+                                fit: BoxFit.cover,
+                                errorBuilder: (_, __, ___) => Container(
+                                  height: 260,
+                                  width: 200,
+                                  color: Colors.grey.shade300,
+                                  child: const Icon(Icons.library_books,
+                                      size: 64, color: Colors.grey),
+                                ),
+                              ))
+                        : Container(
+                            height: 260,
+                            width: 200,
+                            color: Colors.white.withValues(alpha: 0.2),
+                            child: const Icon(Icons.library_books,
+                                size: 64, color: Colors.white),
+                          ),
                   ),
-                  Image.network(model['imageUrl'], height: 334, width: 250),
                   Container(
                     height: 110,
                     width: double.infinity,
                     alignment: Alignment.center,
-                    padding:
-                        EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
+                    padding: const EdgeInsets.only(
+                        left: 16.0, right: 16.0, top: 12.0),
                     child: Column(
                       children: [
                         Text(
-                          model['title'],
+                          (model['title'] ?? '').toString(),
                           style: const TextStyle(
-                            fontSize: 25,
+                            fontSize: 20,
                             color: Colors.white,
-                            fontFamily: 'Sarabun',
+                            fontFamily: 'Kanit',
+                            fontWeight: FontWeight.w600,
                           ),
                           maxLines: 2,
                           textAlign: TextAlign.center,
                           overflow: TextOverflow.ellipsis,
                         ),
+                        const SizedBox(height: 4),
                         Text(
-                          dateStringToDate(model['createDate']),
+                          model['createDate'] != null
+                              ? dateStringToDate(model['createDate'])
+                              : '',
                           style: const TextStyle(
-                            fontSize: 10,
-                            color: Colors.white,
-                            fontFamily: 'Sarabun',
+                            fontSize: 12,
+                            color: Colors.white70,
+                            fontFamily: 'Kanit',
                           ),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
+                  const SizedBox(height: 10.0),
                   if (hasResource) ...[
                     Container(
                       width: 400.0,
-                      padding: EdgeInsets.only(left: 90.0, right: 90.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 90.0),
                       child: Material(
                         elevation: 5.0,
                         borderRadius: BorderRadius.circular(10.0),
                         color: Colors.white,
-                        child: Container(
-                          alignment: Alignment(1, 1),
-                          child: MaterialButton(
-                            minWidth: MediaQuery.of(context).size.width,
-                            onPressed: hasResource
-                                ? () {
-                                    if (fileUrl.isNotEmpty) {
-                                      launchURL(fileUrl);
-                                    } else {
-                                      launchInWebViewWithJavaScript(linkUrl);
-                                    }
-                                  }
-                                : null,
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                SizedBox(
-                                  width: 35.0,
-                                  height: 35.0,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: Image.asset(
-                                      'assets/logo/icons/Group337.png',
-                                      height: 5.0,
-                                      width: 5.0,
+                        child: MaterialButton(
+                          minWidth: MediaQuery.of(context).size.width,
+                          onPressed: () {
+                            if (fileUrl.isNotEmpty) {
+                              launchURL(fileUrl);
+                            } else {
+                              launchInWebViewWithJavaScript(linkUrl);
+                            }
+                          },
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              SizedBox(
+                                width: 35.0,
+                                height: 35.0,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Image.asset(
+                                    'assets/logo/icons/Group337.png',
+                                    height: 5.0,
+                                    width: 5.0,
+                                    color: Theme.of(context).primaryColor,
+                                    errorBuilder: (_, __, ___) => Icon(
+                                      Icons.menu_book,
+                                      size: 20,
                                       color: Theme.of(context).primaryColor,
                                     ),
                                   ),
                                 ),
-                                Text(
-                                  fileUrl.isNotEmpty
-                                      ? 'เปิดเอกสาร PDF'
-                                      : 'เปิดลิงก์',
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontFamily: 'Sarabun',
-                                  ),
+                              ),
+                              Text(
+                                fileUrl.isNotEmpty
+                                    ? 'เปิดเอกสาร PDF'
+                                    : 'เปิดลิงก์',
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontFamily: 'Kanit',
+                                  fontWeight: FontWeight.w600,
                                 ),
-                              ],
-                            ),
-                            /*
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder: (context) => PdfViewerPage(
-                              //       path: model['fileUrl'],
-                              //     ),
-                              //   ),
-                              // );
-                            */
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -317,98 +276,93 @@ class _KnowledgeDetailPageState extends State<KnowledgeForm> {
               ),
             ],
           ),
-          SizedBox(
-            height: 20.0,
-          ),
+          const SizedBox(height: 20.0),
           Column(
             children: [
-              TextDetail(
-                  title: 'ข้อมูล',
-                  value: '',
-                  fsTitle: 18.0,
-                  fsValue: 13.0,
-                  color: Colors.black),
-              model['author'] != ''
-                  ? TextDetail(
-                      title: 'ผู้แต่ง',
-                      value: '${model['author']}',
-                      fsTitle: 13.0,
-                      fsValue: 13.0,
-                      color: Colors.grey)
-                  : Container(),
-              model['publisher'] != ''
-                  ? TextDetail(
-                      title: 'สำนักพิมพ์',
-                      value: '${model['publisher']}',
-                      fsTitle: 13.0,
-                      fsValue: 13.0,
-                      color: Colors.grey)
-                  : Container(),
-              model['categoryList'][0]['title'] != ''
-                  ? TextDetail(
-                      title: 'หมวดหมู่',
-                      value: '${model['categoryList'][0]['title']}',
-                      fsTitle: 13.0,
-                      fsValue: 13.0,
-                      color: Colors.grey)
-                  : Container(),
-              model['bookType'] != ''
-                  ? TextDetail(
-                      title: 'ประเภทหนังสือ',
-                      value: '${model['bookType']}',
-                      fsTitle: 13.0,
-                      fsValue: 13.0,
-                      color: Colors.grey)
-                  : Container(),
-              model['numberOfPages'] != ''
-                  ? TextDetail(
-                      title: 'จำนวนหน้า',
-                      value: '${model['numberOfPages'].toString()}',
-                      fsTitle: 13.0,
-                      fsValue: 13.0,
-                      color: Colors.grey)
-                  : Container(),
-              model['size'] != ''
-                  ? TextDetail(
-                      title: 'ขนาด',
-                      value: '${model['size'].toString()}',
-                      fsTitle: 13.0,
-                      fsValue: 13.0,
-                      color: Colors.grey)
-                  : Container(),
-              SizedBox(
-                height: 20.0,
+              const TextDetail(
+                title: 'ข้อมูล',
+                value: '',
+                fsTitle: 18.0,
+                fsValue: 13.0,
+                color: Colors.black,
               ),
-              TextDetail(
-                  title: 'รายละเอียด',
-                  value: '',
-                  fsTitle: 18.0,
+              if (author.isNotEmpty)
+                TextDetail(
+                  title: 'ผู้แต่ง',
+                  value: author,
+                  fsTitle: 13.0,
                   fsValue: 13.0,
-                  color: Colors.black),
-              SizedBox(
-                height: 10.0,
+                  color: Colors.grey,
+                ),
+              if (publisher.isNotEmpty)
+                TextDetail(
+                  title: 'สำนักพิมพ์',
+                  value: publisher,
+                  fsTitle: 13.0,
+                  fsValue: 13.0,
+                  color: Colors.grey,
+                ),
+              if (categoryTitle.isNotEmpty)
+                TextDetail(
+                  title: 'หมวดหมู่',
+                  value: categoryTitle,
+                  fsTitle: 13.0,
+                  fsValue: 13.0,
+                  color: Colors.grey,
+                ),
+              if (bookType.isNotEmpty)
+                TextDetail(
+                  title: 'ประเภทหนังสือ',
+                  value: bookType,
+                  fsTitle: 13.0,
+                  fsValue: 13.0,
+                  color: Colors.grey,
+                ),
+              if (numberOfPages.isNotEmpty)
+                TextDetail(
+                  title: 'จำนวนหน้า',
+                  value: numberOfPages,
+                  fsTitle: 13.0,
+                  fsValue: 13.0,
+                  color: Colors.grey,
+                ),
+              if (size.isNotEmpty)
+                TextDetail(
+                  title: 'ขนาด',
+                  value: size,
+                  fsTitle: 13.0,
+                  fsValue: 13.0,
+                  color: Colors.grey,
+                ),
+              const SizedBox(height: 20.0),
+              const TextDetail(
+                title: 'รายละเอียด',
+                value: '',
+                fsTitle: 18.0,
+                fsValue: 13.0,
+                color: Colors.black,
               ),
+              const SizedBox(height: 10.0),
               Container(
-                width: 380,
-                padding: EdgeInsets.only(left: 10.0, top: 5, right: 10.0),
+                width: double.infinity,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
                 alignment: Alignment.topLeft,
                 child: Html(
-                    data:
-                        model['description'] != '' ? model['description'] : '',
-                    onLinkTap: (url, context, attributes) {
-                      // ignore: deprecated_member_use
-                      launch(url!);
-                    }),
-
-                // HtmlView(
-                //   data: model['description'] != '' ? model['description'] : '',
-                //   scrollable:
-                //       false, //false to use MarksownBody and true to use Marksown
-                // ),
+                  data: description.isNotEmpty
+                      ? description
+                      : '<p>ไม่มีรายละเอียดข้อมูลเพิ่มเติม</p>',
+                  onLinkTap: (url, context, attributes) {
+                    if (url != null && url.isNotEmpty) {
+                      final uri = Uri.tryParse(url);
+                      if (uri != null) {
+                        launchUrl(uri, mode: LaunchMode.externalApplication);
+                      }
+                    }
+                  },
+                ),
               ),
-              SizedBox(
-                height: 40.0,
-              ),
+              const SizedBox(height: 40.0),
             ],
           ),
         ],
@@ -418,13 +372,14 @@ class _KnowledgeDetailPageState extends State<KnowledgeForm> {
 }
 
 class TextDetail extends StatelessWidget {
-  TextDetail(
-      {super.key,
-      this.title,
-      this.value,
-      this.fsTitle,
-      this.fsValue,
-      this.color});
+  const TextDetail({
+    super.key,
+    this.title,
+    this.value,
+    this.fsTitle,
+    this.fsValue,
+    this.color,
+  });
 
   final String? title;
   final String? value;
@@ -434,36 +389,35 @@ class TextDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 140,
-          padding: EdgeInsets.only(left: 10.0, top: 5, right: 10.0),
-          alignment: Alignment.topLeft,
-          child: Text(
-            title!,
-            style: TextStyle(
-              fontSize: fsTitle,
-              color: color,
-              fontFamily: 'Sarabun',
-            ),
-          ),
-        ),
-        Expanded(
-          child: Container(
-            padding: EdgeInsets.only(left: 10.0, top: 5),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 120,
             child: Text(
-              value!,
+              title ?? '',
               style: TextStyle(
-                fontSize: fsValue,
-                color: color,
-                fontFamily: 'Sarabun',
+                fontSize: fsTitle ?? 13.0,
+                color: color ?? Colors.grey,
+                fontFamily: 'Kanit',
+                fontWeight: FontWeight.w500,
               ),
-              overflow: TextOverflow.ellipsis,
             ),
           ),
-        ),
-      ],
+          Expanded(
+            child: Text(
+              value ?? '',
+              style: TextStyle(
+                fontSize: fsValue ?? 13.0,
+                color: Colors.black87,
+                fontFamily: 'Kanit',
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

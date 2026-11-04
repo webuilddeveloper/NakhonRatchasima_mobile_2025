@@ -107,7 +107,7 @@ class _MyQrCode extends State<MyQrCode> {
                 "assets/images/bg_buttom_qr_code.png",
                 height: MediaQuery.of(context).size.height * 0.47,
                 width: MediaQuery.of(context).size.width,
-                color: const Color(0xFFC9166D),
+                color: AppColors.primary,
                 fit: BoxFit.fill,
               ),
             ),

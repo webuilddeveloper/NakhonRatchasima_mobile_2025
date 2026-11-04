@@ -260,7 +260,7 @@ class _RenewLicensePageState extends State<RenewLicensePage> {
     //                 style: TextStyle(
     //                   fontSize: 13,
     //                   fontFamily: 'Sarabun',
-    //                   color: Color(0xFFC9166D),
+    //                   color: Color(0xFFBF360C),
     //                   fontWeight: FontWeight.normal,
     //                 ),
     //               ),
@@ -315,7 +315,7 @@ class _RenewLicensePageState extends State<RenewLicensePage> {
     //                 style: TextStyle(
     //                   fontSize: 13,
     //                   fontFamily: 'Sarabun',
-    //                   color: Color(0xFFC9166D),
+    //                   color: Color(0xFFBF360C),
     //                   fontWeight: FontWeight.normal,
     //                 ),
     //               ),
@@ -394,19 +394,19 @@ class _RenewLicensePageState extends State<RenewLicensePage> {
           containerHeight: 210.0,
           itemStyle: TextStyle(
             fontSize: 16.0,
-            color: Color(0xFFC9166D),
+            color: Color(0xFFBF360C),
             fontWeight: FontWeight.normal,
             fontFamily: 'Sarabun',
           ),
           doneStyle: TextStyle(
             fontSize: 16.0,
-            color: Color(0xFFC9166D),
+            color: Color(0xFFBF360C),
             fontWeight: FontWeight.normal,
             fontFamily: 'Sarabun',
           ),
           cancelStyle: TextStyle(
             fontSize: 16.0,
-            color: Color(0xFFC9166D),
+            color: Color(0xFFBF360C),
             fontWeight: FontWeight.normal,
             fontFamily: 'Sarabun',
           ),
@@ -518,7 +518,7 @@ class _RenewLicensePageState extends State<RenewLicensePage> {
                     ),
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: Color(0xFFFFE3F0),
+                      fillColor: Color(0xFFFFEDE6),
                       contentPadding: EdgeInsets.symmetric(
                           vertical: 10.0, horizontal: 15.0),
                       hintText: 'วัน / เดือน / ปีเกิด',
@@ -576,7 +576,7 @@ class _RenewLicensePageState extends State<RenewLicensePage> {
                           style: TextStyle(
                               fontFamily: 'Kanit',
                               fontSize: 15,
-                              color: Color(0xFFC9166D),
+                              color: Color(0xFFBF360C),
                               decoration: TextDecoration.underline),
                         ),
                       ),
@@ -592,7 +592,7 @@ class _RenewLicensePageState extends State<RenewLicensePage> {
                           child: Icon(
                             Icons.upload_file,
                             size: 40,
-                            color: Color(0xFFC9166D),
+                            color: Color(0xFFBF360C),
                           ),
                         ),
                       ),
@@ -610,7 +610,7 @@ class _RenewLicensePageState extends State<RenewLicensePage> {
                       child: Icon(
                         Icons.upload_file,
                         size: 40,
-                        color: Color(0xFFC9166D),
+                        color: Color(0xFFBF360C),
                       ),
                     ),
                   ),
@@ -625,7 +625,7 @@ class _RenewLicensePageState extends State<RenewLicensePage> {
                           style: TextStyle(
                               fontFamily: 'Kanit',
                               fontSize: 15,
-                              color: Color(0xFFC9166D),
+                              color: Color(0xFFBF360C),
                               decoration: TextDecoration.underline),
                         ),
                       ),
@@ -641,7 +641,7 @@ class _RenewLicensePageState extends State<RenewLicensePage> {
                           child: Icon(
                             Icons.upload_file,
                             size: 40,
-                            color: Color(0xFFC9166D),
+                            color: Color(0xFFBF360C),
                           ),
                         ),
                       ),
@@ -659,7 +659,7 @@ class _RenewLicensePageState extends State<RenewLicensePage> {
                       child: Icon(
                         Icons.upload_file,
                         size: 40,
-                        color: Color(0xFFC9166D),
+                        color: Color(0xFFBF360C),
                       ),
                     ),
                   ),
@@ -685,7 +685,7 @@ class _RenewLicensePageState extends State<RenewLicensePage> {
                           child: Icon(
                             Icons.upload_file,
                             size: 40,
-                            color: Color(0xFFC9166D),
+                            color: Color(0xFFBF360C),
                           ),
                         ),
                       ),
@@ -703,7 +703,7 @@ class _RenewLicensePageState extends State<RenewLicensePage> {
                       child: Icon(
                         Icons.upload_file,
                         size: 40,
-                        color: Color(0xFFC9166D),
+                        color: Color(0xFFBF360C),
                       ),
                     ),
                   ),
@@ -759,7 +759,7 @@ class _RenewLicensePageState extends State<RenewLicensePage> {
             ),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5.0),
-              color: Color(0xFFC9166D),
+              color: Color(0xFFBF360C),
             ),
             width: 30.0,
             height: 30.0,
@@ -771,7 +771,7 @@ class _RenewLicensePageState extends State<RenewLicensePage> {
               title,
               style: new TextStyle(
                 fontSize: 12.0,
-                color: Color(0xFFC9166D),
+                color: Color(0xFFBF360C),
                 fontWeight: FontWeight.normal,
                 fontFamily: 'Sarabun',
               ),

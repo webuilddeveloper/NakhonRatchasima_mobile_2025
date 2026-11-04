@@ -49,5 +49,64 @@ class _CategoryCard extends StatelessWidget {
   final Map<String, Object> item;
   final VoidCallback onTap;
   @override
-  Widget build(BuildContext context) { final color = item['color'] as Color; return Container(margin: const EdgeInsets.only(bottom: 11), child: Material(color: AppColors.surface, borderRadius: KoratRadius.md, child: InkWell(onTap: onTap, borderRadius: KoratRadius.md, child: Padding(padding: const EdgeInsets.all(15), child: Row(children: [Container(width: 52, height: 52, decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(15)), child: Icon(item['icon'] as IconData, color: color, size: 27)), const SizedBox(width: 13), Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(item['title'] as String, style: const TextStyle(color: AppColors.textPrimary, fontFamily: 'Kanit', fontSize: 16, fontWeight: FontWeight.w600)), const SizedBox(height: 3), Text(item['subtitle'] as String, maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(color: AppColors.textSecondary, fontFamily: 'Sarabun', fontSize: 12, height: 1.25))])), Icon(Icons.chevron_right_rounded, color: color, size: 25)])))); }
+  Widget build(BuildContext context) {
+    final color = item['color'] as Color;
+    return Container(
+      margin: const EdgeInsets.only(bottom: 11),
+      child: Material(
+        color: AppColors.surface,
+        borderRadius: KoratRadius.md,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: KoratRadius.md,
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: Row(
+              children: [
+                Container(
+                  width: 52,
+                  height: 52,
+                  decoration: BoxDecoration(
+                    color: color.withValues(alpha: 0.12),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Icon(item['icon'] as IconData, color: color, size: 27),
+                ),
+                const SizedBox(width: 13),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        item['title'] as String,
+                        style: const TextStyle(
+                          color: AppColors.textPrimary,
+                          fontFamily: 'Kanit',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 3),
+                      Text(
+                        item['subtitle'] as String,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          color: AppColors.textSecondary,
+                          fontFamily: 'Sarabun',
+                          fontSize: 12,
+                          height: 1.25,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Icon(Icons.chevron_right_rounded, color: color, size: 25),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }

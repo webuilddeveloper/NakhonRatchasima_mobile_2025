@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import '../apptheme.dart';
 
 import '../shared/api_provider.dart';
 import '../shared/extension.dart';
@@ -217,7 +217,7 @@ class _TrafficTicketTMPPageState extends State<TrafficTicketTMP> {
               _textRowExpanded(
                 title: model['accuse1_CODE'],
                 value: model['fine1'],
-                valueColor: const Color(0xFFF670C3),
+                valueColor: AppColors.primary,
                 expandedRight: false,
                 spaceBetween: 60,
               ),
@@ -225,7 +225,7 @@ class _TrafficTicketTMPPageState extends State<TrafficTicketTMP> {
               _textRowExpanded(
                 title: model['accuse2_CODE'],
                 value: model['fine2'],
-                valueColor: const Color(0xFFF670C3),
+                valueColor: AppColors.primary,
                 expandedRight: false,
                 spaceBetween: 60,
               ),
@@ -233,7 +233,7 @@ class _TrafficTicketTMPPageState extends State<TrafficTicketTMP> {
               _textRowExpanded(
                 title: model['accuse3_CODE'],
                 value: model['fine3'],
-                valueColor: const Color(0xFFF670C3),
+                valueColor: AppColors.primary,
                 expandedRight: false,
                 spaceBetween: 60,
               ),
@@ -241,7 +241,7 @@ class _TrafficTicketTMPPageState extends State<TrafficTicketTMP> {
               _textRowExpanded(
                 title: model['accuse4_CODE'],
                 value: model['fine4'],
-                valueColor: const Color(0xFFF670C3),
+                valueColor: AppColors.primary,
                 expandedRight: false,
                 spaceBetween: 60,
               ),
@@ -249,7 +249,7 @@ class _TrafficTicketTMPPageState extends State<TrafficTicketTMP> {
               _textRowExpanded(
                 title: model['accuse5_CODE'],
                 value: model['fine5'],
-                valueColor: const Color(0xFFF670C3),
+                valueColor: AppColors.primary,
                 expandedRight: false,
                 spaceBetween: 60,
               ),
@@ -257,7 +257,7 @@ class _TrafficTicketTMPPageState extends State<TrafficTicketTMP> {
             _textRowExpanded(
               title: 'ค่าปรับทั้งหมด',
               value: model['fine_AMT'],
-              valueColor: const Color(0xFFF670C3),
+              valueColor: AppColors.primary,
               valueSize: 20,
             ),
           ],

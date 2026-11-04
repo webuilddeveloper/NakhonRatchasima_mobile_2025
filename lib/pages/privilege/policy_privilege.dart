@@ -97,7 +97,7 @@ class _PolicyPrivilegeState extends State<PolicyPrivilege> {
                 style: TextStyle(
                   fontSize: 13,
                   fontFamily: 'Sarabunun',
-                  color: Color(0xFFC9166D),
+                  color: Color(0xFFBF360C),
                   fontWeight: FontWeight.normal,
                 ),
               ),
@@ -154,7 +154,7 @@ class _PolicyPrivilegeState extends State<PolicyPrivilege> {
                   style: TextStyle(
                     fontSize: 13,
                     fontFamily: 'Sarabunun',
-                    color: Color(0xFFC9166D),
+                    color: Color(0xFFBF360C),
                     fontWeight: FontWeight.normal,
                   ),
                 ),
@@ -343,10 +343,10 @@ class _PolicyPrivilegeState extends State<PolicyPrivilege> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(18),
                 side: BorderSide(
-                  color: Color(0xFFC9166D),
+                  color: Color(0xFFBF360C),
                 ),
               ),
-              backgroundColor: Color(0xFFC9166D),
+              backgroundColor: Color(0xFFBF360C),
               textStyle: TextStyle(
                 color: Colors.white,
               ),

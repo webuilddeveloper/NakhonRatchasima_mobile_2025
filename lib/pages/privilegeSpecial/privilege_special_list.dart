@@ -215,9 +215,9 @@ class _PrivilegeSpecialList extends State<PrivilegeSpecialList> {
               CategorySelector2(
                 onChange: (String val, String valTitle) {
                   setState(
-                    () => {
-                      categorySelected = val,
-                      categoryTitleSelected = valTitle,
+                    () {
+                      categorySelected = val;
+                      categoryTitleSelected = valTitle;
                     },
                   );
                   _onLoading();

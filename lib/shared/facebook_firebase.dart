@@ -12,7 +12,7 @@ Future<UserCredential?> signInWithFacebook() async {
         FacebookAuthProvider.credential(accessToken!.tokenString);
     try {
       return await FirebaseAuth.instance.signInWithCredential(credential);
-    } on FirebaseAuthException catch (e) {
+    } on FirebaseAuthException {
       // manage Firebase authentication exceptions
       return null;
     } catch (e) {

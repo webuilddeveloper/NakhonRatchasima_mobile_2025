@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ratchasima/component/header.dart';
 import 'package:ratchasima/pages/question/question_list_form.dart';
+import '../../shared/mock_repository.dart';
 
 import '../../shared/api_provider.dart';
 import 'question_list_vertical.dart';
@@ -19,17 +20,7 @@ class _QuestionList extends State<QuestionList> {
   String? keySearch;
   String? category;
 
-  dynamic _model = [
-    {
-      'code': '1',
-      'title': 'สอบถามหน่อยครับ',
-      'description': 'สอบถามหน่อยครับ',
-      'date': '3 วัน ที่ผ่านมา',
-      'createDate': '20/06/2025 5:32 pm',
-      'view': '535',
-      'userName': 'Xxxx1'
-    },
-  ];
+  dynamic _model = KoratMockRepository.localQuestions;
 
   // final ScrollController _controller = ScrollController();
   @override
@@ -94,33 +85,38 @@ class _QuestionList extends State<QuestionList> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25.0),
                           side: BorderSide(
-                            color: Color(0xFFC9166D),
+                            color: Color(0xFFBF360C),
                             width: 2.0,
                           ),
                         ),
                         child: MaterialButton(
                           height: 30,
-                          onPressed: () {
-                            Navigator.push(
+                          onPressed: () async {
+                            final res = await Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => QuestionListForm(),
                               ),
                             );
+                            if (res == true && mounted) {
+                              setState(() {
+                                _model = List.from(KoratMockRepository.localQuestions);
+                              });
+                            }
                           },
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Icon(
                                 Icons.add_circle_outline,
-                                color: Color(0xFFC9166D),
+                                color: Color(0xFFBF360C),
                               ),
                               SizedBox(width: 5),
                               new Text(
                                 'เพิ่มคำถามใหม่',
                                 style: new TextStyle(
                                   fontSize: 16.0,
-                                  color: Color(0xFFC9166D),
+                                  color: Color(0xFFBF360C),
                                   fontWeight: FontWeight.normal,
                                   fontFamily: 'Kanit',
                                 ),

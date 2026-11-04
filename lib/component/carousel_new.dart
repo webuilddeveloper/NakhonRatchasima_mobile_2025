@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ratchasima/apptheme.dart';
 import 'package:ratchasima/pages/news/news_form.dart';
 import 'package:ratchasima/shared/api_provider.dart';
 
@@ -74,7 +74,10 @@ class _CarouselNew extends State<CarouselNew> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => NewsForm(
-                            url: document['url'] ?? '',
+                            url: (document['url'] != null &&
+                                    document['url'].toString().isNotEmpty)
+                                ? document['url']
+                                : '${newsApi}read',
                             code: document['code'] ?? '',
                             model: document,
                             urlComment: newsApi,
@@ -155,8 +158,8 @@ class _CarouselNew extends State<CarouselNew> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
                         color: _current == index
-                            ? Color(0xFFC9166D)
-                            : Color(0xFFFFE3F0),
+                            ? AppColors.primary
+                            : AppColors.primarySoft,
                         // : Color.fromRGBO(0, 0, 0, 0.4),
                       ),
                     );

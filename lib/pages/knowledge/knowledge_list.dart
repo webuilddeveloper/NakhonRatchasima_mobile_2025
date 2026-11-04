@@ -3,6 +3,7 @@ import 'package:ratchasima/component/header.dart';
 import 'package:ratchasima/apptheme.dart';
 import 'package:ratchasima/component/key_search.dart';
 import 'package:ratchasima/shared/api_provider.dart' as service;
+import 'package:ratchasima/shared/mock_repository.dart';
 
 import 'knowledge_list_vertical.dart' as grid;
 
@@ -46,6 +47,8 @@ class _KnowledgeList extends State<KnowledgeList> {
 
   @override
   void dispose() {
+    txtDescription.dispose();
+    _refreshController.dispose();
     super.dispose();
   }
 
@@ -142,12 +145,18 @@ class _KnowledgeList extends State<KnowledgeList> {
     return FutureBuilder<dynamic>(
       future: _futureCategory,
       builder: (context, snapshot) {
-        if (!snapshot.hasData || snapshot.data.isEmpty) {
+        final List<dynamic> categories = (snapshot.hasData &&
+                snapshot.data is List &&
+                (snapshot.data as List).isNotEmpty)
+            ? snapshot.data as List
+            : KoratMockRepository.getKnowledgeCategories();
+
+        if (categories.isEmpty) {
           return const SizedBox(height: 48);
         }
 
         final tabWidth = (MediaQuery.of(context).size.width - 48) /
-            snapshot.data.length;
+            categories.length;
         return Container(
           height: 48,
           margin: const EdgeInsets.symmetric(horizontal: 16),
@@ -159,9 +168,9 @@ class _KnowledgeList extends State<KnowledgeList> {
           ),
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: snapshot.data.length,
+            itemCount: categories.length,
             itemBuilder: (context, index) {
-              final item = snapshot.data[index];
+              final item = categories[index];
               final selected = (category ?? '') == (item['code'] ?? '');
               return GestureDetector(
                 onTap: () {

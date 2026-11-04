@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ratchasima/apptheme.dart';
 import 'package:ratchasima/component/korat_ui.dart';
+import '../shared/mock_repository.dart';
 
 import '../component/blurred_network_image.dart';
 import 'otop_cart.dart';
@@ -14,26 +15,7 @@ class OtopProductListPage extends StatefulWidget {
 }
 
 class _OtopProductListPageState extends State<OtopProductListPage> {
-  final List<Map<String, String>> products = [
-    {
-      'name': 'กระเป๋าสานมือ',
-      'image':
-          'https://gateway.we-builds.com/wb-py-media/uploads/nakhonphanom\\20250527-111652-2fbb960de6bdcc8577d47800645cc477.jpeg',
-      'description': 'กระเป๋าสานจากใบเตยหอม ทำมือ 100%',
-      'price': '฿850',
-      'category': 'งานฝีมือ',
-      'rating': '4.8',
-    },
-    {
-      'name': 'สบู่สมุนไพร',
-      'image':
-          'https://gateway.we-builds.com/wb-py-media/uploads/nakhonphanom\\20250527-111808-039b2f71f192a0989e12f688a9140df0.png_720x720q80.png',
-      'description': 'สบู่สมุนไพรกลิ่นตะไคร้ หอมสดชื่น',
-      'price': '฿120',
-      'category': 'ผลิตภัณฑ์ธรรมชาติ',
-      'rating': '4.9',
-    },
-  ];
+  final List<Map<String, String>> products = KoratMockRepository.getOtopProducts();
 
   void goBack() => Navigator.pop(context, false);
 

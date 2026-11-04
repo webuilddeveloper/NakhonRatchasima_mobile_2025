@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'blank_loading.dart';
@@ -15,8 +14,8 @@ blankMenu(BuildContext context) {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Color(0xFFC9166D),
-                Color(0xFFC9166D),
+                Color(0xFFBF360C),
+                Color(0xFFBF360C),
               ],
               begin: Alignment.topCenter,
               end: new Alignment(0.6, 0.0),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import '../apptheme.dart';
 
 class MenuGridItem extends StatefulWidget {
   MenuGridItem(
@@ -40,7 +40,7 @@ class _MenuGridItem extends State<MenuGridItem> {
         },
         child: Container(
           // margin: EdgeInsets.symmetric(horizontal: widget.isCenter ? 1.0 : 0.0),
-          // color: widget.isPrimaryColor ? Color(0xFFF670C3) : Color(0xFFC9166D),
+          // color: widget.isPrimaryColor ? Color(0xFFD84315) : Color(0xFFBF360C),
           color: Colors.transparent,
           height: (width / 3),
           child: Column(
@@ -53,11 +53,11 @@ class _MenuGridItem extends State<MenuGridItem> {
                   gradient: LinearGradient(
                     colors: [
                       !widget.isPrimaryColor!
-                          ? Color(0xFFF670C3)
-                          : Color(0xFFC9166D),
+                          ? AppColors.primaryBright
+                          : AppColors.primary,
                       !widget.isPrimaryColor!
-                          ? Color(0xFFF670C3)
-                          : Color(0xFFC9166D),
+                          ? AppColors.primary
+                          : AppColors.primaryDark,
                     ],
                     begin: Alignment.topLeft,
                     end: new Alignment(1, 0.0),

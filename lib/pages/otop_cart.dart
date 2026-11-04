@@ -1,4 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ratchasima/apptheme.dart';
 import 'package:ratchasima/component/header.dart';
 import 'package:ratchasima/component/korat_ui.dart';
@@ -351,6 +354,70 @@ class _OtopCheckoutPageState extends State<OtopCheckoutPage> {
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
   final _addressController = TextEditingController();
+  final _storage = const FlutterSecureStorage();
+
+  bool _saveForNextTime = true;
+  bool _isAutoFilled = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSavedShippingInfo();
+  }
+
+  Future<void> _loadSavedShippingInfo() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      String? name = prefs.getString('otop_shipping_name');
+      String? phone = prefs.getString('otop_shipping_phone');
+      String? address = prefs.getString('otop_shipping_address');
+
+      if ((name == null || name.isEmpty) && (address == null || address.isEmpty)) {
+        // Fallback to logged-in user profile
+        final rawProfile = await _storage.read(key: 'localProfile') ??
+            await _storage.read(key: 'dataUserLoginDDPM');
+        if (rawProfile != null && rawProfile.isNotEmpty) {
+          final profile = jsonDecode(rawProfile);
+          final firstName = profile['firstName'] ?? '';
+          final lastName = profile['lastName'] ?? '';
+          name = '$firstName $lastName'.trim();
+          phone = profile['phone'] ?? '';
+          address = profile['address'] ?? '';
+        }
+      }
+
+      // If still empty, provide realistic Korat mock defaults
+      if (name == null || name.isEmpty) {
+        name = 'สมชาย โคราชรักษา';
+      }
+      if (phone == null || phone.isEmpty) {
+        phone = '081-999-8888';
+      }
+      if (address == null || address.isEmpty) {
+        address = '123/45 ถ.มิตรภาพ ต.ในเมือง อ.เมือง จ.นครราชสีมา 30000';
+      }
+
+      if (mounted) {
+        setState(() {
+          _nameController.text = name!;
+          _phoneController.text = phone!;
+          _addressController.text = address!;
+          _isAutoFilled = true;
+        });
+      }
+    } catch (_) {}
+  }
+
+  Future<void> _persistShippingInfo() async {
+    if (!_saveForNextTime) return;
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('otop_shipping_name', _nameController.text.trim());
+      await prefs.setString('otop_shipping_phone', _phoneController.text.trim());
+      await prefs.setString('otop_shipping_address', _addressController.text.trim());
+    } catch (_) {}
+  }
+
   @override
   void dispose() {
     _nameController.dispose();
@@ -359,15 +426,18 @@ class _OtopCheckoutPageState extends State<OtopCheckoutPage> {
     super.dispose();
   }
 
-  void _submit() {
+  void _submit() async {
     if (!(_formKey.currentState?.validate() ?? false)) return;
+    await _persistShippingInfo();
     OtopCartController.instance.clear();
+    if (!mounted) return;
     Navigator.pushReplacement(context,
         MaterialPageRoute(builder: (_) => const OtopOrderSuccessPage()));
   }
 
   InputDecoration _decoration(String label, IconData icon) => InputDecoration(
       labelText: label,
+      labelStyle: const TextStyle(fontFamily: 'Kanit', fontSize: 14),
       prefixIcon: Icon(icon, color: AppColors.primary),
       filled: true,
       fillColor: AppColors.surface,
@@ -423,8 +493,8 @@ class _OtopCheckoutPageState extends State<OtopCheckoutPage> {
                     Text('QR สำหรับชำระเงินจะแสดงเมื่อยืนยันรายการ',
                         style: TextStyle(
                             color: AppColors.textSecondary,
-                            fontFamily: 'Sarabun',
-                            fontSize: 11))
+                            fontFamily: 'Kanit',
+                            fontSize: 12))
                   ])),
         ],
       ),
@@ -441,7 +511,7 @@ class _OtopCheckoutPageState extends State<OtopCheckoutPage> {
           child: ListView(
               padding: const EdgeInsets.fromLTRB(16, 20, 16, 28),
               children: [
-                const Text('กรอกข้อมูลสำหรับจัดส่งสินค้า',
+                const Text('ที่อยู่สำหรับจัดส่งสินค้า',
                     style: TextStyle(
                         color: AppColors.textPrimary,
                         fontFamily: 'Kanit',
@@ -449,15 +519,64 @@ class _OtopCheckoutPageState extends State<OtopCheckoutPage> {
                         fontWeight: FontWeight.w600)),
                 const SizedBox(height: 6),
                 const Text(
-                    'ผู้ผลิตจะติดต่อกลับเพื่อยืนยันรายละเอียดการสั่งซื้อ',
+                    'ข้อมูลจัดส่งจะถูกจดจำเป็นที่อยู่เริ่มต้น ไม่ต้องกรอกใหม่ทุกครั้ง',
                     style: TextStyle(
                         color: AppColors.textSecondary,
-                        fontFamily: 'Sarabun',
+                        fontFamily: 'Kanit',
                         fontSize: 13)),
-                const SizedBox(height: 20),
+                const SizedBox(height: 14),
+
+                // Saved Address Status Banner
+                if (_isAutoFilled)
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 14),
+                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: AppColors.primarySoft,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(Icons.check_circle_outline_rounded,
+                            size: 18, color: AppColors.primary),
+                        const SizedBox(width: 8),
+                        const Expanded(
+                          child: Text(
+                            'โหลดข้อมูลจัดส่งเริ่มต้นเรียบร้อยแล้ว (แตะเพื่อแก้ไขได้)',
+                            style: TextStyle(
+                              fontFamily: 'Kanit',
+                              fontSize: 12.5,
+                              color: AppColors.primary,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              _nameController.clear();
+                              _phoneController.clear();
+                              _addressController.clear();
+                            });
+                          },
+                          child: const Text(
+                            'ล้างข้อมูล',
+                            style: TextStyle(
+                              fontFamily: 'Kanit',
+                              fontSize: 12,
+                              color: AppColors.primary,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
                 TextFormField(
                     controller: _nameController,
-                    decoration: _decoration('ชื่อผู้รับ', Icons.person_outline),
+                    style: const TextStyle(fontFamily: 'Kanit', fontSize: 15),
+                    decoration: _decoration('ชื่อ-นามสกุล ผู้รับ', Icons.person_outline),
                     validator: (value) => value == null || value.trim().isEmpty
                         ? 'กรุณากรอกชื่อผู้รับ'
                         : null),
@@ -465,20 +584,60 @@ class _OtopCheckoutPageState extends State<OtopCheckoutPage> {
                 TextFormField(
                     controller: _phoneController,
                     keyboardType: TextInputType.phone,
+                    style: const TextStyle(fontFamily: 'Kanit', fontSize: 15),
                     decoration:
-                        _decoration('เบอร์โทรศัพท์', Icons.phone_outlined),
+                        _decoration('เบอร์โทรศัพท์ติดต่อ', Icons.phone_outlined),
                     validator: (value) => value == null || value.trim().isEmpty
                         ? 'กรุณากรอกเบอร์โทรศัพท์'
                         : null),
                 const SizedBox(height: 12),
                 TextFormField(
                     controller: _addressController,
-                    maxLines: 4,
+                    maxLines: 3,
+                    style: const TextStyle(fontFamily: 'Kanit', fontSize: 15),
                     decoration: _decoration(
-                        'ที่อยู่จัดส่ง', Icons.location_on_outlined),
+                        'ที่อยู่จัดส่งโดยละเอียด', Icons.location_on_outlined),
                     validator: (value) => value == null || value.trim().isEmpty
                         ? 'กรุณากรอกที่อยู่จัดส่ง'
                         : null),
+                const SizedBox(height: 12),
+
+                // Save for next time toggle
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: AppColors.surface,
+                    borderRadius: BorderRadius.circular(14),
+                    border: Border.all(color: AppColors.border),
+                  ),
+                  child: Row(
+                    children: [
+                      Checkbox(
+                        value: _saveForNextTime,
+                        activeColor: AppColors.primary,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        onChanged: (val) {
+                          setState(() {
+                            _saveForNextTime = val ?? true;
+                          });
+                        },
+                      ),
+                      const Expanded(
+                        child: Text(
+                          'บันทึกที่อยู่นี้เป็นที่อยู่เริ่มต้น (ไม่ต้องกรอกใหม่ในครั้งต่อไป)',
+                          style: TextStyle(
+                            fontFamily: 'Kanit',
+                            fontSize: 13,
+                            color: AppColors.textPrimary,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
                 const SizedBox(height: 24),
                 const Text('วิธีชำระเงิน',
                     style: TextStyle(

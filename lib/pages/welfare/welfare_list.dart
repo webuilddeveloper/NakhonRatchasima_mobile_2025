@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../component/key_search.dart';
 import '../../component/tab_category.dart';
-import '../../shared/api_provider.dart'  as service;
+import '../../shared/api_provider.dart' as service;
 
 import '../../widget/header.dart';
 import 'welfare_list_vertical.dart';
@@ -117,8 +117,8 @@ class _WelfareList extends State<WelfareList> {
                 ),
                 onChange: (String val) {
                   setState(
-                    () => {
-                      category = val,
+                    () {
+                      category = val;
                       welfare = new WelfareListVertical(
                         site: 'DDPM',
                         model: service.post('${service.welfareApi}read', {
@@ -129,7 +129,7 @@ class _WelfareList extends State<WelfareList> {
                         }),
                         url: '${service.welfareApi}read',
                         // urlGallery: '${service.welfareGalleryApi}',
-                      ),
+                      );
                     },
                   );
                 },
@@ -141,8 +141,8 @@ class _WelfareList extends State<WelfareList> {
                 onKeySearchChange: (String val) {
                   // welfareList(context, service.post('${service.welfareApi}read', {'skip': 0, 'limit': 100,"keySearch": val}),'');
                   setState(
-                    () => {
-                      keySearch = val,
+                    () {
+                      keySearch = val;
                       welfare = new WelfareListVertical(
                         site: 'DDPM',
                         model: service.post('${service.welfareApi}read', {
@@ -153,7 +153,7 @@ class _WelfareList extends State<WelfareList> {
                         }),
                         url: '${service.welfareApi}read',
                         urlGallery: '${service.welfareGalleryApi}',
-                      )
+                      );
                     },
                   );
                 },

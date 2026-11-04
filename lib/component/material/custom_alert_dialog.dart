@@ -200,11 +200,11 @@ class CustomAlertDialog extends StatelessWidget {
   ///
   /// Typically this is a list of [FlatButton] widgets.
   ///
-  /// These widgets will be wrapped in a [ButtonBar], which introduces 8 pixels
+  /// These widgets will be wrapped in a [OverflowBar], which introduces 8 pixels
   /// of padding on each side.
   ///
   /// If the [title] is not null but the [content] _is_ null, then an extra 20
-  /// pixels of padding is added above the [ButtonBar] to separate the [title]
+  /// pixels of padding is added above the [OverflowBar] to separate the [title]
   /// from the [actions].
   final List<Widget>? actions;
 

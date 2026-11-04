@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import '../apptheme.dart';
 
+import '../shared/mock_repository.dart';
 import 'blurred_network_image.dart';
 
 class CarouselRotation extends StatefulWidget {
@@ -42,23 +44,16 @@ class _CarouselRotation extends State<CarouselRotation> {
     return FutureBuilder<dynamic>(
       future: widget.model,
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        if (snapshot.hasData) {
-          final activeItems = (snapshot.data as Iterable<dynamic>)
-              .where(
-                (item) => item is Map && item['isActive'] == true,
-              )
-              .toList();
-
-          if (activeItems.isNotEmpty) {
-            return _buildScreen(activeItems);
-          } else {
-            return Container();
-          }
-        } else if (snapshot.hasError) {
-          return Container();
-        } else {
-          return Container();
+        List<dynamic> items = [];
+        if (snapshot.hasData && snapshot.data is List && (snapshot.data as List).isNotEmpty) {
+          items = (snapshot.data as List).where(
+            (item) => item is Map && item['isActive'] != false,
+          ).toList();
         }
+        if (items.isEmpty) {
+          items = KoratMockRepository.getMainBanners();
+        }
+        return _buildScreen(items);
       },
     );
   }
@@ -85,10 +80,10 @@ class _CarouselRotation extends State<CarouselRotation> {
               return InkWell(
                 onTap: () {
                   widget.nav?.call(
-                    document['linkUrl'],
-                    document['action'],
+                    (document['linkUrl'] ?? document['link'] ?? '').toString(),
+                    (document['action'] ?? 'in').toString(),
                     document,
-                    document['code'],
+                    (document['code'] ?? '').toString(),
                   );
                 },
                 child: Container(
@@ -121,8 +116,8 @@ class _CarouselRotation extends State<CarouselRotation> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
                     color: _current == index
-                        ? const Color(0xFFC9166D)
-                        : const Color(0xFFFFE3F0),
+                        ? AppColors.primary
+                        : AppColors.primarySoft,
                   ),
                 );
               }).toList(),

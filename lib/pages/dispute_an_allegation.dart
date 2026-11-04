@@ -136,7 +136,7 @@ class _DisputeAnAllegationPageState extends State<DisputeAnAllegation> {
                     fontFamily: 'Sarabun',
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFFC9166D),
+                    color: Color(0xFFBF360C),
                   ),
                 ),
                 InkWell(
@@ -149,7 +149,7 @@ class _DisputeAnAllegationPageState extends State<DisputeAnAllegation> {
                       fontFamily: 'Sarabun',
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFFC9166D),
+                      color: Color(0xFFBF360C),
                       decoration: TextDecoration.underline,
                     ),
                   ),
@@ -226,7 +226,7 @@ class _DisputeAnAllegationPageState extends State<DisputeAnAllegation> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
               color: model['disputeStatus'] == "NORMAL"
-                  ? Color(0xFFF670C3)
+                  ? Color(0xFFD84315)
                   : Color(0xFF7948AD),
             ),
             child: Column(

@@ -118,25 +118,20 @@ class _OtopProductDetailPageState extends State<OtopProductDetailPage>
                     if (widget.product['category'] != null)
                       Container(
                         padding:
-                            EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                            const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                         decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Color(0xFFC9166D).withOpacity(0.2),
-                              Color(0xFFF670C3).withOpacity(0.2),
-                            ],
-                          ),
+                          color: AppColors.primarySoft,
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(
-                            color: Color(0xFFC9166D).withOpacity(0.3),
+                            color: AppColors.primary.withValues(alpha: 0.25),
                           ),
                         ),
                         child: Text(
                           widget.product['category']!,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontFamily: 'Kanit',
-                            fontSize: 10,
-                            color: Color(0xFFC9166D),
+                            fontSize: 11,
+                            color: AppColors.primary,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -184,12 +179,12 @@ class _OtopProductDetailPageState extends State<OtopProductDetailPage>
                                   return Icon(
                                     Icons.star_rounded,
                                     color: index < 4
-                                        ? Color(0xFFF670C3)
+                                        ? const Color(0xFFF59E0B)
                                         : Colors.grey[300],
                                     size: 20,
                                   );
                                 }),
-                                SizedBox(width: 6),
+                                const SizedBox(width: 6),
                                 Text(
                                   widget.product['rating'] ?? '4.8',
                                   style: TextStyle(
@@ -201,14 +196,14 @@ class _OtopProductDetailPageState extends State<OtopProductDetailPage>
                                 ),
                               ],
                             ),
-                            SizedBox(height: 6),
+                            const SizedBox(height: 6),
                             Text(
                               widget.product['price']!,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontFamily: 'Kanit',
                                 fontSize: 26,
                                 fontWeight: FontWeight.w800,
-                                color: Color(0xFFC9166D),
+                                color: AppColors.primary,
                               ),
                             ),
                           ],
@@ -240,9 +235,7 @@ class _OtopProductDetailPageState extends State<OtopProductDetailPage>
                 child: OutlinedButton.icon(
                   onPressed: () {
                     OtopCartController.instance.add(widget.product);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('เพิ่มสินค้าลงตะกร้าแล้ว')),
-                    );
+                    _showCartAddedPopup(context);
                   },
                   icon: const Icon(Icons.add_shopping_cart_rounded),
                   label: const Text('เพิ่มลงตะกร้า'),
@@ -291,6 +284,179 @@ class _OtopProductDetailPageState extends State<OtopProductDetailPage>
           ),
         ),
       ),
+    );
+  }
+
+  void _showCartAddedPopup(BuildContext context) {
+    showGeneralDialog(
+      context: context,
+      barrierDismissible: true,
+      barrierLabel: 'dismiss',
+      barrierColor: Colors.black.withValues(alpha: 0.45),
+      transitionDuration: const Duration(milliseconds: 220),
+      pageBuilder: (ctx, anim1, anim2) {
+        return Center(
+          child: Material(
+            color: Colors.transparent,
+            child: Container(
+              width: MediaQuery.of(ctx).size.width * 0.82,
+              constraints: const BoxConstraints(maxWidth: 340),
+              padding: const EdgeInsets.all(22),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(22),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.12),
+                    blurRadius: 20,
+                    offset: const Offset(0, 8),
+                  ),
+                ],
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: 58,
+                    height: 58,
+                    decoration: BoxDecoration(
+                      color: AppColors.primarySoft,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.check_circle_rounded,
+                      color: AppColors.primary,
+                      size: 36,
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+                  const Text(
+                    'เพิ่มสินค้าลงในตะกร้าแล้ว',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'Kanit',
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.textPrimary,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: AppColors.surfaceWarm,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: BlurredNetworkImage(
+                            imageUrl: widget.product['image'] ?? '',
+                            width: 48,
+                            height: 48,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.product['name'] ?? '',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontFamily: 'Kanit',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.textPrimary,
+                                ),
+                              ),
+                              Text(
+                                widget.product['price'] ?? '',
+                                style: const TextStyle(
+                                  fontFamily: 'Kanit',
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.primary,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: () => Navigator.of(ctx).pop(),
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: AppColors.textSecondary,
+                            side: const BorderSide(color: AppColors.border),
+                            padding: const EdgeInsets.symmetric(vertical: 11),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          child: const Text(
+                            'เลือกซื้อต่อ',
+                            style: TextStyle(
+                              fontFamily: 'Kanit',
+                              fontSize: 13.5,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(ctx).pop();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const OtopCartPage(),
+                              ),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.primary,
+                            foregroundColor: Colors.white,
+                            elevation: 0,
+                            padding: const EdgeInsets.symmetric(vertical: 11),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          child: const Text(
+                            'ไปที่ตะกร้า',
+                            style: TextStyle(
+                              fontFamily: 'Kanit',
+                              fontSize: 13.5,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+      transitionBuilder: (ctx, anim1, anim2, child) {
+        return Transform.scale(
+          scale: 0.85 + (0.15 * anim1.value),
+          child: Opacity(opacity: anim1.value, child: child),
+        );
+      },
     );
   }
 }

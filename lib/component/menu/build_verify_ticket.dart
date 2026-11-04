@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import '../../apptheme.dart';
 
 import '../../pages/traffic_ticket.dart';
 import '../../pages/traffic_ticket_tmp.dart';
@@ -65,8 +66,8 @@ class _VerifyTicket extends State<VerifyTicket> {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color(0xFFF670C3).withOpacity(0.5),
-              Color(0xFFF670C3).withOpacity(0.3),
+              AppColors.primary.withOpacity(0.5),
+              AppColors.primary.withOpacity(0.3),
             ],
             begin: Alignment.centerRight,
             // end: new Alignment(1, 0.0),
@@ -86,8 +87,8 @@ class _VerifyTicket extends State<VerifyTicket> {
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
-                          Color(0xFFF670C3).withOpacity(0.6),
-                          Color(0xFFF670C3),
+                          AppColors.primary.withOpacity(0.6),
+                          AppColors.primary,
                         ],
                         begin: Alignment.centerRight,
                         // end: new Alignment(1, 0.0),
@@ -153,8 +154,8 @@ class _VerifyTicket extends State<VerifyTicket> {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Color(0xFFC9166D).withOpacity(0.5),
-                Color(0xFFC9166D).withOpacity(0.3),
+                AppColors.primary.withOpacity(0.5),
+                AppColors.primary.withOpacity(0.3),
               ],
               begin: Alignment.centerRight,
               // end: new Alignment(1, 0.0),
@@ -172,16 +173,7 @@ class _VerifyTicket extends State<VerifyTicket> {
                       margin: EdgeInsets.all(5),
                       padding: EdgeInsets.all(5),
                       decoration: BoxDecoration(
-                        // gradient: LinearGradient(
-                        //   colors: [
-                        //     Color(0xFFC9166D).withOpacity(0.6),
-                        //     Color(0xFFC9166D),
-                        //   ],
-                        //   begin: Alignment.centerRight,
-                        //   // end: new Alignment(1, 0.0),
-                        //   end: Alignment.centerLeft,
-                        // ),
-                        color: Color(0xFFC9166D),
+                        color: AppColors.primary,
                       ),
                       child: Column(
                         children: [
@@ -258,7 +250,7 @@ class _VerifyTicket extends State<VerifyTicket> {
                 ),
                 child: Image.asset(
                   'assets/icons/traffic_ticket_icon.png',
-                  // color: Color(0xFFF670C3),
+                  // color: AppColors.primary,
                 ),
               )
             ],

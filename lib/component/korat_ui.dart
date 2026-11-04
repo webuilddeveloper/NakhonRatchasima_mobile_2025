@@ -169,15 +169,15 @@ class _KoratAppBarBackground extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Color(0xFFB90F5F),
+            Color(0xFF8C1D04),
             AppColors.primary,
-            Color(0xFFD92B79),
+            Color(0xFFD84315),
           ],
           stops: [0, 0.56, 1],
         ),
         boxShadow: [
           BoxShadow(
-            color: Color(0x3DC9166D),
+            color: Color(0x3DBF360C),
             blurRadius: 16,
             offset: Offset(0, 5),
           ),

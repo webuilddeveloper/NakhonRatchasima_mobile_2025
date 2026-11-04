@@ -1,26 +1,31 @@
 import 'package:flutter/material.dart';
 
 abstract final class AppColors {
-  // Primary colors
-  static const Color primary = Color(0xFFC9166D);
-  static const Color primaryBright = Color(0xFFF670C3);
-  static const Color primarySoft = Color(0xFFFFE3F0);
+  // Primary colors - Korat Terracotta
+  static const Color primary = Color(0xFFBF360C);
+  static const Color primaryBright = Color(0xFFD84315);
+  static const Color primaryDark = Color(0xFF8C1D04);
+  static const Color primarySoft = Color(0xFFFFEDE6);
+
+  // Accent - Emerald Green (Nakhon Ratchasima Silk & Nature)
+  static const Color accentEmerald = Color(0xFF059669);
+  static const Color accentEmeraldSoft = Color(0xFFE8F5E9);
 
   // Surfaces
-  static const Color background = Color(0xFFFFFBF7);
+  static const Color background = Color(0xFFFAF8F5);
   static const Color surface = Color(0xFFFFFFFF);
-  static const Color surfaceWarm = Color(0xFFFFF3F8);
+  static const Color surfaceWarm = Color(0xFFFFF7F2);
 
   // Text and borders
-  static const Color textPrimary = Color(0xFF282429);
-  static const Color textSecondary = Color(0xFF6E646A);
-  static const Color border = Color(0xFFE4D8DE);
+  static const Color textPrimary = Color(0xFF261C14);
+  static const Color textSecondary = Color(0xFF6E6259);
+  static const Color border = Color(0xFFEADBCE);
 
   // Status colors
-  static const Color success = Color(0xFF23855B);
+  static const Color success = Color(0xFF10B981);
   static const Color warning = Color(0xFFE09A27);
   static const Color error = Color(0xFFBA1A1A);
-  static const Color info = Color(0xFF3978C5);
+  static const Color info = Color(0xFF1E88E5);
 }
 
 abstract final class AppTheme {
@@ -43,7 +48,13 @@ abstract final class AppTheme {
 
     return ThemeData(
       useMaterial3: true,
-      fontFamily: 'Sarabun',
+      fontFamily: 'Kanit',
+      fontFamilyFallback: const [
+        'Apple Color Emoji',
+        'Noto Color Emoji',
+        'Segoe UI Emoji',
+        'Sarabun',
+      ],
       colorScheme: colorScheme,
       primaryColor: AppColors.primary,
       scaffoldBackgroundColor: AppColors.background,
@@ -51,45 +62,53 @@ abstract final class AppTheme {
       dividerColor: AppColors.border,
       textTheme: const TextTheme(
         headlineLarge: TextStyle(
+          fontFamily: 'Kanit',
           fontSize: 30,
           height: 1.2,
           fontWeight: FontWeight.w700,
           color: AppColors.textPrimary,
         ),
         headlineMedium: TextStyle(
+          fontFamily: 'Kanit',
           fontSize: 26,
           height: 1.25,
           fontWeight: FontWeight.w700,
           color: AppColors.textPrimary,
         ),
         titleLarge: TextStyle(
+          fontFamily: 'Kanit',
           fontSize: 22,
           height: 1.3,
           fontWeight: FontWeight.w700,
           color: AppColors.textPrimary,
         ),
         titleMedium: TextStyle(
+          fontFamily: 'Kanit',
           fontSize: 17,
           height: 1.35,
           fontWeight: FontWeight.w600,
           color: AppColors.textPrimary,
         ),
         bodyLarge: TextStyle(
+          fontFamily: 'Sarabun',
           fontSize: 16,
           height: 1.5,
           color: AppColors.textPrimary,
         ),
         bodyMedium: TextStyle(
+          fontFamily: 'Sarabun',
           fontSize: 14,
           height: 1.5,
           color: AppColors.textPrimary,
         ),
         bodySmall: TextStyle(
+          fontFamily: 'Sarabun',
           fontSize: 12,
           height: 1.4,
           color: AppColors.textSecondary,
         ),
         labelLarge: TextStyle(
+          fontFamily: 'Kanit',
           fontSize: 15,
           fontWeight: FontWeight.w600,
         ),

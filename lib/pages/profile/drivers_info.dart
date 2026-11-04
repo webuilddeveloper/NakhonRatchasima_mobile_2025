@@ -280,8 +280,8 @@ class _DriversInfoPageState extends State<DriversInfo> {
                                               ]
                                             : [
                                                 Color(0xFFF1E8F8),
-                                                Color(0xFFFFE3F0),
-                                                Color(0xFFFFE3F0),
+                                                Color(0xFFFFEDE6),
+                                                Color(0xFFFFEDE6),
                                                 Color(0xFFFFFFFF),
                                                 Color(0xFFF1E8F8),
                                               ],
@@ -475,7 +475,7 @@ class _DriversInfoPageState extends State<DriversInfo> {
                                     height: 25,
                                     padding: EdgeInsets.all(5),
                                     decoration: BoxDecoration(
-                                      color: Color(0xFFF670C3),
+                                      color: Color(0xFFD84315),
                                       borderRadius: BorderRadius.circular(5),
                                     ),
                                     child: Text(
@@ -495,7 +495,7 @@ class _DriversInfoPageState extends State<DriversInfo> {
                               height: 25,
                               padding: EdgeInsets.all(5),
                               decoration: BoxDecoration(
-                                color: Color(0xFFC9166D),
+                                color: Color(0xFFBF360C),
                                 borderRadius: BorderRadius.circular(5),
                               ),
                               child: Text(
@@ -613,7 +613,7 @@ class _DriversInfoPageState extends State<DriversInfo> {
                     height: 60,
                     padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: Color(0xFFC9166D),
+                      color: Color(0xFFBF360C),
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(15),
                         topRight: Radius.circular(15),

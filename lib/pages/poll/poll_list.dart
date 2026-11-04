@@ -118,21 +118,19 @@ class _PollList extends State<PollList> {
                   {'skip': 0, 'limit': 100},
                 ),
                 onChange: (String val) {
-                  setState(
-                    () => {
-                      category = val,
-                      poll = new PollListVertical(
-                        site: 'DDPM',
-                        model: service.post('${service.pollApi}read',
-                            {'skip': 0, 'limit': _limit, "category": category}),
-                        url: '${service.pollApi}read',
-                        title: widget.title,
-                        titleHome: widget.title,
-                        urlGallery: '${service.pollGalleryApi}',
-                        callBack: () => {_onLoading()},
-                      ),
-                    },
-                  );
+                  setState(() {
+                    category = val;
+                    poll = PollListVertical(
+                      site: 'DDPM',
+                      model: service.post('${service.pollApi}read',
+                          {'skip': 0, 'limit': _limit, "category": category}),
+                      url: '${service.pollApi}read',
+                      title: widget.title,
+                      titleHome: widget.title,
+                      urlGallery: '${service.pollGalleryApi}',
+                      callBack: () => _onLoading(),
+                    );
+                  });
                 },
               ),
               SizedBox(height: 5),
@@ -141,23 +139,21 @@ class _PollList extends State<PollList> {
                 hintext: 'ค้นหาคำถาม',
                 onKeySearchChange: (String val) {
                   // pollList(context, service.post('${service.pollApi}read', {'skip': 0, 'limit': 100,"keySearch": val}),'');
-                  setState(
-                    () => {
-                      keySearch = val,
-                      poll = new PollListVertical(
-                        site: 'DDPM',
-                        model: service.post('${service.pollApi}read', {
-                          'skip': 0,
-                          'limit': _limit,
-                          "keySearch": keySearch,
-                          'category': category
-                        }),
-                        url: '${service.pollApi}read',
-                        urlGallery: '${service.pollGalleryApi}',
-                        callBack: () => {_onLoading()},
-                      )
-                    },
-                  );
+                  setState(() {
+                    keySearch = val;
+                    poll = PollListVertical(
+                      site: 'DDPM',
+                      model: service.post('${service.pollApi}read', {
+                        'skip': 0,
+                        'limit': _limit,
+                        "keySearch": keySearch,
+                        'category': category
+                      }),
+                      url: '${service.pollApi}read',
+                      urlGallery: '${service.pollGalleryApi}',
+                      callBack: () => _onLoading(),
+                    );
+                  });
                 },
               ),
               SizedBox(height: 10),

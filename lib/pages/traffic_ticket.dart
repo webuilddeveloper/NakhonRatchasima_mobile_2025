@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -362,7 +361,7 @@ class _TrafficTicketPageState extends State<TrafficTicket> {
               _textRowExpanded(
                 title: model['accuse1_CODE'],
                 value: model['fine1'],
-                valueColor: const Color(0xFFF670C3),
+                valueColor: const Color(0xFFD84315),
                 expandedRight: false,
                 spaceBetween: 60,
               ),
@@ -370,7 +369,7 @@ class _TrafficTicketPageState extends State<TrafficTicket> {
               _textRowExpanded(
                 title: model['accuse2_CODE'],
                 value: model['fine2'],
-                valueColor: const Color(0xFFF670C3),
+                valueColor: const Color(0xFFD84315),
                 expandedRight: false,
                 spaceBetween: 60,
               ),
@@ -378,7 +377,7 @@ class _TrafficTicketPageState extends State<TrafficTicket> {
               _textRowExpanded(
                 title: model['accuse3_CODE'],
                 value: model['fine3'],
-                valueColor: const Color(0xFFF670C3),
+                valueColor: const Color(0xFFD84315),
                 expandedRight: false,
                 spaceBetween: 60,
               ),
@@ -386,7 +385,7 @@ class _TrafficTicketPageState extends State<TrafficTicket> {
               _textRowExpanded(
                 title: model['accuse4_CODE'],
                 value: model['fine4'],
-                valueColor: const Color(0xFFF670C3),
+                valueColor: const Color(0xFFD84315),
                 expandedRight: false,
                 spaceBetween: 60,
               ),
@@ -394,7 +393,7 @@ class _TrafficTicketPageState extends State<TrafficTicket> {
               _textRowExpanded(
                 title: model['accuse5_CODE'],
                 value: model['fine5'],
-                valueColor: const Color(0xFFF670C3),
+                valueColor: const Color(0xFFD84315),
                 expandedRight: false,
                 spaceBetween: 60,
               ),
@@ -402,7 +401,7 @@ class _TrafficTicketPageState extends State<TrafficTicket> {
             _textRowExpanded(
               title: 'ค่าปรับทั้งหมด',
               value: model['fine_AMT'],
-              valueColor: const Color(0xFFF670C3),
+              valueColor: const Color(0xFFD84315),
               valueSize: 20,
             ),
           ],
@@ -505,8 +504,8 @@ class _TrafficTicketPageState extends State<TrafficTicket> {
     } else if (value == '2') {
       status = 'เกินกำหนดแล้วยังไม่ชำระ';
       colors = [
-        const Color(0xFFF670C3),
-        const Color(0xFFF670C3),
+        const Color(0xFFD84315),
+        const Color(0xFFD84315),
       ];
     } else if (value == '3') {
       status = 'ชำระแล้ว';

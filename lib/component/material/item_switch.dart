@@ -45,7 +45,7 @@ itemSwitch({
               callback!(change);
             },
             activeTrackColor: activeTrackColor,
-            activeColor: activeColor,
+            activeThumbColor: activeColor,
           ),
         ),
       ],

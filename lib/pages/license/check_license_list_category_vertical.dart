@@ -123,7 +123,7 @@ class CheckLicenseListCategoryVerticalState
                                                   fontWeight: FontWeight.normal,
                                                   fontSize: 16,
                                                   fontFamily: 'Kanit',
-                                                  color: Color(0xFFC9166D),
+                                                  color: Color(0xFFBF360C),
                                                 ),
                                                 maxLines: 2,
                                                 overflow: TextOverflow.ellipsis,

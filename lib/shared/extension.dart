@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../apptheme.dart';
 // import 'package:flutter_datetime_picker/flutter_datetime_picker.dart' as datatTimePicker;
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart' as datatTimePicker;
 import 'package:intl/intl.dart';
@@ -103,21 +104,21 @@ dialogDatePicker(
         containerHeight: 210.0,
         itemStyle: TextStyle(
           fontSize: 16.0,
-          color: Color(0xFFC9166D),
+          color: AppColors.textPrimary,
           fontWeight: FontWeight.normal,
-          fontFamily: 'Sarabun',
+          fontFamily: 'Kanit',
         ),
         doneStyle: TextStyle(
           fontSize: 16.0,
-          color: Color(0xFFC9166D),
-          fontWeight: FontWeight.normal,
-          fontFamily: 'Sarabun',
+          color: AppColors.primary,
+          fontWeight: FontWeight.w600,
+          fontFamily: 'Kanit',
         ),
         cancelStyle: TextStyle(
           fontSize: 16.0,
-          color: Color(0xFFC9166D),
+          color: AppColors.textSecondary,
           fontWeight: FontWeight.normal,
-          fontFamily: 'Sarabun',
+          fontFamily: 'Kanit',
         ),
       ),
       showTitleActions: true,

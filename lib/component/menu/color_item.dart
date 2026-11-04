@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../apptheme.dart';
 
 colorItem(
   String title,
@@ -10,8 +11,8 @@ colorItem(
   Function? callback,
   LinearGradient linearGradient = const LinearGradient(
     colors: [
-      Color(0xFFF670C3),
-      Color(0xFFF670C3),
+      AppColors.primaryBright,
+      AppColors.primary,
     ],
     begin: Alignment.centerRight,
     end: Alignment.centerLeft,

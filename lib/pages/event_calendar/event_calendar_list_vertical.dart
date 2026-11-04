@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../apptheme.dart';
 import '../../component/blurred_network_image.dart';
+import '../../shared/mock_repository.dart';
 import '../blank_page/blank_data.dart';
 import 'event_calendar_form.dart';
 
@@ -38,47 +39,49 @@ class _EventCalendarListVertical extends State<EventCalendarListVertical> {
     return FutureBuilder<dynamic>(
       future: widget.model, // function where you call your api
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        // AsyncSnapshot<Your object type>
-
-        if (snapshot.hasData) {
-          if (snapshot.data.length == 0) {
-            return Container(
-              height: 200,
-              alignment: Alignment.center,
-              child: Text(
-                'ไม่พบข้อมูล',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontFamily: 'Sarabun',
-                  color: Color.fromRGBO(0, 0, 0, 0.6),
-                ),
-              ),
-            );
-          } else {
-            return Container(
-              padding: const EdgeInsets.fromLTRB(16, 4, 16, 16),
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 12,
-                  mainAxisExtent: 246,
-                ),
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: snapshot.data.length,
-                itemBuilder: (context, index) {
-                  // return Container(height: 300.0,color: Colors.red,margin: EdgeInsets.all(5.0),);
-                  return myCard(index, snapshot.data.length,
-                      snapshot.data[index], context);
-                  // return demoItem(snapshot.data[index]);
-                },
-              ),
-            );
-          }
-        } else {
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return blankGridData(context);
         }
+
+        final List<dynamic> eventList = (snapshot.hasData &&
+                snapshot.data is List &&
+                (snapshot.data as List).isNotEmpty)
+            ? snapshot.data as List
+            : KoratMockRepository.getEvents();
+
+        if (eventList.isEmpty) {
+          return Container(
+            height: 200,
+            alignment: Alignment.center,
+            child: const Text(
+              'ไม่พบข้อมูลกิจกรรม',
+              style: TextStyle(
+                fontSize: 16,
+                fontFamily: 'Sarabun',
+                color: AppColors.textSecondary,
+              ),
+            ),
+          );
+        }
+
+        return Container(
+          padding: const EdgeInsets.fromLTRB(16, 4, 16, 16),
+          child: GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 12,
+              mainAxisSpacing: 12,
+              mainAxisExtent: 246,
+            ),
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: eventList.length,
+            itemBuilder: (context, index) {
+              return myCard(
+                  index, eventList.length, eventList[index], context);
+            },
+          ),
+        );
       },
     );
   }

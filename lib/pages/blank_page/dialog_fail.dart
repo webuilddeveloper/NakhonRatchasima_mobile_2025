@@ -33,7 +33,7 @@ dialogFail(BuildContext context,
               style: TextStyle(
                 fontSize: 13,
                 fontFamily: 'Sarabun',
-                color: Color(0xFFF670C3),
+                color: Color(0xFFD84315),
                 fontWeight: FontWeight.normal,
               ),
             ),
