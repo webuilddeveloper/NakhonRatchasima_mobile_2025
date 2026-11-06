@@ -50,9 +50,15 @@
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>ขออนุญาติเข้าถึงคลังภาพเพื่อบันทึกรูปภาพ</string>
+	<string>ขออนุญาตเข้าถึงคลังภาพเพื่อเลือกและบันทึกรูปภาพ</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>ขออนุญาตเข้าถึงคลังภาพเพื่อบันทึกรูปภาพลงในอุปกรณ์ของคุณ</string>
 	<key>NSCameraUsageDescription</key>
-	<string>ต้องการใช้กล้องเพื่อถ่ายรูป</string>
+	<string>ขออนุญาตเข้าถึงกล้องเพื่อถ่ายภาพสำหรับแนบข้อมูลหรือเปลี่ยนรูปโปรไฟล์</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>ขออนุญาตเข้าถึงไมโครโฟนสำหรับการบันทึกเสียงและสั่งการด้วยเสียง</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>ขออนุญาตเข้าถึงระบบรู้จำเสียงเพื่อแปลงเสียงพูดเป็นข้อความค้นหาและพิมพ์ข้อความ</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>เพื่อแสดงตำแหน่งปัจจุบันของคุณ และแนะนำจุดน่าสนใจให้กับคุณ</string>
 	<key>NSLocationUsageDescription</key>

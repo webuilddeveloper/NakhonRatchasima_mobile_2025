@@ -1702,7 +1702,7 @@ class HomePageState extends State<HomePage> {
     {
       'name': 'อนุสาวรีย์ท้าวสุรนารี (ย่าโม)',
       'location': 'อำเภอเมืองนครราชสีมา จังหวัดนครราชสีมา',
-      'review': '⭐ แลนด์มาร์กคู่เมืองโคราช',
+      'review': 'แลนด์มาร์กคู่เมืองโคราช',
       'imageUrl':
           'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQUT9JighyBOtliJaqTNa_tNPSv0jWYsDtGfCKuMMquOHppchvWrRzldw&s=10',
       'url':
@@ -1715,7 +1715,7 @@ class HomePageState extends State<HomePage> {
     {
       'name': 'ประตูชุมพล',
       'location': 'อำเภอเมืองนครราชสีมา จังหวัดนครราชสีมา',
-      'review': '⭐ จุดถ่ายรูปยอดนิยมใจกลางเมือง',
+      'review': 'จุดถ่ายรูปยอดนิยมใจกลางเมือง',
       'imageUrl':
           'https://cms.dmpcdn.com/travel/2022/06/29/ad3fb0c0-f766-11ec-99fd-db3af2a5f38c_webp_original.jpg',
       'url':
@@ -1728,7 +1728,7 @@ class HomePageState extends State<HomePage> {
     {
       'name': 'วัดศาลาลอย',
       'location': 'อำเภอเมืองนครราชสีมา จังหวัดนครราชสีมา',
-      'review': '⭐ วัดสำคัญและสถาปัตยกรรมเด่นของโคราช',
+      'review': 'วัดสำคัญและสถาปัตยกรรมเด่นของโคราช',
       'imageUrl':
           'https://nkr.mcu.ac.th/tour/wp-content/uploads/2015/03/I-San-in-The-Rain_83.jpg',
       'url':
@@ -1741,7 +1741,7 @@ class HomePageState extends State<HomePage> {
     {
       'name': 'อุทยานแห่งชาติเขาใหญ่',
       'location': 'อำเภอปากช่อง จังหวัดนครราชสีมา',
-      'review': '⭐ แหล่งธรรมชาติยอดนิยมของโคราช',
+      'review': 'แหล่งธรรมชาติยอดนิยมของโคราช',
       'imageUrl':
           'https://my.kapook.com/imagescontent/fb_img/772/s_110442_7165.jpg',
       'url':
@@ -1754,7 +1754,7 @@ class HomePageState extends State<HomePage> {
     {
       'name': 'ฟาร์มโชคชัย',
       'location': 'อำเภอปากช่อง จังหวัดนครราชสีมา',
-      'review': '⭐ แหล่งท่องเที่ยวสำหรับครอบครัว',
+      'review': 'แหล่งท่องเที่ยวสำหรับครอบครัว',
       'imageUrl':
           'https://img.salehere.co.th/p/600x0/2022/07/06/dy4spmdfpmbi.jpg',
       'url':
@@ -1767,7 +1767,7 @@ class HomePageState extends State<HomePage> {
     {
       'name': 'อ่างเก็บน้ำลำตะคอง',
       'location': 'อำเภอสีคิ้ว จังหวัดนครราชสีมา',
-      'review': '⭐ จุดชมวิวธรรมชาติและพระอาทิตย์ตก',
+      'review': 'จุดชมวิวธรรมชาติและพระอาทิตย์ตก',
       'imageUrl':
           'https://cms.dmpcdn.com/travel/2020/06/10/51ac4e40-ab0e-11ea-b79d-0ddf2d8ccf90_original.jpg',
       'url':
@@ -1780,7 +1780,7 @@ class HomePageState extends State<HomePage> {
     {
       'name': 'วัดบ้านไร่',
       'location': 'อำเภอด่านขุนทด จังหวัดนครราชสีมา',
-      'review': '⭐ วัดสวยและงานศิลปะร่วมสมัย',
+      'review': 'วัดสวยและงานศิลปะร่วมสมัย',
       'imageUrl': 'https://img.thaicdn.net/u/2019/supattra_wat/watt/wat2.jpg',
       'url':
           'https://www.google.com/maps/search/?api=1&query=15.216413,101.771731',
@@ -1792,7 +1792,7 @@ class HomePageState extends State<HomePage> {
     {
       'name': 'สวนสัตว์นครราชสีมา',
       'location': 'อำเภอเมืองนครราชสีมา จังหวัดนครราชสีมา',
-      'review': '⭐ เที่ยวสนุกสำหรับครอบครัว',
+      'review': 'เที่ยวสนุกสำหรับครอบครัว',
       'imageUrl':
           'https://img.wongnai.com/p/1600x0/2021/12/12/8c2713da5fea4bccb147c2348a10782f.jpg',
       'url':
@@ -1938,17 +1938,26 @@ class HomePageState extends State<HomePage> {
                                       ),
                                     ],
                                   ),
-                                  const SizedBox(height: 2),
-                                  Text(
-                                    place['review']!,
-                                    style: const TextStyle(
-                                      fontSize: 11,
-                                      fontFamily: 'Kanit',
-                                      fontWeight: FontWeight.w500,
-                                      color: Color(0xFF27544F),
-                                    ),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
+                                  const SizedBox(height: 3),
+                                  Row(
+                                    children: [
+                                      const Icon(Icons.star_rounded,
+                                          size: 14, color: Color(0xFFF59E0B)),
+                                      const SizedBox(width: 3),
+                                      Expanded(
+                                        child: Text(
+                                          place['review']!,
+                                          style: const TextStyle(
+                                            fontSize: 11,
+                                            fontFamily: 'Kanit',
+                                            fontWeight: FontWeight.w500,
+                                            color: Color(0xFF27544F),
+                                          ),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                   if (place.containsKey('description') &&
                                       place['description']!.isNotEmpty)

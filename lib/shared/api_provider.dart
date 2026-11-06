@@ -19,7 +19,7 @@ import 'mock_repository.dart';
 
 const appName = 'Khub Dee DLT';
 const versionName = '0.0.1';
-const versionNumber = 6;
+const versionNumber = 5;
 
 const serverPrefix = 'https://khubdeedlt.we-builds.com/';
 const server = '$serverPrefix/khubdeedlt-api/';
@@ -141,12 +141,10 @@ Future<dynamic> postCategory(String url, dynamic criteria) async {
       "organization": dataOrganization,
     });
 
-    var response = await http
-        .post(Uri.parse(url), body: body, headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json"
-        })
-        .timeout(const Duration(seconds: 4));
+    var response = await http.post(Uri.parse(url), body: body, headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    }).timeout(const Duration(seconds: 4));
 
     var data = json.decode(response.body);
     List<dynamic> list = [
@@ -167,7 +165,9 @@ Future<dynamic> postCategory(String url, dynamic criteria) async {
   } else if (url.contains('knowledge')) {
     return Future.value(KoratMockRepository.getKnowledgeCategories());
   }
-  return Future.value([{'code': '', 'title': 'ทั้งหมด'}]);
+  return Future.value([
+    {'code': '', 'title': 'ทั้งหมด'}
+  ]);
 }
 
 Future<dynamic> post(String url, dynamic criteria) async {
@@ -204,21 +204,24 @@ Future<dynamic> post(String url, dynamic criteria) async {
       "longitude": criteria['longitude'] ?? 0,
     });
 
-    var response = await http
-        .post(Uri.parse(url), body: body, headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json"
-        })
-        .timeout(const Duration(seconds: 4));
+    var response = await http.post(Uri.parse(url), body: body, headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    }).timeout(const Duration(seconds: 4));
 
     var data = json.decode(response.body);
     final items = data['objectData'];
     if (items != null) {
-      final code = criteria != null && criteria is Map ? (criteria['code'] ?? '').toString() : '';
+      final code = criteria != null && criteria is Map
+          ? (criteria['code'] ?? '').toString()
+          : '';
       if (items is List && items.isNotEmpty) {
         if (code.isNotEmpty) {
           final match = items.firstWhere(
-            (it) => it is Map && it['code'] != null && it['code'].toString() == code,
+            (it) =>
+                it is Map &&
+                it['code'] != null &&
+                it['code'].toString() == code,
             orElse: () => null,
           );
           if (match != null) {
@@ -228,7 +231,8 @@ Future<dynamic> post(String url, dynamic criteria) async {
           return Future.value(items);
         }
       } else if (items is Map && items.isNotEmpty) {
-        if (code.isEmpty || (items['code'] != null && items['code'].toString() == code)) {
+        if (code.isEmpty ||
+            (items['code'] != null && items['code'].toString() == code)) {
           return Future.value(items);
         }
       }
@@ -242,18 +246,23 @@ Future<dynamic> post(String url, dynamic criteria) async {
   if (urlLower.contains('poll')) {
     return Future.value(KoratMockRepository.getPollList());
   } else if (urlLower.contains('eventcalendar')) {
-    final cat = criteria != null && criteria is Map ? (criteria['category'] ?? '') : '';
-    return Future.value(KoratMockRepository.getEvents(category: cat.toString()));
+    final cat =
+        criteria != null && criteria is Map ? (criteria['category'] ?? '') : '';
+    return Future.value(
+        KoratMockRepository.getEvents(category: cat.toString()));
   } else if (urlLower.contains('contact')) {
-    final code = criteria != null && criteria is Map ? (criteria['code'] ?? '') : '';
+    final code =
+        criteria != null && criteria is Map ? (criteria['code'] ?? '') : '';
     return Future.value(KoratMockRepository.getContacts(code: code.toString()));
   } else if (urlLower.contains('knowledge')) {
     return Future.value(KoratMockRepository.getKnowledgeList());
   } else if (urlLower.contains('news') || url.isEmpty) {
-    final code = criteria != null && criteria is Map ? (criteria['code'] ?? '') : '';
+    final code =
+        criteria != null && criteria is Map ? (criteria['code'] ?? '') : '';
     final allNews = KoratMockRepository.getNewsList();
     if (code.isNotEmpty) {
-      final match = allNews.firstWhere((n) => n['code'] == code, orElse: () => allNews.first);
+      final match = allNews.firstWhere((n) => n['code'] == code,
+          orElse: () => allNews.first);
       return Future.value([match]);
     }
     return Future.value(allNews);
@@ -342,12 +351,10 @@ Future<dynamic> postObjectData(String url, dynamic criteria) async {
   try {
     var body = json.encode(criteria);
     var targetUrl = url.startsWith('http') ? url : (serverNpm + url);
-    var response = await http
-        .post(Uri.parse(targetUrl), body: body, headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json"
-        })
-        .timeout(const Duration(seconds: 4));
+    var response = await http.post(Uri.parse(targetUrl), body: body, headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    }).timeout(const Duration(seconds: 4));
 
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
